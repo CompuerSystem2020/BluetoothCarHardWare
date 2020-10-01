@@ -1,0 +1,2092 @@
+
+FPGA_Ram.elf:     file format elf32-tradlittlemips
+
+
+Disassembly of section .text_init:
+
+bfc00000 <__reset_vector>:
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/boot.S:63
+/**************************************************************************************
+    R E S E T   E X C E P T I O N   H A N D L E R
+**************************************************************************************/
+
+LEAF(__reset_vector)
+    la a2,__cpu_init
+bfc00000:	3c06bfc0 	lui	a2,0xbfc0
+bfc00004:	24c60014 	addiu	a2,a2,20
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/boot.S:64
+    jr a2
+bfc00008:	00c00008 	jr	a2
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/boot.S:65
+    mtc0    $0, C0_COUNT        # Clear cp0 Count (Used to measure boot time.)
+bfc0000c:	40804800 	mtc0	zero,c0_count
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/boot.S:66
+    nop
+bfc00010:	00000000 	nop
+
+bfc00014 <__cpu_init>:
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/boot.S:75
+LEAF(__cpu_init)
+
+    # Verify the code is here due to a reset and not NMI. If this is an NMI then trigger
+    # a debugger breakpoint using a sdbp instruction.
+
+    mfc0    s1, C0_STATUS       # Read CP0 Status
+bfc00014:	40116000 	mfc0	s1,c0_status
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/boot.S:76
+    ext     s1, s1, 19, 1       # extract NMI
+bfc00018:	7e3104c0 	ext	s1,s1,0x13,0x1
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/boot.S:77
+    beqz    s1, init_resources  # Branch if this is NOT an NMI exception.
+bfc0001c:	12200002 	beqz	s1,bfc00028 <init_resources>
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/boot.S:78
+    nop
+bfc00020:	00000000 	nop
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/boot.S:79
+    sdbbp                       # Failed assertion: NMI.
+bfc00024:	7000003f 	sdbbp
+
+bfc00028 <init_resources>:
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/boot.S:85
+
+init_resources:                 # initializes resources for "cpu".
+
+    # Initialize CP0 registers
+
+    la a2,      init_cp0        # Init CP0 Status, Count, Compare, Watch*, and Cause.
+bfc00028:	3c06bfc0 	lui	a2,0xbfc0
+bfc0002c:	24c60288 	addiu	a2,a2,648
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/boot.S:86
+    jalr a2
+bfc00030:	00c0f809 	jalr	a2
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/boot.S:87
+    nop
+bfc00034:	00000000 	nop
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/boot.S:118
+  #  jalr    a2
+  #  nop
+
+    # Prepare for eret to main.
+
+    la      ra, all_done        # If main returns then go to all_done:.
+bfc00038:	3c1fbfc0 	lui	ra,0xbfc0
+bfc0003c:	27ff0058 	addiu	ra,ra,88
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/boot.S:119
+    move    a0, zero            # Indicate that there are no arguments available.
+bfc00040:	00002025 	move	a0,zero
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/boot.S:120
+    la      v0, _start          # load the address of the CRT entry point _start.
+bfc00044:	3c02bfc0 	lui	v0,0xbfc0
+bfc00048:	24420130 	addiu	v0,v0,304
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/boot.S:121
+    mtc0    v0, $30             # Write ErrorEPC with the address of main
+bfc0004c:	4082f000 	mtc0	v0,c0_errorepc
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/boot.S:122
+    ehb                         # clear hazards (makes sure write to ErrorPC has completed)
+bfc00050:	000000c0 	ehb
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/boot.S:126
+
+    # Return from exception will now execute code in main
+
+    eret                        # Exit reset exception handler and start execution of _start.
+bfc00054:	42000018 	eret
+
+bfc00058 <all_done>:
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/boot.S:132
+
+
+/**************************************************************************************/
+all_done:
+    # If main returns it will return to this point.  Just spin here.
+    b       all_done
+bfc00058:	1000ffff 	b	bfc00058 <all_done>
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/boot.S:133
+    nop
+bfc0005c:	00000000 	nop
+
+bfc00060 <init_icache>:
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:60
+LEAF(init_icache)
+
+	// Can be skipped if using magic simulation cache flush
+
+	// Determine how big the I$ is
+	mfc0	v0, C0_CONFIG1		// read C0_Config1
+bfc00060:	40028001 	mfc0	v0,c0_config1
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:63
+
+	// Isolate I$ Line Size
+	ext	    v1, v0, CFG1_ILSHIFT, 3		// extract IL
+bfc00064:	7c4314c0 	ext	v1,v0,0x13,0x3
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:66
+
+	// Skip ahead if No I$
+	beq	    v1, zero, done_icache
+bfc00068:	10600011 	beqz	v1,bfc000b0 <done_icache>
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:67
+	nop
+bfc0006c:	00000000 	nop
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:69
+
+	li	    a2, 2
+bfc00070:	24060002 	li	a2,2
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:70
+	sllv    v1, a2, v1			// Now have true I$ line size in bytes
+bfc00074:	00661804 	sllv	v1,a2,v1
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:72
+
+	ext	    a0, v0, CFG1_ISSHIFT, 3		// extract IS
+bfc00078:	7c441580 	ext	a0,v0,0x16,0x3
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:73
+	li	    a2, 64
+bfc0007c:	24060040 	li	a2,64
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:74
+	sllv    a0, a2, a0			// I$ Sets per way
+bfc00080:	00862004 	sllv	a0,a2,a0
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:77
+
+	// Config1IA == I$ Assoc - 1
+	ext	    a1, v0, CFG1_IASHIFT, 3		// extract IA
+bfc00084:	7c451400 	ext	a1,v0,0x10,0x3
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:78
+	add	    a1, 1
+bfc00088:	20a50001 	addi	a1,a1,1
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:80
+
+	mul	    a0, a0, a1			// Total number of sets
+bfc0008c:	70852002 	mul	a0,a0,a1
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:82
+
+	lui	    a2, 0x8000			// Get a KSeg0 address for cacheops
+bfc00090:	3c068000 	lui	a2,0x8000
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:85
+
+	// Clear TagLo/TagHi registers
+	mtc0    zero, C0_TAGLO		// write C0_ITagLo
+bfc00094:	4080e000 	mtc0	zero,c0_taglo
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:86
+	mtc0    zero, C0_TAGHI		// write C0_ITagHi
+bfc00098:	4080e800 	mtc0	zero,c0_taghi
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:88
+
+	move    a3, a0
+bfc0009c:	00803825 	move	a3,a0
+
+bfc000a0 <next_icache_tag>:
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:93
+
+next_icache_tag:
+	// Index Store Tag Cache Op
+	// Will invalidate the tag entry, clear the lock bit, and clear the LRF bit
+	cache   0x8, 0(a2)			// ICIndexStTag
+bfc000a0:	bcc80000 	cache	0x8,0(a2)
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:94
+	add	    a3, -1				// Decrement set counter
+bfc000a4:	20e7ffff 	addi	a3,a3,-1
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:95
+	bne     a3, zero, next_icache_tag
+bfc000a8:	14e0fffd 	bnez	a3,bfc000a0 <next_icache_tag>
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:96
+	add     a2, v1				// Get next line address
+bfc000ac:	00c33020 	add	a2,a2,v1
+
+bfc000b0 <done_icache>:
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:100
+
+done_icache:
+
+    jr      ra
+bfc000b0:	03e00008 	jr	ra
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:101
+    nop
+bfc000b4:	00000000 	nop
+
+bfc000b8 <init_dcache>:
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:110
+* init_dcache invalidates all data cache entries
+**************************************************************************************/
+
+LEAF(init_dcache)
+
+	mfc0	v0, C0_CONFIG1		// read C0_Config1
+bfc000b8:	40028001 	mfc0	v0,c0_config1
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:113
+
+	// Isolate D$ Line Size
+	ext	    v1, v0, CFG1_DLSHIFT, 3		// extract DL
+bfc000bc:	7c431280 	ext	v1,v0,0xa,0x3
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:116
+
+	// Skip ahead if No D$
+	beq	    v1, zero, done_dcache
+bfc000c0:	10600013 	beqz	v1,bfc00110 <done_dcache>
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:117
+	nop
+bfc000c4:	00000000 	nop
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:119
+
+	li	    a2, 2
+bfc000c8:	24060002 	li	a2,2
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:120
+	sllv	v1, a2, v1			// Now have true D$ line size in bytes
+bfc000cc:	00661804 	sllv	v1,a2,v1
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:122
+
+	ext	    a0, v0, CFG1_DSSHIFT, 3		// extract DS
+bfc000d0:	7c441340 	ext	a0,v0,0xd,0x3
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:123
+	li	    a2, 64
+bfc000d4:	24060040 	li	a2,64
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:124
+	sllv	a0, a2, a0	// D$ Sets per way
+bfc000d8:	00862004 	sllv	a0,a2,a0
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:127
+
+	// Config1DA == D$ Assoc - 1
+	ext	    a1, v0, CFG1_DASHIFT, 3		// extract DA
+bfc000dc:	7c4511c0 	ext	a1,v0,0x7,0x3
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:128
+	add	    a1, 1
+bfc000e0:	20a50001 	addi	a1,a1,1
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:130
+
+	mul	    a0, a0, a1			// Get total number of sets
+bfc000e4:	70852002 	mul	a0,a0,a1
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:132
+
+	lui	    a2, 0x8000		    // Get a KSeg0 address for cacheops
+bfc000e8:	3c068000 	lui	a2,0x8000
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:135
+
+	// Clear TagLo/TagHi registers
+	mtc0	zero, C0_TAGLO		// write C0_TagLo
+bfc000ec:	4080e000 	mtc0	zero,c0_taglo
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:136
+	mtc0	zero, C0_TAGHI		// write C0_TagHi
+bfc000f0:	4080e800 	mtc0	zero,c0_taghi
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:137
+	mtc0	zero, C0_TAGLO, 2	// write C0_DTagLo
+bfc000f4:	4080e002 	mtc0	zero,c0_taglo1
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:138
+	mtc0	zero, C0_TAGHI, 2	// write C0_DTagHi
+bfc000f8:	4080e802 	mtc0	zero,c0_taghi1
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:140
+
+	move	a3, a0
+bfc000fc:	00803825 	move	a3,a0
+
+bfc00100 <next_dcache_tag>:
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:146
+
+next_dcache_tag:
+	// Index Store Tag Cache Op
+	// Will invalidate the tag entry, clear the lock bit, and clear the LRF bit
+
+    cache	0x9, 0(a2)			// DCIndexStTag
+bfc00100:	bcc90000 	cache	0x9,0(a2)
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:147
+	add	    a3, -1			    // Decrement set counter
+bfc00104:	20e7ffff 	addi	a3,a3,-1
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:149
+
+	bne	    a3, zero, next_dcache_tag
+bfc00108:	14e0fffd 	bnez	a3,bfc00100 <next_dcache_tag>
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:150
+	add	    a2, v1		    	// Get next line address
+bfc0010c:	00c33020 	add	a2,a2,v1
+
+bfc00110 <done_dcache>:
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:153
+
+done_dcache:
+    jr      ra
+bfc00110:	03e00008 	jr	ra
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:154
+    nop
+bfc00114:	00000000 	nop
+
+bfc00118 <change_k0_cca>:
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:160
+END(init_dcache)
+
+LEAF(change_k0_cca)
+	// NOTE! This code must be executed in KSEG1 (not KSGE0 uncached)
+    // Set CCA for kseg0 to cacheable
+	mfc0	v0, C0_CONFIG	// read C0_Config
+bfc00118:	40028000 	mfc0	v0,c0_config
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:161
+	li	v1, 3			// CCA for single-core processors
+bfc0011c:	24030003 	li	v1,3
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:162
+      ins	v0, v1, 0, 3	// insert K0
+bfc00120:	7c621004 	ins	v0,v1,0x0,0x3
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:163
+	mtc0	v0, C0_CONFIG	// write C0_Config
+bfc00124:	40828000 	mtc0	v0,c0_config
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:164
+	jr.hb   ra
+bfc00128:	03e00408 	jr.hb	ra
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_caches.S:165
+    	nop
+bfc0012c:	00000000 	nop
+
+bfc00130 <_start>:
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/mini_crt0.S:59
+/**************************************************************************************
+**************************************************************************************/
+LEAF(_start)
+
+    # Set the global pointer register address to _gp - value set in linker .ld file
+    la      gp, _gp             # All share globals.
+bfc00130:	3c1cbfc1 	lui	gp,0xbfc1
+bfc00134:	279c9ce0 	addiu	gp,gp,-25376
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/mini_crt0.S:62
+
+    # Set up the stack pointer register to STACK_BASE_ADDR defined in boot.h
+    li      sp, STACK_BASE_ADDR # Set up stack base.
+bfc00138:	3c1dbfc0 	lui	sp,0xbfc0
+bfc0013c:	37bd0900 	ori	sp,sp,0x900
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/mini_crt0.S:65
+
+    # Make a stack frame; must be a multiple of 8-bytes
+    addiu   sp, sp, -8
+bfc00140:	27bdfff8 	addiu	sp,sp,-8
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/mini_crt0.S:68
+
+    # Preserve return address over the call to main
+    sw      ra, 0(sp)
+bfc00144:	afbf0000 	sw	ra,0(sp)
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/mini_crt0.S:70
+
+    li      s1_all_ones, 0xffffffff
+bfc00148:	2411ffff 	li	s1,-1
+
+bfc0014c <zero_bss>:
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/mini_crt0.S:73
+
+zero_bss:
+    la      t1_temp_addr, _fbss
+bfc0014c:	3c09bfc0 	lui	t1,0xbfc0
+bfc00150:	25291ce0 	addiu	t1,t1,7392
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/mini_crt0.S:74
+    ins     t1_temp_addr, s1_all_ones, 29, 1
+bfc00154:	7e29ef44 	ins	t1,s1,0x1d,0x1
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/mini_crt0.S:75
+    la      t3_temp_mark, _end
+bfc00158:	3c0bbfc0 	lui	t3,0xbfc0
+bfc0015c:	256b1ce0 	addiu	t3,t3,7392
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/mini_crt0.S:76
+    ins     t3_temp_mark, s1_all_ones, 29, 1
+bfc00160:	7e2bef44 	ins	t3,s1,0x1d,0x1
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/mini_crt0.S:77
+    beq     t1_temp_addr, t3_temp_mark, invoke_main
+bfc00164:	112b0005 	beq	t1,t3,bfc0017c <invoke_main>
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/mini_crt0.S:78
+    nop
+bfc00168:	00000000 	nop
+
+bfc0016c <next_bss_word>:
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/mini_crt0.S:80
+next_bss_word:
+    sw      zero, 0(t1_temp_addr)
+bfc0016c:	ad200000 	sw	zero,0(t1)
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/mini_crt0.S:81
+    addiu   t1_temp_addr, 4
+bfc00170:	25290004 	addiu	t1,t1,4
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/mini_crt0.S:82
+    bne     t1_temp_addr, t3_temp_mark, next_bss_word
+bfc00174:	152bfffd 	bne	t1,t3,bfc0016c <next_bss_word>
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/mini_crt0.S:83
+    nop
+bfc00178:	00000000 	nop
+
+bfc0017c <invoke_main>:
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/mini_crt0.S:86
+
+invoke_main:
+    la      t0, main
+bfc0017c:	3c08bfc0 	lui	t0,0xbfc0
+bfc00180:	25081974 	addiu	t0,t0,6516
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/mini_crt0.S:88
+    # Create space for the o32 argument stack
+    addiu   sp, sp, -16
+bfc00184:	27bdfff0 	addiu	sp,sp,-16
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/mini_crt0.S:90
+    # Call main
+    jalr    t0
+bfc00188:	0100f809 	jalr	t0
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/mini_crt0.S:91
+    nop
+bfc0018c:	00000000 	nop
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/mini_crt0.S:93
+
+    lw      ra, 0(sp)
+bfc00190:	8fbf0000 	lw	ra,0(sp)
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/mini_crt0.S:94
+    addiu   sp, sp, 8
+bfc00194:	27bd0008 	addiu	sp,sp,8
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/mini_crt0.S:95
+    jr      ra
+bfc00198:	03e00008 	jr	ra
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/mini_crt0.S:96
+    nop
+bfc0019c:	00000000 	nop
+	...
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/boot.S:149
+**************************************************************************************/
+/* NOTE: the linker script must insure that this code starts at start + 0x200 so the exception */
+/* vectors will be addressed properly. All .org assume this! */
+/* TLB refill, 32 bit task. */
+.org 0x200                      # TLB refill, 32 bit task.
+    sdbbp                       # This has the effect of starting the debugger
+bfc00200:	7000003f 	sdbbp
+	...
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/boot.S:153
+    nop
+
+.org 0x280                      # XTLB refill, 64 bit task. start + 0x280
+    sdbbp                       # This has the effect of starting the debugger
+bfc00280:	7000003f 	sdbbp
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/boot.S:154
+    nop
+bfc00284:	00000000 	nop
+
+bfc00288 <init_cp0>:
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_cp0.S:56
+/**************************************************************************************
+**************************************************************************************/
+LEAF(init_cp0)
+
+    // Initialize Status
+	li	v1, 0x00400404		// (M_StatusERL | M_StatusIPL1 | M_StatusBEV)
+bfc00288:	3c030040 	lui	v1,0x40
+bfc0028c:	34630404 	ori	v1,v1,0x404
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_cp0.S:57
+	mtc0	v1, C0_STATUS		// write C0_Status
+bfc00290:	40836000 	mtc0	v1,c0_status
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_cp0.S:60
+
+	// Initialize Watch registers if implemented.
+	mfc0	v0, C0_CONFIG1		// read C0_Config1
+bfc00294:	40028001 	mfc0	v0,c0_config1
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_cp0.S:61
+	ext	v1, v0, 3, 1		// extract bit 3 WR (Watch registers implemented)
+bfc00298:	7c4300c0 	ext	v1,v0,0x3,0x1
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_cp0.S:62
+	beq 	v1, zero, done_wr
+bfc0029c:	10600011 	beqz	v1,bfc002e4 <done_wr>
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_cp0.S:63
+	li    	v1, 0x7				// (M_WatchHiI | M_WatchHiR | M_WatchHiW)
+bfc002a0:	24030007 	li	v1,7
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_cp0.S:66
+
+	// Clear all possible Watch Status bits and disable watch exceptions
+	mtc0	v1, C0_WATCHHI		// write C0_WatchHi0
+bfc002a4:	40839800 	mtc0	v1,c0_watchhi
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_cp0.S:67
+	mtc0	zero, C0_WATCHLO	// write C0_WatchLo0
+bfc002a8:	40809000 	mtc0	zero,c0_watchlo
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_cp0.S:69
+
+	mtc0	v1, C0_WATCHHI, 1	// write C0_WatchHi1
+bfc002ac:	40839801 	mtc0	v1,c0_watchhi,1
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_cp0.S:70
+	mtc0	zero, C0_WATCHLO, 1	// write C0_WatchLo1
+bfc002b0:	40809001 	mtc0	zero,c0_watchlo,1
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_cp0.S:72
+
+	mtc0	v1, C0_WATCHHI, 2	// write C0_WatchHi2
+bfc002b4:	40839802 	mtc0	v1,c0_watchhi,2
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_cp0.S:73
+	mtc0	zero, C0_WATCHLO, 2	// write C0_WatchLo2
+bfc002b8:	40809002 	mtc0	zero,c0_watchlo,2
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_cp0.S:75
+
+	mtc0	v1, C0_WATCHHI, 3	// write C0_WatchHi3
+bfc002bc:	40839803 	mtc0	v1,c0_watchhi,3
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_cp0.S:76
+	mtc0	zero, C0_WATCHLO, 3	// write C0_WatchLo3
+bfc002c0:	40809003 	mtc0	zero,c0_watchlo,3
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_cp0.S:78
+
+	mtc0	v1, C0_WATCHHI, 4	// write C0_WatchHi4
+bfc002c4:	40839804 	mtc0	v1,c0_watchhi,4
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_cp0.S:79
+	mtc0	zero, C0_WATCHLO, 4	// write C0_WatchLo4
+bfc002c8:	40809004 	mtc0	zero,c0_watchlo,4
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_cp0.S:81
+
+	mtc0	v1, C0_WATCHHI, 5	// write C0_WatchHi5
+bfc002cc:	40839805 	mtc0	v1,c0_watchhi,5
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_cp0.S:82
+	mtc0	zero, C0_WATCHLO, 5	// write C0_WatchLo5
+bfc002d0:	40809005 	mtc0	zero,c0_watchlo,5
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_cp0.S:84
+
+	mtc0	v1, C0_WATCHHI, 6	// write C0_WatchHi6
+bfc002d4:	40839806 	mtc0	v1,c0_watchhi,6
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_cp0.S:85
+	mtc0	zero, C0_WATCHLO, 6	// write C0_WatchLo6
+bfc002d8:	40809006 	mtc0	zero,c0_watchlo,6
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_cp0.S:87
+
+	mtc0	v1, C0_WATCHHI, 7	// write C0_WatchHi7
+bfc002dc:	40839807 	mtc0	v1,c0_watchhi,7
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_cp0.S:88
+	mtc0	zero, C0_WATCHLO, 7	// write C0_WatchLo7
+bfc002e0:	40809007 	mtc0	zero,c0_watchlo,7
+
+bfc002e4 <done_wr>:
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_cp0.S:93
+
+done_wr:
+
+	// Clear WP bit to avoid watch exception upon user code entry, IV, and software interrupts.
+	mtc0	zero, C0_CAUSE		// write C0_Cause: Init AFTER init of CP0 WatchHi/Lo registers.
+bfc002e4:	40806800 	mtc0	zero,c0_cause
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_cp0.S:96
+
+	// Clear timer interrupt. (Count was cleared at the reset vector to allow timing boot.)
+	mtc0	zero, C0_COMPARE	// write C0_Compare
+bfc002e8:	40805800 	mtc0	zero,c0_compare
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_cp0.S:98
+
+        jr      ra
+bfc002ec:	03e00008 	jr	ra
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_cp0.S:99
+	nop
+bfc002f0:	00000000 	nop
+	...
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/boot.S:159
+
+#include "init_cp0.S"
+
+.org 0x300                      # Cache error exception. start + 0x300
+    sdbbp                       # This has the effect of starting the debugger
+bfc00300:	7000003f 	sdbbp
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/boot.S:160
+    nop
+bfc00304:	00000000 	nop
+
+bfc00308 <init_tlb>:
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_tlb.S:57
+**************************************************************************************/
+LEAF(init_tlb)
+
+check_for_tlb:
+	// Determine if we have a TLB
+	mfc0    v1, C0_CONFIG			// read C0_Config
+bfc00308:	40038000 	mfc0	v1,c0_config
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_tlb.S:58
+	ext	    v1, v1, 7, 3			// extract MT field
+bfc0030c:	7c6311c0 	ext	v1,v1,0x7,0x3
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_tlb.S:59
+	li	    a3, 0x1					// load a 1 to check against
+bfc00310:	24070001 	li	a3,1
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_tlb.S:60
+	bne	    v1, a3, done_init_tlb
+bfc00314:	1467000f 	bne	v1,a3,bfc00354 <done_init_tlb>
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_tlb.S:61
+	mfc0    v0, C0_CONFIG1			// C0_Config1
+bfc00318:	40028001 	mfc0	v0,c0_config1
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_tlb.S:62
+	nop
+bfc0031c:	00000000 	nop
+
+bfc00320 <start_init_tlb>:
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_tlb.S:66
+
+start_init_tlb:
+	// Config1MMUSize == Number of TLB entries - 1
+	ext     v1, v0, CFG1_MMUSSHIFT, 6 // extract MMU Size
+bfc00320:	7c432e40 	ext	v1,v0,0x19,0x6
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_tlb.S:67
+	mtc0    zero, C0_ENTRYLO0		// write C0_EntryLo0
+bfc00324:	40801000 	mtc0	zero,c0_entrylo0
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_tlb.S:68
+	mtc0    zero, C0_ENTRYLO1		// write C0_EntryLo1
+bfc00328:	40801800 	mtc0	zero,c0_entrylo1
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_tlb.S:69
+	mtc0    zero, C0_PAGEMASK		// write C0_PageMask
+bfc0032c:	40802800 	mtc0	zero,c0_pagemask
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_tlb.S:70
+	mtc0    zero, C0_WIRED			// write C0_Wired
+bfc00330:	40803000 	mtc0	zero,c0_wired
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_tlb.S:71
+	li	    a0, 0x80000000
+bfc00334:	3c048000 	lui	a0,0x8000
+
+bfc00338 <next_tlb_entry_pair>:
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_tlb.S:74
+
+next_tlb_entry_pair:
+	mtc0    v1, C0_INDEX			// write C0_Index
+bfc00338:	40830000 	mtc0	v1,c0_index
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_tlb.S:75
+	mtc0	a0, C0_ENTRYHI			// write C0_EntryHi
+bfc0033c:	40845000 	mtc0	a0,c0_entryhi
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_tlb.S:76
+	ehb
+bfc00340:	000000c0 	ehb
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_tlb.S:77
+	tlbwi
+bfc00344:	42000002 	tlbwi
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_tlb.S:78
+	add	    a0, (2<<13)				// Add 8K to the address to avoid TLB conflict with previous entry
+bfc00348:	20844000 	addi	a0,a0,16384
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_tlb.S:80
+
+	bne		v1, zero, next_tlb_entry_pair
+bfc0034c:	1460fffa 	bnez	v1,bfc00338 <next_tlb_entry_pair>
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_tlb.S:81
+	add	    v1, -1
+bfc00350:	2063ffff 	addi	v1,v1,-1
+
+bfc00354 <done_init_tlb>:
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_tlb.S:84
+
+done_init_tlb:
+    jr      ra
+bfc00354:	03e00008 	jr	ra
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/init_tlb.S:85
+    nop
+bfc00358:	00000000 	nop
+	...
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/boot.S:167
+#include "init_tlb.S"
+
+
+.org 0x380    /* General exception. */
+    # display alternating one-zeros on board LEDs
+    li      k0, BOARD_16_LEDS_ADDR  # Board LEDs display
+bfc00380:	3c1ab060 	lui	k0,0xb060
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/boot.S:168
+    li      k1, 0x5555          # alternating one-zeros
+bfc00384:	241b5555 	li	k1,21845
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/boot.S:169
+    sw      k1, 0(k0)           # Write pattern to LEDs
+bfc00388:	af5b0000 	sw	k1,0(k0)
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/boot.S:170
+    eret
+bfc0038c:	42000018 	eret
+	...
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/boot.S:177
+
+# If you want the above code to fit into 1k flash you will need to leave out the
+# code below. This is the code that covers the debug exception which you normally will not get.
+
+.org 0x480 /* EJTAG debug exception (EJTAG Control Register[ProbTrap] == 0.) */
+    li      r24_malta_word, BOARD_16_LEDS_ADDR     # If post boot then $24 is clobbered.
+bfc00480:	3c18b060 	lui	t8,0xb060
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/boot.S:178
+    mtc0    a0, C0_DESAVE       # DeSave a0
+bfc00484:	4084f800 	mtc0	a0,c0_desave
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/boot.S:179
+    mfc0    a0, C0_DEPC         # Read DEPC
+bfc00488:	4004c000 	mfc0	a0,c0_depc
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/boot.S:180
+    sw      a0, 0(r24_malta_word)    # Display lower 16 bits of DEPC if there is not an EJTAG probe.
+bfc0048c:	af040000 	sw	a0,0(t8)
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/boot.S:181
+    mfc0    a0, C0_DESAVE       # Restore a0
+bfc00490:	4004f800 	mfc0	a0,c0_desave
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/boot.S:182
+1:  b       1b  /* Stay here */
+bfc00494:	1000ffff 	b	bfc00494 <done_init_tlb+0x140>
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/boot.S:183
+    nop
+bfc00498:	00000000 	nop
+done_init_tlb():
+bfc0049c:	00000000 	nop
+
+Disassembly of section .text_ram:
+
+bfc01000 <delay>:
+delay():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:32
+#define iir		fcr
+#define dll		rbr
+#define dlm		ier
+
+// 
+void delay() {
+bfc01000:	27bdfff8 	addiu	sp,sp,-8
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34
+	volatile unsigned int j;
+	for (j = 0; j < (10000); j++) ;	// delay 
+bfc01004:	afa00000 	sw	zero,0(sp)
+bfc01008:	8fa20000 	lw	v0,0(sp)
+bfc0100c:	2c422710 	sltiu	v0,v0,10000
+bfc01010:	10400008 	beqz	v0,bfc01034 <delay+0x34>
+bfc01014:	00000000 	nop
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34 (discriminator 3)
+bfc01018:	8fa20000 	lw	v0,0(sp)
+bfc0101c:	24420001 	addiu	v0,v0,1
+bfc01020:	afa20000 	sw	v0,0(sp)
+bfc01024:	8fa20000 	lw	v0,0(sp)
+bfc01028:	2c422710 	sltiu	v0,v0,10000
+bfc0102c:	1440fffa 	bnez	v0,bfc01018 <delay+0x18>
+bfc01030:	00000000 	nop
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:35
+}
+bfc01034:	03e00008 	jr	ra
+bfc01038:	27bd0008 	addiu	sp,sp,8
+
+bfc0103c <init_bluetooth>:
+init_bluetooth():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:38
+
+void init_bluetooth(void) 
+{
+bfc0103c:	27bdffe8 	addiu	sp,sp,-24
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:39
+	*WRITE_IO(BT_UART_BASE + lcr) = 0x00000080; 
+bfc01040:	3c02b050 	lui	v0,0xb050
+bfc01044:	24030080 	li	v1,128
+bfc01048:	ac43100c 	sw	v1,4108(v0)
+delay():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34
+	for (j = 0; j < (10000); j++) ;	// delay 
+bfc0104c:	afa00000 	sw	zero,0(sp)
+bfc01050:	8fa20000 	lw	v0,0(sp)
+bfc01054:	2c422710 	sltiu	v0,v0,10000
+bfc01058:	10400008 	beqz	v0,bfc0107c <init_bluetooth+0x40>
+bfc0105c:	3c02b050 	lui	v0,0xb050
+bfc01060:	8fa20000 	lw	v0,0(sp)
+bfc01064:	24420001 	addiu	v0,v0,1
+bfc01068:	afa20000 	sw	v0,0(sp)
+bfc0106c:	8fa20000 	lw	v0,0(sp)
+bfc01070:	2c422710 	sltiu	v0,v0,10000
+bfc01074:	1440fffa 	bnez	v0,bfc01060 <init_bluetooth+0x24>
+bfc01078:	3c02b050 	lui	v0,0xb050
+init_bluetooth():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:42
+	// LCR[7] is 1 
+	delay(); 
+	*WRITE_IO(BT_UART_BASE + dll) = 69; 
+bfc0107c:	24030045 	li	v1,69
+bfc01080:	ac431000 	sw	v1,4096(v0)
+delay():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34
+	for (j = 0; j < (10000); j++) ;	// delay 
+bfc01084:	afa00004 	sw	zero,4(sp)
+bfc01088:	8fa20004 	lw	v0,4(sp)
+bfc0108c:	2c422710 	sltiu	v0,v0,10000
+bfc01090:	10400008 	beqz	v0,bfc010b4 <init_bluetooth+0x78>
+bfc01094:	3c02b050 	lui	v0,0xb050
+bfc01098:	8fa20004 	lw	v0,4(sp)
+bfc0109c:	24420001 	addiu	v0,v0,1
+bfc010a0:	afa20004 	sw	v0,4(sp)
+bfc010a4:	8fa20004 	lw	v0,4(sp)
+bfc010a8:	2c422710 	sltiu	v0,v0,10000
+bfc010ac:	1440fffa 	bnez	v0,bfc01098 <init_bluetooth+0x5c>
+bfc010b0:	3c02b050 	lui	v0,0xb050
+init_bluetooth():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:45
+	// DLL msb. 115200 at 50MHz. Formula is Clk/16/baudrate. From axi_uart manual. 
+	delay(); 
+	*WRITE_IO(BT_UART_BASE + dlm) = 0x00000001; 
+bfc010b4:	24030001 	li	v1,1
+bfc010b8:	ac431004 	sw	v1,4100(v0)
+delay():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34
+	for (j = 0; j < (10000); j++) ;	// delay 
+bfc010bc:	afa00008 	sw	zero,8(sp)
+bfc010c0:	8fa20008 	lw	v0,8(sp)
+bfc010c4:	2c422710 	sltiu	v0,v0,10000
+bfc010c8:	10400008 	beqz	v0,bfc010ec <init_bluetooth+0xb0>
+bfc010cc:	3c02b050 	lui	v0,0xb050
+bfc010d0:	8fa20008 	lw	v0,8(sp)
+bfc010d4:	24420001 	addiu	v0,v0,1
+bfc010d8:	afa20008 	sw	v0,8(sp)
+bfc010dc:	8fa20008 	lw	v0,8(sp)
+bfc010e0:	2c422710 	sltiu	v0,v0,10000
+bfc010e4:	1440fffa 	bnez	v0,bfc010d0 <init_bluetooth+0x94>
+bfc010e8:	3c02b050 	lui	v0,0xb050
+init_bluetooth():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:48
+	// DLL lsb. 
+	delay(); 
+	*WRITE_IO(BT_UART_BASE + lcr) = 0x00000003; 
+bfc010ec:	24030003 	li	v1,3
+bfc010f0:	ac43100c 	sw	v1,4108(v0)
+delay():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34
+	for (j = 0; j < (10000); j++) ;	// delay 
+bfc010f4:	afa0000c 	sw	zero,12(sp)
+bfc010f8:	8fa2000c 	lw	v0,12(sp)
+bfc010fc:	2c422710 	sltiu	v0,v0,10000
+bfc01100:	10400008 	beqz	v0,bfc01124 <init_bluetooth+0xe8>
+bfc01104:	3c02b050 	lui	v0,0xb050
+bfc01108:	8fa2000c 	lw	v0,12(sp)
+bfc0110c:	24420001 	addiu	v0,v0,1
+bfc01110:	afa2000c 	sw	v0,12(sp)
+bfc01114:	8fa2000c 	lw	v0,12(sp)
+bfc01118:	2c422710 	sltiu	v0,v0,10000
+bfc0111c:	1440fffa 	bnez	v0,bfc01108 <init_bluetooth+0xcc>
+bfc01120:	3c02b050 	lui	v0,0xb050
+init_bluetooth():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:51
+	// LCR register. 8n1 parity disabled 
+	delay(); 
+	*WRITE_IO(BT_UART_BASE + ier) = 0x00000001; 
+bfc01124:	24030001 	li	v1,1
+bfc01128:	ac431004 	sw	v1,4100(v0)
+delay():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34
+	for (j = 0; j < (10000); j++) ;	// delay 
+bfc0112c:	afa00010 	sw	zero,16(sp)
+bfc01130:	8fa20010 	lw	v0,16(sp)
+bfc01134:	2c422710 	sltiu	v0,v0,10000
+bfc01138:	10400008 	beqz	v0,bfc0115c <init_bluetooth+0x120>
+bfc0113c:	00000000 	nop
+bfc01140:	8fa20010 	lw	v0,16(sp)
+bfc01144:	24420001 	addiu	v0,v0,1
+bfc01148:	afa20010 	sw	v0,16(sp)
+bfc0114c:	8fa20010 	lw	v0,16(sp)
+bfc01150:	2c422710 	sltiu	v0,v0,10000
+bfc01154:	1440fffa 	bnez	v0,bfc01140 <init_bluetooth+0x104>
+bfc01158:	00000000 	nop
+init_bluetooth():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:54
+	// IER register. disable interrupts 
+	delay(); 
+}
+bfc0115c:	03e00008 	jr	ra
+bfc01160:	27bd0018 	addiu	sp,sp,24
+
+bfc01164 <init_debug>:
+init_debug():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:56
+void init_debug(void) 
+{
+bfc01164:	27bdffe8 	addiu	sp,sp,-24
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:57
+	*WRITE_IO(UART_BASE + lcr) = 0x00000080; // LCR[7]  is 1
+bfc01168:	3c02b040 	lui	v0,0xb040
+bfc0116c:	24030080 	li	v1,128
+bfc01170:	ac43100c 	sw	v1,4108(v0)
+delay():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34
+	for (j = 0; j < (10000); j++) ;	// delay 
+bfc01174:	afa00000 	sw	zero,0(sp)
+bfc01178:	8fa20000 	lw	v0,0(sp)
+bfc0117c:	2c422710 	sltiu	v0,v0,10000
+bfc01180:	10400008 	beqz	v0,bfc011a4 <init_debug+0x40>
+bfc01184:	3c02b040 	lui	v0,0xb040
+bfc01188:	8fa20000 	lw	v0,0(sp)
+bfc0118c:	24420001 	addiu	v0,v0,1
+bfc01190:	afa20000 	sw	v0,0(sp)
+bfc01194:	8fa20000 	lw	v0,0(sp)
+bfc01198:	2c422710 	sltiu	v0,v0,10000
+bfc0119c:	1440fffa 	bnez	v0,bfc01188 <init_debug+0x24>
+bfc011a0:	3c02b040 	lui	v0,0xb040
+init_debug():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:59
+	delay();
+	*WRITE_IO(UART_BASE + dll) = 27; // DLL msb. 115200 at 50MHz. Formula is Clk/16/baudrate. From axi_uart manual.
+bfc011a4:	2403001b 	li	v1,27
+bfc011a8:	ac431000 	sw	v1,4096(v0)
+delay():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34
+	for (j = 0; j < (10000); j++) ;	// delay 
+bfc011ac:	afa00004 	sw	zero,4(sp)
+bfc011b0:	8fa20004 	lw	v0,4(sp)
+bfc011b4:	2c422710 	sltiu	v0,v0,10000
+bfc011b8:	10400008 	beqz	v0,bfc011dc <init_debug+0x78>
+bfc011bc:	3c02b040 	lui	v0,0xb040
+bfc011c0:	8fa20004 	lw	v0,4(sp)
+bfc011c4:	24420001 	addiu	v0,v0,1
+bfc011c8:	afa20004 	sw	v0,4(sp)
+bfc011cc:	8fa20004 	lw	v0,4(sp)
+bfc011d0:	2c422710 	sltiu	v0,v0,10000
+bfc011d4:	1440fffa 	bnez	v0,bfc011c0 <init_debug+0x5c>
+bfc011d8:	3c02b040 	lui	v0,0xb040
+init_debug():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:61
+	delay();
+	*WRITE_IO(UART_BASE + dlm) = 0x00000000; // DLL lsb.
+bfc011dc:	ac401004 	sw	zero,4100(v0)
+delay():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34
+	for (j = 0; j < (10000); j++) ;	// delay 
+bfc011e0:	afa00008 	sw	zero,8(sp)
+bfc011e4:	8fa20008 	lw	v0,8(sp)
+bfc011e8:	2c422710 	sltiu	v0,v0,10000
+bfc011ec:	10400008 	beqz	v0,bfc01210 <init_debug+0xac>
+bfc011f0:	3c02b040 	lui	v0,0xb040
+bfc011f4:	8fa20008 	lw	v0,8(sp)
+bfc011f8:	24420001 	addiu	v0,v0,1
+bfc011fc:	afa20008 	sw	v0,8(sp)
+bfc01200:	8fa20008 	lw	v0,8(sp)
+bfc01204:	2c422710 	sltiu	v0,v0,10000
+bfc01208:	1440fffa 	bnez	v0,bfc011f4 <init_debug+0x90>
+bfc0120c:	3c02b040 	lui	v0,0xb040
+init_debug():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:63
+	delay();
+	*WRITE_IO(UART_BASE + lcr) = 0x00000003; // LCR register. 8n1 parity disabled
+bfc01210:	24030003 	li	v1,3
+bfc01214:	ac43100c 	sw	v1,4108(v0)
+delay():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34
+	for (j = 0; j < (10000); j++) ;	// delay 
+bfc01218:	afa0000c 	sw	zero,12(sp)
+bfc0121c:	8fa2000c 	lw	v0,12(sp)
+bfc01220:	2c422710 	sltiu	v0,v0,10000
+bfc01224:	10400008 	beqz	v0,bfc01248 <init_debug+0xe4>
+bfc01228:	3c02b040 	lui	v0,0xb040
+bfc0122c:	8fa2000c 	lw	v0,12(sp)
+bfc01230:	24420001 	addiu	v0,v0,1
+bfc01234:	afa2000c 	sw	v0,12(sp)
+bfc01238:	8fa2000c 	lw	v0,12(sp)
+bfc0123c:	2c422710 	sltiu	v0,v0,10000
+bfc01240:	1440fffa 	bnez	v0,bfc0122c <init_debug+0xc8>
+bfc01244:	3c02b040 	lui	v0,0xb040
+init_debug():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:65
+	delay();
+	*WRITE_IO(UART_BASE + ier) = 0x00000000; // IER register. disable interrupts
+bfc01248:	ac401004 	sw	zero,4100(v0)
+delay():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34
+	for (j = 0; j < (10000); j++) ;	// delay 
+bfc0124c:	afa00010 	sw	zero,16(sp)
+bfc01250:	8fa20010 	lw	v0,16(sp)
+bfc01254:	2c422710 	sltiu	v0,v0,10000
+bfc01258:	10400008 	beqz	v0,bfc0127c <init_debug+0x118>
+bfc0125c:	00000000 	nop
+bfc01260:	8fa20010 	lw	v0,16(sp)
+bfc01264:	24420001 	addiu	v0,v0,1
+bfc01268:	afa20010 	sw	v0,16(sp)
+bfc0126c:	8fa20010 	lw	v0,16(sp)
+bfc01270:	2c422710 	sltiu	v0,v0,10000
+bfc01274:	1440fffa 	bnez	v0,bfc01260 <init_debug+0xfc>
+bfc01278:	00000000 	nop
+init_debug():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:67
+	delay();
+}
+bfc0127c:	03e00008 	jr	ra
+bfc01280:	27bd0018 	addiu	sp,sp,24
+
+bfc01284 <BT_uart_inbyte>:
+BT_uart_inbyte():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:72
+
+char BT_uart_inbyte(void) 
+{ 
+	unsigned int RecievedByte; 
+	while(!((*READ_IO(BT_UART_BASE + lsr) & 0x00000001)==0x00000001));
+bfc01284:	3c03b050 	lui	v1,0xb050
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:72 (discriminator 1)
+bfc01288:	8c621014 	lw	v0,4116(v1)
+bfc0128c:	30420001 	andi	v0,v0,0x1
+bfc01290:	1040fffd 	beqz	v0,bfc01288 <BT_uart_inbyte+0x4>
+bfc01294:	3c02b050 	lui	v0,0xb050
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:73
+	RecievedByte = *READ_IO(BT_UART_BASE + rbr); 
+bfc01298:	8c421000 	lw	v0,4096(v0)
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:75
+	return (char)RecievedByte; 
+}
+bfc0129c:	03e00008 	jr	ra
+bfc012a0:	304200ff 	andi	v0,v0,0xff
+
+bfc012a4 <_mips_handle_irq>:
+_mips_handle_irq():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:77
+
+char _mips_handle_irq(void* ctx, int reason) { 
+bfc012a4:	27bdffd0 	addiu	sp,sp,-48
+delay():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34
+	for (j = 0; j < (10000); j++) ;	// delay 
+bfc012a8:	afa00028 	sw	zero,40(sp)
+bfc012ac:	8fa20028 	lw	v0,40(sp)
+bfc012b0:	2c422710 	sltiu	v0,v0,10000
+bfc012b4:	10400008 	beqz	v0,bfc012d8 <_mips_handle_irq+0x34>
+bfc012b8:	3c03b050 	lui	v1,0xb050
+bfc012bc:	8fa20028 	lw	v0,40(sp)
+bfc012c0:	24420001 	addiu	v0,v0,1
+bfc012c4:	afa20028 	sw	v0,40(sp)
+bfc012c8:	8fa20028 	lw	v0,40(sp)
+bfc012cc:	2c422710 	sltiu	v0,v0,10000
+bfc012d0:	1440fffa 	bnez	v0,bfc012bc <_mips_handle_irq+0x18>
+bfc012d4:	3c03b050 	lui	v1,0xb050
+BT_uart_inbyte():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:72
+	while(!((*READ_IO(BT_UART_BASE + lsr) & 0x00000001)==0x00000001));
+bfc012d8:	8c621014 	lw	v0,4116(v1)
+bfc012dc:	30420001 	andi	v0,v0,0x1
+bfc012e0:	1040fffd 	beqz	v0,bfc012d8 <_mips_handle_irq+0x34>
+bfc012e4:	00000000 	nop
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:73
+	RecievedByte = *READ_IO(BT_UART_BASE + rbr); 
+bfc012e8:	8c621000 	lw	v0,4096(v1)
+_mips_handle_irq():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:82
+
+	char BT_rxData = 0;
+	delay();
+	BT_rxData = BT_uart_inbyte(); 
+	*WRITE_IO(UART_BASE + thr) = BT_rxData;
+bfc012ec:	3c03b040 	lui	v1,0xb040
+bfc012f0:	304400ff 	andi	a0,v0,0xff
+bfc012f4:	ac641000 	sw	a0,4096(v1)
+delay():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34
+	for (j = 0; j < (10000); j++) ;	// delay 
+bfc012f8:	afa0002c 	sw	zero,44(sp)
+bfc012fc:	8fa3002c 	lw	v1,44(sp)
+bfc01300:	2c632710 	sltiu	v1,v1,10000
+bfc01304:	10600008 	beqz	v1,bfc01328 <_mips_handle_irq+0x84>
+bfc01308:	304200ff 	andi	v0,v0,0xff
+bfc0130c:	8fa3002c 	lw	v1,44(sp)
+bfc01310:	24630001 	addiu	v1,v1,1
+bfc01314:	afa3002c 	sw	v1,44(sp)
+bfc01318:	8fa3002c 	lw	v1,44(sp)
+bfc0131c:	2c632710 	sltiu	v1,v1,10000
+bfc01320:	1460fffa 	bnez	v1,bfc0130c <_mips_handle_irq+0x68>
+bfc01324:	00000000 	nop
+_mips_handle_irq():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:84
+	delay(); 
+	if (BT_rxData == 'k') { 
+bfc01328:	2403006b 	li	v1,107
+bfc0132c:	10430039 	beq	v0,v1,bfc01414 <_mips_handle_irq+0x170>
+bfc01330:	2403006d 	li	v1,109
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:87
+		*WRITE_IO(IO_LEDR)=0x1; 
+		delay();
+	} else if (BT_rxData == 'm') { 
+bfc01334:	10430048 	beq	v0,v1,bfc01458 <_mips_handle_irq+0x1b4>
+bfc01338:	24030077 	li	v1,119
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:90
+	 	*WRITE_IO(IO_LEDR)=0x2; 
+	  	delay(); 
+ 	} else if (BT_rxData == 'w') {
+bfc0133c:	1043005e 	beq	v0,v1,bfc014b8 <_mips_handle_irq+0x214>
+bfc01340:	24030061 	li	v1,97
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:93
+   		*WRITE_IO(IO_LEDR)=0x4; 
+   		delay(); 
+   	} else if (BT_rxData == 'a') {
+bfc01344:	1043007e 	beq	v0,v1,bfc01540 <_mips_handle_irq+0x29c>
+bfc01348:	24030064 	li	v1,100
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:96
+    	*WRITE_IO(IO_LEDR)=0x8; 
+    	delay(); 
+    } else if (BT_rxData == 'd') {
+bfc0134c:	1043006b 	beq	v0,v1,bfc014fc <_mips_handle_irq+0x258>
+bfc01350:	24030073 	li	v1,115
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:99
+     	*WRITE_IO(IO_LEDR) = 0x10; 
+     	delay(); 
+ 	}else if (BT_rxData == 's') {
+bfc01354:	1043008b 	beq	v0,v1,bfc01584 <_mips_handle_irq+0x2e0>
+bfc01358:	24030074 	li	v1,116
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:102
+ 	  	*WRITE_IO(IO_LEDR) = 0x20; 
+ 	  	delay(); 
+ 	} else if (BT_rxData == 't') {
+bfc0135c:	1043009a 	beq	v0,v1,bfc015c8 <_mips_handle_irq+0x324>
+bfc01360:	3c03b060 	lui	v1,0xb060
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:106
+ 	   	*WRITE_IO(IO_LEDR) = 0x40; 
+ 	    delay(); 
+ 	} else { 
+ 	    *WRITE_IO(IO_LEDR) = 0x80; 
+bfc01364:	24040080 	li	a0,128
+bfc01368:	ac640000 	sw	a0,0(v1)
+delay():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34
+	for (j = 0; j < (10000); j++) ;	// delay 
+bfc0136c:	afa00008 	sw	zero,8(sp)
+bfc01370:	8fa30008 	lw	v1,8(sp)
+bfc01374:	2c632710 	sltiu	v1,v1,10000
+bfc01378:	10600008 	beqz	v1,bfc0139c <_mips_handle_irq+0xf8>
+bfc0137c:	3c03b040 	lui	v1,0xb040
+bfc01380:	8fa30008 	lw	v1,8(sp)
+bfc01384:	24630001 	addiu	v1,v1,1
+bfc01388:	afa30008 	sw	v1,8(sp)
+bfc0138c:	8fa30008 	lw	v1,8(sp)
+bfc01390:	2c632710 	sltiu	v1,v1,10000
+bfc01394:	1460fffa 	bnez	v1,bfc01380 <_mips_handle_irq+0xdc>
+bfc01398:	3c03b040 	lui	v1,0xb040
+_mips_handle_irq():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:109
+ 	    delay();
+ 	}
+ 	*WRITE_IO(UART_BASE + thr) = '\n';
+bfc0139c:	2404000a 	li	a0,10
+bfc013a0:	ac641000 	sw	a0,4096(v1)
+delay():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34
+	for (j = 0; j < (10000); j++) ;	// delay 
+bfc013a4:	afa00000 	sw	zero,0(sp)
+bfc013a8:	8fa30000 	lw	v1,0(sp)
+bfc013ac:	2c632710 	sltiu	v1,v1,10000
+bfc013b0:	10600008 	beqz	v1,bfc013d4 <_mips_handle_irq+0x130>
+bfc013b4:	3c03b040 	lui	v1,0xb040
+bfc013b8:	8fa30000 	lw	v1,0(sp)
+bfc013bc:	24630001 	addiu	v1,v1,1
+bfc013c0:	afa30000 	sw	v1,0(sp)
+bfc013c4:	8fa30000 	lw	v1,0(sp)
+bfc013c8:	2c632710 	sltiu	v1,v1,10000
+bfc013cc:	1460fffa 	bnez	v1,bfc013b8 <_mips_handle_irq+0x114>
+bfc013d0:	3c03b040 	lui	v1,0xb040
+_mips_handle_irq():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:111
+ 	delay();
+ 	*WRITE_IO(UART_BASE + thr) = '\r';
+bfc013d4:	2404000d 	li	a0,13
+bfc013d8:	ac641000 	sw	a0,4096(v1)
+delay():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34
+	for (j = 0; j < (10000); j++) ;	// delay 
+bfc013dc:	afa00004 	sw	zero,4(sp)
+bfc013e0:	8fa30004 	lw	v1,4(sp)
+bfc013e4:	2c632710 	sltiu	v1,v1,10000
+bfc013e8:	10600008 	beqz	v1,bfc0140c <_mips_handle_irq+0x168>
+bfc013ec:	00000000 	nop
+bfc013f0:	8fa30004 	lw	v1,4(sp)
+bfc013f4:	24630001 	addiu	v1,v1,1
+bfc013f8:	afa30004 	sw	v1,4(sp)
+bfc013fc:	8fa30004 	lw	v1,4(sp)
+bfc01400:	2c632710 	sltiu	v1,v1,10000
+bfc01404:	1460fffa 	bnez	v1,bfc013f0 <_mips_handle_irq+0x14c>
+bfc01408:	00000000 	nop
+_mips_handle_irq():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:114
+ 	delay();
+	return BT_rxData; 
+} 
+bfc0140c:	03e00008 	jr	ra
+bfc01410:	27bd0030 	addiu	sp,sp,48
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:85
+		*WRITE_IO(IO_LEDR)=0x1; 
+bfc01414:	3c03b060 	lui	v1,0xb060
+bfc01418:	24040001 	li	a0,1
+bfc0141c:	ac640000 	sw	a0,0(v1)
+delay():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34
+	for (j = 0; j < (10000); j++) ;	// delay 
+bfc01420:	afa00024 	sw	zero,36(sp)
+bfc01424:	8fa30024 	lw	v1,36(sp)
+bfc01428:	2c632710 	sltiu	v1,v1,10000
+bfc0142c:	1060ffdb 	beqz	v1,bfc0139c <_mips_handle_irq+0xf8>
+bfc01430:	3c03b040 	lui	v1,0xb040
+bfc01434:	8fa30024 	lw	v1,36(sp)
+bfc01438:	24630001 	addiu	v1,v1,1
+bfc0143c:	afa30024 	sw	v1,36(sp)
+bfc01440:	8fa30024 	lw	v1,36(sp)
+bfc01444:	2c632710 	sltiu	v1,v1,10000
+bfc01448:	1460fffa 	bnez	v1,bfc01434 <_mips_handle_irq+0x190>
+bfc0144c:	3c03b040 	lui	v1,0xb040
+_mips_handle_irq():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:109
+ 	*WRITE_IO(UART_BASE + thr) = '\n';
+bfc01450:	1000ffd3 	b	bfc013a0 <_mips_handle_irq+0xfc>
+bfc01454:	2404000a 	li	a0,10
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:88
+	 	*WRITE_IO(IO_LEDR)=0x2; 
+bfc01458:	3c03b060 	lui	v1,0xb060
+bfc0145c:	24040002 	li	a0,2
+bfc01460:	ac640000 	sw	a0,0(v1)
+delay():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34
+	for (j = 0; j < (10000); j++) ;	// delay 
+bfc01464:	afa00020 	sw	zero,32(sp)
+bfc01468:	8fa30020 	lw	v1,32(sp)
+bfc0146c:	2c632710 	sltiu	v1,v1,10000
+bfc01470:	1060ffca 	beqz	v1,bfc0139c <_mips_handle_irq+0xf8>
+bfc01474:	3c03b040 	lui	v1,0xb040
+bfc01478:	8fa30020 	lw	v1,32(sp)
+bfc0147c:	24630001 	addiu	v1,v1,1
+bfc01480:	afa30020 	sw	v1,32(sp)
+bfc01484:	8fa30020 	lw	v1,32(sp)
+bfc01488:	2c632710 	sltiu	v1,v1,10000
+bfc0148c:	1060ffc3 	beqz	v1,bfc0139c <_mips_handle_irq+0xf8>
+bfc01490:	3c03b040 	lui	v1,0xb040
+bfc01494:	8fa30020 	lw	v1,32(sp)
+bfc01498:	24630001 	addiu	v1,v1,1
+bfc0149c:	afa30020 	sw	v1,32(sp)
+bfc014a0:	8fa30020 	lw	v1,32(sp)
+bfc014a4:	2c632710 	sltiu	v1,v1,10000
+bfc014a8:	1460fff3 	bnez	v1,bfc01478 <_mips_handle_irq+0x1d4>
+bfc014ac:	3c03b040 	lui	v1,0xb040
+_mips_handle_irq():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:109
+ 	*WRITE_IO(UART_BASE + thr) = '\n';
+bfc014b0:	1000ffbb 	b	bfc013a0 <_mips_handle_irq+0xfc>
+bfc014b4:	2404000a 	li	a0,10
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:91
+   		*WRITE_IO(IO_LEDR)=0x4; 
+bfc014b8:	3c03b060 	lui	v1,0xb060
+bfc014bc:	24040004 	li	a0,4
+bfc014c0:	ac640000 	sw	a0,0(v1)
+delay():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34
+	for (j = 0; j < (10000); j++) ;	// delay 
+bfc014c4:	afa0001c 	sw	zero,28(sp)
+bfc014c8:	8fa3001c 	lw	v1,28(sp)
+bfc014cc:	2c632710 	sltiu	v1,v1,10000
+bfc014d0:	1060ffb2 	beqz	v1,bfc0139c <_mips_handle_irq+0xf8>
+bfc014d4:	3c03b040 	lui	v1,0xb040
+bfc014d8:	8fa3001c 	lw	v1,28(sp)
+bfc014dc:	24630001 	addiu	v1,v1,1
+bfc014e0:	afa3001c 	sw	v1,28(sp)
+bfc014e4:	8fa3001c 	lw	v1,28(sp)
+bfc014e8:	2c632710 	sltiu	v1,v1,10000
+bfc014ec:	1460fffa 	bnez	v1,bfc014d8 <_mips_handle_irq+0x234>
+bfc014f0:	3c03b040 	lui	v1,0xb040
+_mips_handle_irq():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:109
+ 	*WRITE_IO(UART_BASE + thr) = '\n';
+bfc014f4:	1000ffaa 	b	bfc013a0 <_mips_handle_irq+0xfc>
+bfc014f8:	2404000a 	li	a0,10
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:97
+     	*WRITE_IO(IO_LEDR) = 0x10; 
+bfc014fc:	3c03b060 	lui	v1,0xb060
+bfc01500:	24040010 	li	a0,16
+bfc01504:	ac640000 	sw	a0,0(v1)
+delay():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34
+	for (j = 0; j < (10000); j++) ;	// delay 
+bfc01508:	afa00014 	sw	zero,20(sp)
+bfc0150c:	8fa30014 	lw	v1,20(sp)
+bfc01510:	2c632710 	sltiu	v1,v1,10000
+bfc01514:	1060ffa1 	beqz	v1,bfc0139c <_mips_handle_irq+0xf8>
+bfc01518:	3c03b040 	lui	v1,0xb040
+bfc0151c:	8fa30014 	lw	v1,20(sp)
+bfc01520:	24630001 	addiu	v1,v1,1
+bfc01524:	afa30014 	sw	v1,20(sp)
+bfc01528:	8fa30014 	lw	v1,20(sp)
+bfc0152c:	2c632710 	sltiu	v1,v1,10000
+bfc01530:	1460fffa 	bnez	v1,bfc0151c <_mips_handle_irq+0x278>
+bfc01534:	3c03b040 	lui	v1,0xb040
+_mips_handle_irq():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:109
+ 	*WRITE_IO(UART_BASE + thr) = '\n';
+bfc01538:	1000ff99 	b	bfc013a0 <_mips_handle_irq+0xfc>
+bfc0153c:	2404000a 	li	a0,10
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:94
+    	*WRITE_IO(IO_LEDR)=0x8; 
+bfc01540:	3c03b060 	lui	v1,0xb060
+bfc01544:	24040008 	li	a0,8
+bfc01548:	ac640000 	sw	a0,0(v1)
+delay():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34
+	for (j = 0; j < (10000); j++) ;	// delay 
+bfc0154c:	afa00018 	sw	zero,24(sp)
+bfc01550:	8fa30018 	lw	v1,24(sp)
+bfc01554:	2c632710 	sltiu	v1,v1,10000
+bfc01558:	1060ff90 	beqz	v1,bfc0139c <_mips_handle_irq+0xf8>
+bfc0155c:	3c03b040 	lui	v1,0xb040
+bfc01560:	8fa30018 	lw	v1,24(sp)
+bfc01564:	24630001 	addiu	v1,v1,1
+bfc01568:	afa30018 	sw	v1,24(sp)
+bfc0156c:	8fa30018 	lw	v1,24(sp)
+bfc01570:	2c632710 	sltiu	v1,v1,10000
+bfc01574:	1460fffa 	bnez	v1,bfc01560 <_mips_handle_irq+0x2bc>
+bfc01578:	3c03b040 	lui	v1,0xb040
+_mips_handle_irq():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:109
+ 	*WRITE_IO(UART_BASE + thr) = '\n';
+bfc0157c:	1000ff88 	b	bfc013a0 <_mips_handle_irq+0xfc>
+bfc01580:	2404000a 	li	a0,10
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:100
+ 	  	*WRITE_IO(IO_LEDR) = 0x20; 
+bfc01584:	3c03b060 	lui	v1,0xb060
+bfc01588:	24040020 	li	a0,32
+bfc0158c:	ac640000 	sw	a0,0(v1)
+delay():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34
+	for (j = 0; j < (10000); j++) ;	// delay 
+bfc01590:	afa00010 	sw	zero,16(sp)
+bfc01594:	8fa30010 	lw	v1,16(sp)
+bfc01598:	2c632710 	sltiu	v1,v1,10000
+bfc0159c:	1060ff7f 	beqz	v1,bfc0139c <_mips_handle_irq+0xf8>
+bfc015a0:	3c03b040 	lui	v1,0xb040
+bfc015a4:	8fa30010 	lw	v1,16(sp)
+bfc015a8:	24630001 	addiu	v1,v1,1
+bfc015ac:	afa30010 	sw	v1,16(sp)
+bfc015b0:	8fa30010 	lw	v1,16(sp)
+bfc015b4:	2c632710 	sltiu	v1,v1,10000
+bfc015b8:	1460fffa 	bnez	v1,bfc015a4 <_mips_handle_irq+0x300>
+bfc015bc:	3c03b040 	lui	v1,0xb040
+_mips_handle_irq():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:109
+ 	*WRITE_IO(UART_BASE + thr) = '\n';
+bfc015c0:	1000ff77 	b	bfc013a0 <_mips_handle_irq+0xfc>
+bfc015c4:	2404000a 	li	a0,10
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:103
+ 	   	*WRITE_IO(IO_LEDR) = 0x40; 
+bfc015c8:	24040040 	li	a0,64
+bfc015cc:	ac640000 	sw	a0,0(v1)
+delay():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34
+	for (j = 0; j < (10000); j++) ;	// delay 
+bfc015d0:	afa0000c 	sw	zero,12(sp)
+bfc015d4:	8fa3000c 	lw	v1,12(sp)
+bfc015d8:	2c632710 	sltiu	v1,v1,10000
+bfc015dc:	1060ff6f 	beqz	v1,bfc0139c <_mips_handle_irq+0xf8>
+bfc015e0:	3c03b040 	lui	v1,0xb040
+bfc015e4:	8fa3000c 	lw	v1,12(sp)
+bfc015e8:	24630001 	addiu	v1,v1,1
+bfc015ec:	afa3000c 	sw	v1,12(sp)
+bfc015f0:	8fa3000c 	lw	v1,12(sp)
+bfc015f4:	2c632710 	sltiu	v1,v1,10000
+bfc015f8:	1460fffa 	bnez	v1,bfc015e4 <_mips_handle_irq+0x340>
+bfc015fc:	3c03b040 	lui	v1,0xb040
+_mips_handle_irq():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:109
+ 	*WRITE_IO(UART_BASE + thr) = '\n';
+bfc01600:	1000ff67 	b	bfc013a0 <_mips_handle_irq+0xfc>
+bfc01604:	2404000a 	li	a0,10
+
+bfc01608 <pmw_helper>:
+pmw_helper():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:116
+void pmw_helper(int x, int y)
+{
+bfc01608:	27bdfff8 	addiu	sp,sp,-8
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:117
+    *WRITE_IO(WHEEL_BASE) = (x << 4) | y;
+bfc0160c:	00042100 	sll	a0,a0,0x4
+bfc01610:	3c02b070 	lui	v0,0xb070
+bfc01614:	00852025 	or	a0,a0,a1
+bfc01618:	ac441000 	sw	a0,4096(v0)
+delay():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34
+	for (j = 0; j < (10000); j++) ;	// delay 
+bfc0161c:	afa00000 	sw	zero,0(sp)
+bfc01620:	8fa20000 	lw	v0,0(sp)
+bfc01624:	2c422710 	sltiu	v0,v0,10000
+bfc01628:	10400008 	beqz	v0,bfc0164c <pmw_helper+0x44>
+bfc0162c:	00000000 	nop
+bfc01630:	8fa20000 	lw	v0,0(sp)
+bfc01634:	24420001 	addiu	v0,v0,1
+bfc01638:	afa20000 	sw	v0,0(sp)
+bfc0163c:	8fa20000 	lw	v0,0(sp)
+bfc01640:	2c422710 	sltiu	v0,v0,10000
+bfc01644:	1440fffa 	bnez	v0,bfc01630 <pmw_helper+0x28>
+bfc01648:	00000000 	nop
+pmw_helper():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:119
+    delay();
+}
+bfc0164c:	03e00008 	jr	ra
+bfc01650:	27bd0008 	addiu	sp,sp,8
+
+bfc01654 <forward>:
+forward():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:122
+
+void forward(int speed)
+{
+bfc01654:	27bdfff8 	addiu	sp,sp,-8
+pmw_helper():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:117
+    *WRITE_IO(WHEEL_BASE) = (x << 4) | y;
+bfc01658:	3c02b070 	lui	v0,0xb070
+bfc0165c:	34840d40 	ori	a0,a0,0xd40
+bfc01660:	ac441000 	sw	a0,4096(v0)
+delay():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34
+	for (j = 0; j < (10000); j++) ;	// delay 
+bfc01664:	afa00000 	sw	zero,0(sp)
+bfc01668:	8fa20000 	lw	v0,0(sp)
+bfc0166c:	2c422710 	sltiu	v0,v0,10000
+bfc01670:	10400008 	beqz	v0,bfc01694 <forward+0x40>
+bfc01674:	00000000 	nop
+bfc01678:	8fa20000 	lw	v0,0(sp)
+bfc0167c:	24420001 	addiu	v0,v0,1
+bfc01680:	afa20000 	sw	v0,0(sp)
+bfc01684:	8fa20000 	lw	v0,0(sp)
+bfc01688:	2c422710 	sltiu	v0,v0,10000
+bfc0168c:	1440fffa 	bnez	v0,bfc01678 <forward+0x24>
+bfc01690:	00000000 	nop
+forward():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:124
+	pmw_helper(0xD4,speed); // 1101 0100
+}
+bfc01694:	03e00008 	jr	ra
+bfc01698:	27bd0008 	addiu	sp,sp,8
+
+bfc0169c <backward>:
+backward():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:127
+
+void backward(int speed)
+{
+bfc0169c:	27bdfff8 	addiu	sp,sp,-8
+pmw_helper():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:117
+    *WRITE_IO(WHEEL_BASE) = (x << 4) | y;
+bfc016a0:	3c02b070 	lui	v0,0xb070
+bfc016a4:	348402b0 	ori	a0,a0,0x2b0
+bfc016a8:	ac441000 	sw	a0,4096(v0)
+delay():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34
+	for (j = 0; j < (10000); j++) ;	// delay 
+bfc016ac:	afa00000 	sw	zero,0(sp)
+bfc016b0:	8fa20000 	lw	v0,0(sp)
+bfc016b4:	2c422710 	sltiu	v0,v0,10000
+bfc016b8:	10400008 	beqz	v0,bfc016dc <backward+0x40>
+bfc016bc:	00000000 	nop
+bfc016c0:	8fa20000 	lw	v0,0(sp)
+bfc016c4:	24420001 	addiu	v0,v0,1
+bfc016c8:	afa20000 	sw	v0,0(sp)
+bfc016cc:	8fa20000 	lw	v0,0(sp)
+bfc016d0:	2c422710 	sltiu	v0,v0,10000
+bfc016d4:	1440fffa 	bnez	v0,bfc016c0 <backward+0x24>
+bfc016d8:	00000000 	nop
+backward():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:129
+	pmw_helper(0x2B,speed); // 0010 1011
+}
+bfc016dc:	03e00008 	jr	ra
+bfc016e0:	27bd0008 	addiu	sp,sp,8
+
+bfc016e4 <turn_left>:
+turn_left():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:132
+
+void turn_left(int speed)
+{
+bfc016e4:	27bdfff8 	addiu	sp,sp,-8
+pmw_helper():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:117
+    *WRITE_IO(WHEEL_BASE) = (x << 4) | y;
+bfc016e8:	3c02b070 	lui	v0,0xb070
+bfc016ec:	34840660 	ori	a0,a0,0x660
+bfc016f0:	ac441000 	sw	a0,4096(v0)
+delay():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34
+	for (j = 0; j < (10000); j++) ;	// delay 
+bfc016f4:	afa00000 	sw	zero,0(sp)
+bfc016f8:	8fa20000 	lw	v0,0(sp)
+bfc016fc:	2c422710 	sltiu	v0,v0,10000
+bfc01700:	10400008 	beqz	v0,bfc01724 <turn_left+0x40>
+bfc01704:	00000000 	nop
+bfc01708:	8fa20000 	lw	v0,0(sp)
+bfc0170c:	24420001 	addiu	v0,v0,1
+bfc01710:	afa20000 	sw	v0,0(sp)
+bfc01714:	8fa20000 	lw	v0,0(sp)
+bfc01718:	2c422710 	sltiu	v0,v0,10000
+bfc0171c:	1440fffa 	bnez	v0,bfc01708 <turn_left+0x24>
+bfc01720:	00000000 	nop
+turn_left():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:134
+    pmw_helper(0x66,speed); // 0110 0110
+}
+bfc01724:	03e00008 	jr	ra
+bfc01728:	27bd0008 	addiu	sp,sp,8
+
+bfc0172c <turn_right>:
+turn_right():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:137
+
+void turn_right(int speed)
+{
+bfc0172c:	27bdfff8 	addiu	sp,sp,-8
+pmw_helper():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:117
+    *WRITE_IO(WHEEL_BASE) = (x << 4) | y;
+bfc01730:	3c02b070 	lui	v0,0xb070
+bfc01734:	34840990 	ori	a0,a0,0x990
+bfc01738:	ac441000 	sw	a0,4096(v0)
+delay():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34
+	for (j = 0; j < (10000); j++) ;	// delay 
+bfc0173c:	afa00000 	sw	zero,0(sp)
+bfc01740:	8fa20000 	lw	v0,0(sp)
+bfc01744:	2c422710 	sltiu	v0,v0,10000
+bfc01748:	10400008 	beqz	v0,bfc0176c <turn_right+0x40>
+bfc0174c:	00000000 	nop
+bfc01750:	8fa20000 	lw	v0,0(sp)
+bfc01754:	24420001 	addiu	v0,v0,1
+bfc01758:	afa20000 	sw	v0,0(sp)
+bfc0175c:	8fa20000 	lw	v0,0(sp)
+bfc01760:	2c422710 	sltiu	v0,v0,10000
+bfc01764:	1440fffa 	bnez	v0,bfc01750 <turn_right+0x24>
+bfc01768:	00000000 	nop
+turn_right():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:139
+	pmw_helper(0x99,speed); // 1001 1001
+}
+bfc0176c:	03e00008 	jr	ra
+bfc01770:	27bd0008 	addiu	sp,sp,8
+
+bfc01774 <pmw>:
+pmw():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:144
+
+void pmw(int data, int *speed)
+{	
+	int sss = *speed;
+	if (data == 'k') {
+bfc01774:	2402006b 	li	v0,107
+bfc01778:	10820013 	beq	a0,v0,bfc017c8 <pmw+0x54>
+bfc0177c:	8ca30000 	lw	v1,0(a1)
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:148
+		if (sss != 15){
+			sss += 3;
+		}
+	} else if (data == 'm') {
+bfc01780:	2402006d 	li	v0,109
+bfc01784:	10820015 	beq	a0,v0,bfc017dc <pmw+0x68>
+bfc01788:	2462fffd 	addiu	v0,v1,-3
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:142
+{	
+bfc0178c:	27bdffe8 	addiu	sp,sp,-24
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:152
+		if(sss != 0){
+			sss -= 3;
+		}
+	} else if (data == 'w') {
+bfc01790:	24020077 	li	v0,119
+bfc01794:	10820014 	beq	a0,v0,bfc017e8 <pmw+0x74>
+bfc01798:	24020061 	li	v0,97
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:154
+		forward(sss);
+	} else if (data == 'a') {
+bfc0179c:	10820035 	beq	a0,v0,bfc01874 <pmw+0x100>
+bfc017a0:	24020064 	li	v0,100
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:156
+		turn_left(sss);
+	} else if (data == 'd') {
+bfc017a4:	10820022 	beq	a0,v0,bfc01830 <pmw+0xbc>
+bfc017a8:	24020073 	li	v0,115
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:158
+		turn_right(sss);
+	} else if (data == 's') {
+bfc017ac:	10820042 	beq	a0,v0,bfc018b8 <pmw+0x144>
+bfc017b0:	24020074 	li	v0,116
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:160
+		backward(sss);
+	} else if (data == 't') {
+bfc017b4:	10820058 	beq	a0,v0,bfc01918 <pmw+0x1a4>
+bfc017b8:	3c02b070 	lui	v0,0xb070
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:163
+		forward(0);
+	}
+	*speed = sss;
+bfc017bc:	aca30000 	sw	v1,0(a1)
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:164
+}
+bfc017c0:	03e00008 	jr	ra
+bfc017c4:	27bd0018 	addiu	sp,sp,24
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:146
+			sss += 3;
+bfc017c8:	24620003 	addiu	v0,v1,3
+bfc017cc:	3864000f 	xori	a0,v1,0xf
+bfc017d0:	0044180b 	movn	v1,v0,a0
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:163
+	*speed = sss;
+bfc017d4:	03e00008 	jr	ra
+bfc017d8:	aca30000 	sw	v1,0(a1)
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:150
+			sss -= 3;
+bfc017dc:	0043180b 	movn	v1,v0,v1
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:163
+	*speed = sss;
+bfc017e0:	03e00008 	jr	ra
+bfc017e4:	aca30000 	sw	v1,0(a1)
+pmw_helper():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:117
+    *WRITE_IO(WHEEL_BASE) = (x << 4) | y;
+bfc017e8:	34620d40 	ori	v0,v1,0xd40
+bfc017ec:	3c04b070 	lui	a0,0xb070
+bfc017f0:	ac821000 	sw	v0,4096(a0)
+delay():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34
+	for (j = 0; j < (10000); j++) ;	// delay 
+bfc017f4:	afa00010 	sw	zero,16(sp)
+bfc017f8:	8fa20010 	lw	v0,16(sp)
+bfc017fc:	2c422710 	sltiu	v0,v0,10000
+bfc01800:	5040ffef 	beqzl	v0,bfc017c0 <pmw+0x4c>
+bfc01804:	aca30000 	sw	v1,0(a1)
+bfc01808:	8fa20010 	lw	v0,16(sp)
+bfc0180c:	24420001 	addiu	v0,v0,1
+bfc01810:	afa20010 	sw	v0,16(sp)
+bfc01814:	8fa20010 	lw	v0,16(sp)
+bfc01818:	2c422710 	sltiu	v0,v0,10000
+bfc0181c:	1440fffa 	bnez	v0,bfc01808 <pmw+0x94>
+bfc01820:	00000000 	nop
+pmw():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:163
+	*speed = sss;
+bfc01824:	aca30000 	sw	v1,0(a1)
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:164
+}
+bfc01828:	03e00008 	jr	ra
+bfc0182c:	27bd0018 	addiu	sp,sp,24
+pmw_helper():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:117
+    *WRITE_IO(WHEEL_BASE) = (x << 4) | y;
+bfc01830:	34620990 	ori	v0,v1,0x990
+bfc01834:	3c04b070 	lui	a0,0xb070
+bfc01838:	ac821000 	sw	v0,4096(a0)
+delay():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34
+	for (j = 0; j < (10000); j++) ;	// delay 
+bfc0183c:	afa00008 	sw	zero,8(sp)
+bfc01840:	8fa20008 	lw	v0,8(sp)
+bfc01844:	2c422710 	sltiu	v0,v0,10000
+bfc01848:	5040ffdd 	beqzl	v0,bfc017c0 <pmw+0x4c>
+bfc0184c:	aca30000 	sw	v1,0(a1)
+bfc01850:	8fa20008 	lw	v0,8(sp)
+bfc01854:	24420001 	addiu	v0,v0,1
+bfc01858:	afa20008 	sw	v0,8(sp)
+bfc0185c:	8fa20008 	lw	v0,8(sp)
+bfc01860:	2c422710 	sltiu	v0,v0,10000
+bfc01864:	1440fffa 	bnez	v0,bfc01850 <pmw+0xdc>
+bfc01868:	00000000 	nop
+pmw():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:163
+	*speed = sss;
+bfc0186c:	1000ffd4 	b	bfc017c0 <pmw+0x4c>
+bfc01870:	aca30000 	sw	v1,0(a1)
+pmw_helper():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:117
+    *WRITE_IO(WHEEL_BASE) = (x << 4) | y;
+bfc01874:	34620660 	ori	v0,v1,0x660
+bfc01878:	3c04b070 	lui	a0,0xb070
+bfc0187c:	ac821000 	sw	v0,4096(a0)
+delay():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34
+	for (j = 0; j < (10000); j++) ;	// delay 
+bfc01880:	afa0000c 	sw	zero,12(sp)
+bfc01884:	8fa2000c 	lw	v0,12(sp)
+bfc01888:	2c422710 	sltiu	v0,v0,10000
+bfc0188c:	5040ffcc 	beqzl	v0,bfc017c0 <pmw+0x4c>
+bfc01890:	aca30000 	sw	v1,0(a1)
+bfc01894:	8fa2000c 	lw	v0,12(sp)
+bfc01898:	24420001 	addiu	v0,v0,1
+bfc0189c:	afa2000c 	sw	v0,12(sp)
+bfc018a0:	8fa2000c 	lw	v0,12(sp)
+bfc018a4:	2c422710 	sltiu	v0,v0,10000
+bfc018a8:	1440fffa 	bnez	v0,bfc01894 <pmw+0x120>
+bfc018ac:	00000000 	nop
+pmw():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:163
+	*speed = sss;
+bfc018b0:	1000ffc3 	b	bfc017c0 <pmw+0x4c>
+bfc018b4:	aca30000 	sw	v1,0(a1)
+pmw_helper():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:117
+    *WRITE_IO(WHEEL_BASE) = (x << 4) | y;
+bfc018b8:	346202b0 	ori	v0,v1,0x2b0
+bfc018bc:	3c04b070 	lui	a0,0xb070
+bfc018c0:	ac821000 	sw	v0,4096(a0)
+delay():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34
+	for (j = 0; j < (10000); j++) ;	// delay 
+bfc018c4:	afa00004 	sw	zero,4(sp)
+bfc018c8:	8fa20004 	lw	v0,4(sp)
+bfc018cc:	2c422710 	sltiu	v0,v0,10000
+bfc018d0:	5040ffbb 	beqzl	v0,bfc017c0 <pmw+0x4c>
+bfc018d4:	aca30000 	sw	v1,0(a1)
+bfc018d8:	8fa20004 	lw	v0,4(sp)
+bfc018dc:	24420001 	addiu	v0,v0,1
+bfc018e0:	afa20004 	sw	v0,4(sp)
+bfc018e4:	8fa20004 	lw	v0,4(sp)
+bfc018e8:	2c422710 	sltiu	v0,v0,10000
+bfc018ec:	5040ffb4 	beqzl	v0,bfc017c0 <pmw+0x4c>
+bfc018f0:	aca30000 	sw	v1,0(a1)
+bfc018f4:	8fa20004 	lw	v0,4(sp)
+bfc018f8:	24420001 	addiu	v0,v0,1
+bfc018fc:	afa20004 	sw	v0,4(sp)
+bfc01900:	8fa20004 	lw	v0,4(sp)
+bfc01904:	2c422710 	sltiu	v0,v0,10000
+bfc01908:	1440fff3 	bnez	v0,bfc018d8 <pmw+0x164>
+bfc0190c:	00000000 	nop
+pmw():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:163
+	*speed = sss;
+bfc01910:	1000ffab 	b	bfc017c0 <pmw+0x4c>
+bfc01914:	aca30000 	sw	v1,0(a1)
+pmw_helper():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:117
+    *WRITE_IO(WHEEL_BASE) = (x << 4) | y;
+bfc01918:	24040d40 	li	a0,3392
+bfc0191c:	ac441000 	sw	a0,4096(v0)
+delay():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34
+	for (j = 0; j < (10000); j++) ;	// delay 
+bfc01920:	afa00000 	sw	zero,0(sp)
+bfc01924:	8fa20000 	lw	v0,0(sp)
+bfc01928:	2c422710 	sltiu	v0,v0,10000
+bfc0192c:	5040ffa4 	beqzl	v0,bfc017c0 <pmw+0x4c>
+bfc01930:	aca30000 	sw	v1,0(a1)
+bfc01934:	8fa20000 	lw	v0,0(sp)
+bfc01938:	24420001 	addiu	v0,v0,1
+bfc0193c:	afa20000 	sw	v0,0(sp)
+bfc01940:	8fa20000 	lw	v0,0(sp)
+bfc01944:	2c422710 	sltiu	v0,v0,10000
+bfc01948:	5040ff9d 	beqzl	v0,bfc017c0 <pmw+0x4c>
+bfc0194c:	aca30000 	sw	v1,0(a1)
+bfc01950:	8fa20000 	lw	v0,0(sp)
+bfc01954:	24420001 	addiu	v0,v0,1
+bfc01958:	afa20000 	sw	v0,0(sp)
+bfc0195c:	8fa20000 	lw	v0,0(sp)
+bfc01960:	2c422710 	sltiu	v0,v0,10000
+bfc01964:	1440fff3 	bnez	v0,bfc01934 <pmw+0x1c0>
+bfc01968:	00000000 	nop
+pmw():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:163
+	*speed = sss;
+bfc0196c:	1000ff94 	b	bfc017c0 <pmw+0x4c>
+bfc01970:	aca30000 	sw	v1,0(a1)
+
+bfc01974 <main>:
+main():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:168
+//------------------
+// main()
+//------------------
+int main() {
+bfc01974:	27bdffa8 	addiu	sp,sp,-88
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:169
+	volatile unsigned int pushbutton, count = 0xF;
+bfc01978:	2402000f 	li	v0,15
+bfc0197c:	afa20048 	sw	v0,72(sp)
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:170
+	volatile unsigned int j = 1;
+bfc01980:	24020001 	li	v0,1
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:168
+int main() {
+bfc01984:	afbf0054 	sw	ra,84(sp)
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:170
+	volatile unsigned int j = 1;
+bfc01988:	afa20044 	sw	v0,68(sp)
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:174
+	char c = 0;
+	int speed = 0;
+
+	init_debug();
+bfc0198c:	0ff00459 	jal	bfc01164 <init_debug>
+bfc01990:	afa00040 	sw	zero,64(sp)
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:175
+	init_bluetooth();
+bfc01994:	0ff0040f 	jal	bfc0103c <init_bluetooth>
+bfc01998:	3c09b050 	lui	t1,0xb050
+_mips_handle_irq():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:82
+	*WRITE_IO(UART_BASE + thr) = BT_rxData;
+bfc0199c:	3c0ab040 	lui	t2,0xb040
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:84
+	if (BT_rxData == 'k') { 
+bfc019a0:	2406006b 	li	a2,107
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:87
+	} else if (BT_rxData == 'm') { 
+bfc019a4:	2407006d 	li	a3,109
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:90
+ 	} else if (BT_rxData == 'w') {
+bfc019a8:	24080077 	li	t0,119
+delay():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34 (discriminator 1)
+	for (j = 0; j < (10000); j++) ;	// delay 
+bfc019ac:	afa00014 	sw	zero,20(sp)
+bfc019b0:	8fa20014 	lw	v0,20(sp)
+bfc019b4:	2c422710 	sltiu	v0,v0,10000
+bfc019b8:	10400008 	beqz	v0,bfc019dc <main+0x68>
+bfc019bc:	00000000 	nop
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34
+bfc019c0:	8fa20014 	lw	v0,20(sp)
+bfc019c4:	24420001 	addiu	v0,v0,1
+bfc019c8:	afa20014 	sw	v0,20(sp)
+bfc019cc:	8fa20014 	lw	v0,20(sp)
+bfc019d0:	2c422710 	sltiu	v0,v0,10000
+bfc019d4:	1440fffa 	bnez	v0,bfc019c0 <main+0x4c>
+bfc019d8:	00000000 	nop
+BT_uart_inbyte():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:72
+	while(!((*READ_IO(BT_UART_BASE + lsr) & 0x00000001)==0x00000001));
+bfc019dc:	8d221014 	lw	v0,4116(t1)
+bfc019e0:	30420001 	andi	v0,v0,0x1
+bfc019e4:	1040fffd 	beqz	v0,bfc019dc <main+0x68>
+bfc019e8:	00000000 	nop
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:73
+	RecievedByte = *READ_IO(BT_UART_BASE + rbr); 
+bfc019ec:	8d231000 	lw	v1,4096(t1)
+bfc019f0:	306400ff 	andi	a0,v1,0xff
+_mips_handle_irq():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:82
+	*WRITE_IO(UART_BASE + thr) = BT_rxData;
+bfc019f4:	ad441000 	sw	a0,4096(t2)
+delay():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34
+	for (j = 0; j < (10000); j++) ;	// delay 
+bfc019f8:	afa00010 	sw	zero,16(sp)
+bfc019fc:	8fa20010 	lw	v0,16(sp)
+bfc01a00:	2c422710 	sltiu	v0,v0,10000
+bfc01a04:	10400008 	beqz	v0,bfc01a28 <main+0xb4>
+bfc01a08:	306300ff 	andi	v1,v1,0xff
+bfc01a0c:	8fa20010 	lw	v0,16(sp)
+bfc01a10:	24420001 	addiu	v0,v0,1
+bfc01a14:	afa20010 	sw	v0,16(sp)
+bfc01a18:	8fa20010 	lw	v0,16(sp)
+bfc01a1c:	2c422710 	sltiu	v0,v0,10000
+bfc01a20:	1440fffa 	bnez	v0,bfc01a0c <main+0x98>
+bfc01a24:	00000000 	nop
+_mips_handle_irq():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:84
+	if (BT_rxData == 'k') { 
+bfc01a28:	10660039 	beq	v1,a2,bfc01b10 <main+0x19c>
+bfc01a2c:	3c02b060 	lui	v0,0xb060
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:87
+	} else if (BT_rxData == 'm') { 
+bfc01a30:	50670047 	beql	v1,a3,bfc01b50 <main+0x1dc>
+bfc01a34:	24030002 	li	v1,2
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:90
+ 	} else if (BT_rxData == 'w') {
+bfc01a38:	10680054 	beq	v1,t0,bfc01b8c <main+0x218>
+bfc01a3c:	24020061 	li	v0,97
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:93
+   	} else if (BT_rxData == 'a') {
+bfc01a40:	10620063 	beq	v1,v0,bfc01bd0 <main+0x25c>
+bfc01a44:	24020064 	li	v0,100
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:96
+    } else if (BT_rxData == 'd') {
+bfc01a48:	10620072 	beq	v1,v0,bfc01c14 <main+0x2a0>
+bfc01a4c:	24020073 	li	v0,115
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:99
+ 	}else if (BT_rxData == 's') {
+bfc01a50:	10620081 	beq	v1,v0,bfc01c58 <main+0x2e4>
+bfc01a54:	24020074 	li	v0,116
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:102
+ 	} else if (BT_rxData == 't') {
+bfc01a58:	10620090 	beq	v1,v0,bfc01c9c <main+0x328>
+bfc01a5c:	3c02b060 	lui	v0,0xb060
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:106
+ 	    *WRITE_IO(IO_LEDR) = 0x80; 
+bfc01a60:	24030080 	li	v1,128
+bfc01a64:	ac430000 	sw	v1,0(v0)
+delay():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34
+	for (j = 0; j < (10000); j++) ;	// delay 
+bfc01a68:	afa00034 	sw	zero,52(sp)
+bfc01a6c:	8fa20034 	lw	v0,52(sp)
+bfc01a70:	2c422710 	sltiu	v0,v0,10000
+bfc01a74:	10400008 	beqz	v0,bfc01a98 <main+0x124>
+bfc01a78:	2402000a 	li	v0,10
+bfc01a7c:	8fa20034 	lw	v0,52(sp)
+bfc01a80:	24420001 	addiu	v0,v0,1
+bfc01a84:	afa20034 	sw	v0,52(sp)
+bfc01a88:	8fa20034 	lw	v0,52(sp)
+bfc01a8c:	2c422710 	sltiu	v0,v0,10000
+bfc01a90:	1440fffa 	bnez	v0,bfc01a7c <main+0x108>
+bfc01a94:	2402000a 	li	v0,10
+_mips_handle_irq():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:109
+ 	*WRITE_IO(UART_BASE + thr) = '\n';
+bfc01a98:	ad421000 	sw	v0,4096(t2)
+delay():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34
+	for (j = 0; j < (10000); j++) ;	// delay 
+bfc01a9c:	afa0003c 	sw	zero,60(sp)
+bfc01aa0:	8fa2003c 	lw	v0,60(sp)
+bfc01aa4:	2c422710 	sltiu	v0,v0,10000
+bfc01aa8:	10400008 	beqz	v0,bfc01acc <main+0x158>
+bfc01aac:	2402000d 	li	v0,13
+bfc01ab0:	8fa2003c 	lw	v0,60(sp)
+bfc01ab4:	24420001 	addiu	v0,v0,1
+bfc01ab8:	afa2003c 	sw	v0,60(sp)
+bfc01abc:	8fa2003c 	lw	v0,60(sp)
+bfc01ac0:	2c422710 	sltiu	v0,v0,10000
+bfc01ac4:	1440fffa 	bnez	v0,bfc01ab0 <main+0x13c>
+bfc01ac8:	2402000d 	li	v0,13
+_mips_handle_irq():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:111
+ 	*WRITE_IO(UART_BASE + thr) = '\r';
+bfc01acc:	ad421000 	sw	v0,4096(t2)
+delay():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34
+	for (j = 0; j < (10000); j++) ;	// delay 
+bfc01ad0:	afa00038 	sw	zero,56(sp)
+bfc01ad4:	8fa20038 	lw	v0,56(sp)
+bfc01ad8:	2c422710 	sltiu	v0,v0,10000
+bfc01adc:	10400008 	beqz	v0,bfc01b00 <main+0x18c>
+bfc01ae0:	00000000 	nop
+bfc01ae4:	8fa20038 	lw	v0,56(sp)
+bfc01ae8:	24420001 	addiu	v0,v0,1
+bfc01aec:	afa20038 	sw	v0,56(sp)
+bfc01af0:	8fa20038 	lw	v0,56(sp)
+bfc01af4:	2c422710 	sltiu	v0,v0,10000
+bfc01af8:	1440fffa 	bnez	v0,bfc01ae4 <main+0x170>
+bfc01afc:	00000000 	nop
+main():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:179
+
+	while(1) {
+		c = _mips_handle_irq(0, 0);
+		pmw(c, &speed);
+bfc01b00:	0ff005dd 	jal	bfc01774 <pmw>
+bfc01b04:	27a50040 	addiu	a1,sp,64
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:178
+		c = _mips_handle_irq(0, 0);
+bfc01b08:	1000ffa8 	b	bfc019ac <main+0x38>
+bfc01b0c:	00000000 	nop
+_mips_handle_irq():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:85
+		*WRITE_IO(IO_LEDR)=0x1; 
+bfc01b10:	24030001 	li	v1,1
+bfc01b14:	ac430000 	sw	v1,0(v0)
+delay():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34
+	for (j = 0; j < (10000); j++) ;	// delay 
+bfc01b18:	afa00018 	sw	zero,24(sp)
+bfc01b1c:	8fa20018 	lw	v0,24(sp)
+bfc01b20:	2c422710 	sltiu	v0,v0,10000
+bfc01b24:	1040ffdc 	beqz	v0,bfc01a98 <main+0x124>
+bfc01b28:	2402000a 	li	v0,10
+bfc01b2c:	8fa20018 	lw	v0,24(sp)
+bfc01b30:	24420001 	addiu	v0,v0,1
+bfc01b34:	afa20018 	sw	v0,24(sp)
+bfc01b38:	8fa20018 	lw	v0,24(sp)
+bfc01b3c:	2c422710 	sltiu	v0,v0,10000
+bfc01b40:	1440fffa 	bnez	v0,bfc01b2c <main+0x1b8>
+bfc01b44:	2402000a 	li	v0,10
+bfc01b48:	1000ffd3 	b	bfc01a98 <main+0x124>
+bfc01b4c:	00000000 	nop
+_mips_handle_irq():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:88
+	 	*WRITE_IO(IO_LEDR)=0x2; 
+bfc01b50:	ac430000 	sw	v1,0(v0)
+delay():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34
+	for (j = 0; j < (10000); j++) ;	// delay 
+bfc01b54:	afa0001c 	sw	zero,28(sp)
+bfc01b58:	8fa2001c 	lw	v0,28(sp)
+bfc01b5c:	2c422710 	sltiu	v0,v0,10000
+bfc01b60:	1040ffcd 	beqz	v0,bfc01a98 <main+0x124>
+bfc01b64:	2402000a 	li	v0,10
+bfc01b68:	8fa2001c 	lw	v0,28(sp)
+bfc01b6c:	24420001 	addiu	v0,v0,1
+bfc01b70:	afa2001c 	sw	v0,28(sp)
+bfc01b74:	8fa2001c 	lw	v0,28(sp)
+bfc01b78:	2c422710 	sltiu	v0,v0,10000
+bfc01b7c:	1440fffa 	bnez	v0,bfc01b68 <main+0x1f4>
+bfc01b80:	2402000a 	li	v0,10
+bfc01b84:	1000ffc4 	b	bfc01a98 <main+0x124>
+bfc01b88:	00000000 	nop
+_mips_handle_irq():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:91
+   		*WRITE_IO(IO_LEDR)=0x4; 
+bfc01b8c:	3c02b060 	lui	v0,0xb060
+bfc01b90:	24030004 	li	v1,4
+bfc01b94:	ac430000 	sw	v1,0(v0)
+delay():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34
+	for (j = 0; j < (10000); j++) ;	// delay 
+bfc01b98:	afa00020 	sw	zero,32(sp)
+bfc01b9c:	8fa20020 	lw	v0,32(sp)
+bfc01ba0:	2c422710 	sltiu	v0,v0,10000
+bfc01ba4:	1040ffbc 	beqz	v0,bfc01a98 <main+0x124>
+bfc01ba8:	2402000a 	li	v0,10
+bfc01bac:	8fa20020 	lw	v0,32(sp)
+bfc01bb0:	24420001 	addiu	v0,v0,1
+bfc01bb4:	afa20020 	sw	v0,32(sp)
+bfc01bb8:	8fa20020 	lw	v0,32(sp)
+bfc01bbc:	2c422710 	sltiu	v0,v0,10000
+bfc01bc0:	1440fffa 	bnez	v0,bfc01bac <main+0x238>
+bfc01bc4:	2402000a 	li	v0,10
+bfc01bc8:	1000ffb3 	b	bfc01a98 <main+0x124>
+bfc01bcc:	00000000 	nop
+_mips_handle_irq():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:94
+    	*WRITE_IO(IO_LEDR)=0x8; 
+bfc01bd0:	3c02b060 	lui	v0,0xb060
+bfc01bd4:	24030008 	li	v1,8
+bfc01bd8:	ac430000 	sw	v1,0(v0)
+delay():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34
+	for (j = 0; j < (10000); j++) ;	// delay 
+bfc01bdc:	afa00024 	sw	zero,36(sp)
+bfc01be0:	8fa20024 	lw	v0,36(sp)
+bfc01be4:	2c422710 	sltiu	v0,v0,10000
+bfc01be8:	1040ffab 	beqz	v0,bfc01a98 <main+0x124>
+bfc01bec:	2402000a 	li	v0,10
+bfc01bf0:	8fa20024 	lw	v0,36(sp)
+bfc01bf4:	24420001 	addiu	v0,v0,1
+bfc01bf8:	afa20024 	sw	v0,36(sp)
+bfc01bfc:	8fa20024 	lw	v0,36(sp)
+bfc01c00:	2c422710 	sltiu	v0,v0,10000
+bfc01c04:	1440fffa 	bnez	v0,bfc01bf0 <main+0x27c>
+bfc01c08:	2402000a 	li	v0,10
+bfc01c0c:	1000ffa2 	b	bfc01a98 <main+0x124>
+bfc01c10:	00000000 	nop
+_mips_handle_irq():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:97
+     	*WRITE_IO(IO_LEDR) = 0x10; 
+bfc01c14:	3c02b060 	lui	v0,0xb060
+bfc01c18:	24030010 	li	v1,16
+bfc01c1c:	ac430000 	sw	v1,0(v0)
+delay():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34
+	for (j = 0; j < (10000); j++) ;	// delay 
+bfc01c20:	afa00028 	sw	zero,40(sp)
+bfc01c24:	8fa20028 	lw	v0,40(sp)
+bfc01c28:	2c422710 	sltiu	v0,v0,10000
+bfc01c2c:	1040ff9a 	beqz	v0,bfc01a98 <main+0x124>
+bfc01c30:	2402000a 	li	v0,10
+bfc01c34:	8fa20028 	lw	v0,40(sp)
+bfc01c38:	24420001 	addiu	v0,v0,1
+bfc01c3c:	afa20028 	sw	v0,40(sp)
+bfc01c40:	8fa20028 	lw	v0,40(sp)
+bfc01c44:	2c422710 	sltiu	v0,v0,10000
+bfc01c48:	1440fffa 	bnez	v0,bfc01c34 <main+0x2c0>
+bfc01c4c:	2402000a 	li	v0,10
+bfc01c50:	1000ff91 	b	bfc01a98 <main+0x124>
+bfc01c54:	00000000 	nop
+_mips_handle_irq():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:100
+ 	  	*WRITE_IO(IO_LEDR) = 0x20; 
+bfc01c58:	3c02b060 	lui	v0,0xb060
+bfc01c5c:	24030020 	li	v1,32
+bfc01c60:	ac430000 	sw	v1,0(v0)
+delay():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34
+	for (j = 0; j < (10000); j++) ;	// delay 
+bfc01c64:	afa0002c 	sw	zero,44(sp)
+bfc01c68:	8fa2002c 	lw	v0,44(sp)
+bfc01c6c:	2c422710 	sltiu	v0,v0,10000
+bfc01c70:	1040ff89 	beqz	v0,bfc01a98 <main+0x124>
+bfc01c74:	2402000a 	li	v0,10
+bfc01c78:	8fa2002c 	lw	v0,44(sp)
+bfc01c7c:	24420001 	addiu	v0,v0,1
+bfc01c80:	afa2002c 	sw	v0,44(sp)
+bfc01c84:	8fa2002c 	lw	v0,44(sp)
+bfc01c88:	2c422710 	sltiu	v0,v0,10000
+bfc01c8c:	1440fffa 	bnez	v0,bfc01c78 <main+0x304>
+bfc01c90:	2402000a 	li	v0,10
+bfc01c94:	1000ff80 	b	bfc01a98 <main+0x124>
+bfc01c98:	00000000 	nop
+_mips_handle_irq():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:103
+ 	   	*WRITE_IO(IO_LEDR) = 0x40; 
+bfc01c9c:	24030040 	li	v1,64
+bfc01ca0:	ac430000 	sw	v1,0(v0)
+delay():
+E:\ComputerSystem\AWorkSpace\MIPSfpga_axi4_C/main.c:34
+	for (j = 0; j < (10000); j++) ;	// delay 
+bfc01ca4:	afa00030 	sw	zero,48(sp)
+bfc01ca8:	8fa20030 	lw	v0,48(sp)
+bfc01cac:	2c422710 	sltiu	v0,v0,10000
+bfc01cb0:	1040ff79 	beqz	v0,bfc01a98 <main+0x124>
+bfc01cb4:	2402000a 	li	v0,10
+bfc01cb8:	8fa20030 	lw	v0,48(sp)
+bfc01cbc:	24420001 	addiu	v0,v0,1
+bfc01cc0:	afa20030 	sw	v0,48(sp)
+bfc01cc4:	8fa20030 	lw	v0,48(sp)
+bfc01cc8:	2c422710 	sltiu	v0,v0,10000
+bfc01ccc:	1440fffa 	bnez	v0,bfc01cb8 <main+0x344>
+bfc01cd0:	2402000a 	li	v0,10
+bfc01cd4:	1000ff70 	b	bfc01a98 <main+0x124>
+bfc01cd8:	00000000 	nop
+main():
+bfc01cdc:	00000000 	nop
