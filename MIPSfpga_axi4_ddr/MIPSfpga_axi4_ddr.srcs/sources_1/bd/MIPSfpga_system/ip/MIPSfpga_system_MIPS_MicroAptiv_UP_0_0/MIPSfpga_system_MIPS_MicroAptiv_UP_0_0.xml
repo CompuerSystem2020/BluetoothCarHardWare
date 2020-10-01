@@ -152,7 +152,7 @@
   <spirit:addressSpaces>
     <spirit:addressSpace>
       <spirit:name>ahblite</spirit:name>
-      <spirit:range>4G</spirit:range>
+      <spirit:range spirit:format="long">4G</spirit:range>
       <spirit:width spirit:format="long">32</spirit:width>
     </spirit:addressSpace>
   </spirit:addressSpaces>
@@ -1783,8 +1783,8 @@
       </xilinx:tags>
       <xilinx:configElementInfos>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.HCLK.CLK_DOMAIN" xilinx:valuePermission="bd_and_user"/>
-        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.HCLK.FREQ_HZ" xilinx:valueSource="undefined"/>
-        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.HCLK.PHASE" xilinx:valueSource="undefined"/>
+        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.HCLK.FREQ_HZ" xilinx:valuePermission="bd_and_user"/>
+        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.HCLK.PHASE" xilinx:valuePermission="bd_and_user"/>
       </xilinx:configElementInfos>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>

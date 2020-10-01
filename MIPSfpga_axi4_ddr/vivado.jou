@@ -2,16 +2,123 @@
 # Vivado v2018.2 (64-bit)
 # SW Build 2258646 on Thu Jun 14 20:03:12 MDT 2018
 # IP Build 2256618 on Thu Jun 14 22:10:49 MDT 2018
-# Start of session at: Tue Sep 15 09:11:39 2020
-# Process ID: 7700
+# Start of session at: Thu Oct  1 10:49:55 2020
+# Process ID: 1828
 # Current directory: E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr
-# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent10540 E:\ComputerSystem\AWorkSpace\BluetoothCarHardWare\MIPSfpga_axi4_ddr\MIPSfpga_axi4_ddr.xpr
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent376 E:\ComputerSystem\AWorkSpace\BluetoothCarHardWare\MIPSfpga_axi4_ddr\MIPSfpga_axi4_ddr.xpr
 # Log file: E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/vivado.log
 # Journal file: E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr\vivado.jou
 #-----------------------------------------------------------
 start_gui
 open_project E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.xpr
 update_compile_order -fileset sources_1
+open_bd_design {E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/MIPSfpga_system.bd}
+startgroup
+set_property -dict [list CONFIG.NUM_MI {8}] [get_bd_cells axi_interconnect_0]
+endgroup
+save_bd_design
+startgroup
+create_bd_cell -type ip -vlnv xilinx.com:ip:axi_uart16550:2.0 axi_uart16550_1
+endgroup
+set_property location {4 1780 516} [get_bd_cells axi_uart16550_1]
+connect_bd_intf_net -boundary_type upper [get_bd_intf_pins axi_interconnect_0/M06_AXI] [get_bd_intf_pins axi_uart16550_1/S_AXI]
+connect_bd_net [get_bd_pins axi_uart16550_1/s_axi_aclk] [get_bd_pins MIPS_MicroAptiv_UP_0/HCLK]
+connect_bd_net [get_bd_pins axi_uart16550_1/s_axi_aresetn] [get_bd_pins MIPS_MicroAptiv_UP_0/HRESETn]
+connect_bd_net [get_bd_pins axi_uart16550_1/freeze] [get_bd_pins xlconstant_3/dout]
+save_bd_design
+delete_bd_objs [get_bd_nets xlconstant_4_dout]
+connect_bd_net [get_bd_pins axi_uart16550_1/ip2intc_irpt] [get_bd_pins xlconcat_1/In1]
+save_bd_design
+create_bd_port -dir I TX
+set_property location {1976 534} [get_bd_ports TX]
+connect_bd_net [get_bd_ports TX] [get_bd_pins axi_uart16550_1/sin]
+create_bd_port -dir O RX
+set_property location {1961 603} [get_bd_ports RX]
+connect_bd_net [get_bd_ports RX] [get_bd_pins axi_uart16550_1/sout]
+save_bd_design
+set_property location {1954 512} [get_bd_ports TX]
+set_property location {1956 526} [get_bd_ports RX]
+save_bd_design
+connect_bd_net [get_bd_pins axi_interconnect_0/M06_ACLK] [get_bd_pins MIPS_MicroAptiv_UP_0/HCLK]
+connect_bd_net [get_bd_pins axi_interconnect_0/M06_ARESETN] [get_bd_pins MIPS_MicroAptiv_UP_0/HRESETn]
+save_bd_design
+startgroup
+create_bd_cell -type ip -vlnv xilinx.com:ip:axi_gpio:2.0 axi_gpio_1
+endgroup
+set_property -dict [list CONFIG.C_GPIO_WIDTH {12} CONFIG.C_ALL_OUTPUTS {1}] [get_bd_cells axi_gpio_1]
+set_property location {4 1766 733} [get_bd_cells axi_gpio_1]
+connect_bd_intf_net [get_bd_intf_pins axi_gpio_1/S_AXI] -boundary_type upper [get_bd_intf_pins axi_interconnect_0/M07_AXI]
+connect_bd_net [get_bd_pins axi_gpio_1/s_axi_aclk] [get_bd_pins MIPS_MicroAptiv_UP_0/HCLK]
+connect_bd_net [get_bd_pins axi_gpio_1/s_axi_aresetn] [get_bd_pins MIPS_MicroAptiv_UP_0/HRESETn]
+save_bd_design
+create_bd_cell -type ip -vlnv xilinx.com:user:WheelController:1.0 WheelController_0
+set_property location {5 2066 687} [get_bd_cells WheelController_0]
+set_property location {3.5 1757 841} [get_bd_cells axi_gpio_1]
+set_property location {4 1782 700} [get_bd_cells axi_gpio_1]
+set_property location {5 2039 706} [get_bd_cells WheelController_0]
+set_property location {5 2041 702} [get_bd_cells WheelController_0]
+connect_bd_net [get_bd_pins axi_gpio_1/gpio_io_o] [get_bd_pins WheelController_0/para]
+connect_bd_net [get_bd_pins WheelController_0/clk] [get_bd_pins MIPS_MicroAptiv_UP_0/HCLK]
+save_bd_design
+create_bd_port -dir O dir_serial
+create_bd_port -dir I dir_enable
+create_bd_port -dir O dir_latch
+delete_bd_objs [get_bd_ports dir_enable]
+create_bd_port -dir O dir_enable
+create_bd_port -dir O dir_clk
+create_bd_port -dir O -from 3 -to 0 wheel
+startgroup
+set_property location {2324 765} [get_bd_ports wheel]
+set_property location {2324 705} [get_bd_ports dir_serial]
+set_property location {2324 725} [get_bd_ports dir_enable]
+set_property location {2324 675} [get_bd_ports dir_latch]
+set_property location {2324 745} [get_bd_ports dir_clk]
+endgroup
+startgroup
+set_property location {2213 681} [get_bd_ports dir_serial]
+set_property location {2213 701} [get_bd_ports dir_enable]
+set_property location {2213 -109} [get_bd_ports dir_latch]
+set_property location {2213 721} [get_bd_ports dir_clk]
+set_property location {2213 741} [get_bd_ports wheel]
+endgroup
+set_property location {2283 658} [get_bd_ports dir_latch]
+set_property location {2221 617} [get_bd_ports dir_serial]
+set_property location {2237 583} [get_bd_ports dir_latch]
+set_property location {2212 662} [get_bd_ports dir_serial]
+set_property location {2217 682} [get_bd_ports dir_enable]
+set_property location {2204 698} [get_bd_ports dir_latch]
+connect_bd_net [get_bd_ports dir_serial] [get_bd_pins WheelController_0/dir_serial]
+connect_bd_net [get_bd_ports dir_enable] [get_bd_pins WheelController_0/dir_enable]
+connect_bd_net [get_bd_ports dir_latch] [get_bd_pins WheelController_0/dir_latch]
+connect_bd_net [get_bd_ports dir_clk] [get_bd_pins WheelController_0/dir_clk]
+connect_bd_net [get_bd_ports wheel] [get_bd_pins WheelController_0/wheel]
+save_bd_design
+validate_bd_design
+validate_bd_design
+connect_bd_net [get_bd_pins xlconstant_4/dout] [get_bd_pins xlconcat_1/In7]
+connect_bd_net [get_bd_pins xlconcat_1/In6] [get_bd_pins xlconstant_4/dout]
+connect_bd_net [get_bd_pins xlconcat_1/In3] [get_bd_pins xlconstant_4/dout]
+connect_bd_net [get_bd_pins xlconcat_1/In2] [get_bd_pins xlconstant_4/dout]
+connect_bd_net [get_bd_pins xlconcat_1/In0] [get_bd_pins xlconstant_4/dout]
+save_bd_design
+validate_bd_design
+connect_bd_net [get_bd_pins axi_interconnect_0/M07_ACLK] [get_bd_pins MIPS_MicroAptiv_UP_0/HCLK]
+connect_bd_net [get_bd_pins axi_interconnect_0/M07_ARESETN] [get_bd_pins MIPS_MicroAptiv_UP_0/HRESETn]
+save_bd_design
+validate_bd_design
+assign_bd_address [get_bd_addr_segs {axi_uart16550_1/S_AXI/Reg }]
+set_property offset 0x10500000 [get_bd_addr_segs {MIPS_MicroAptiv_UP_0/ahblite/SEG_axi_uart16550_1_Reg}]
+assign_bd_address [get_bd_addr_segs {axi_gpio_1/S_AXI/Reg }]
+set_property offset 0x10700000 [get_bd_addr_segs {MIPS_MicroAptiv_UP_0/ahblite/SEG_axi_gpio_1_Reg}]
+save_bd_design
+validate_bd_design
+update_ip_catalog
+save_bd_design
+reset_run synth_1
+launch_runs impl_1 -jobs 8
+wait_on_run impl_1
+launch_runs impl_1 -to_step write_bitstream -jobs 8
+wait_on_run impl_1
 open_hw
 connect_hw_server
 open_hw_target
@@ -21,5 +128,9 @@ refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7a100t_0] 0]
 set_property PROBES.FILE {} [get_hw_devices xc7a100t_0]
 set_property FULL_PROBES.FILE {} [get_hw_devices xc7a100t_0]
 set_property PROGRAM.FILE {E:/ComputerSystem/MIPSfpga_system_wrapper.bit} [get_hw_devices xc7a100t_0]
+program_hw_devices [get_hw_devices xc7a100t_0]
+set_property PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7a100t_0]
+set_property PROGRAM.FILE {E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.runs/impl_1/MIPSfpga_system_wrapper.bit} [get_hw_devices xc7a100t_0]
 program_hw_devices [get_hw_devices xc7a100t_0]
 refresh_hw_device [lindex [get_hw_devices xc7a100t_0] 0]

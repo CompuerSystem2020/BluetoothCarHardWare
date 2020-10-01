@@ -1,8 +1,8 @@
 //Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2018.2 (win64) Build 2258646 Thu Jun 14 20:03:12 MDT 2018
-//Date        : Mon Dec  9 16:37:18 2019
-//Host        : foxtrot024-PC running 64-bit Service Pack 1  (build 7601)
+//Date        : Thu Oct  1 11:02:04 2020
+//Host        : Kingqi running 64-bit major release  (build 9200)
 //Command     : generate_target MIPSfpga_system_wrapper.bd
 //Design      : MIPSfpga_system_wrapper
 //Purpose     : IP block netlist
@@ -34,8 +34,15 @@ module MIPSfpga_system_wrapper
     JB8,
     LED,
     PWMs,
+    RX,
+    TX,
     UART_RXD_OUT,
-    UART_TXD_IN);
+    UART_TXD_IN,
+    dir_clk,
+    dir_enable,
+    dir_latch,
+    dir_serial,
+    wheel);
   input CLK100MHZ;
   input CPU_RESETN;
   output [12:0]DDR2_SDRAM_addr;
@@ -60,8 +67,15 @@ module MIPSfpga_system_wrapper
   input JB8;
   output [15:0]LED;
   output [1:0]PWMs;
+  output RX;
+  input TX;
   output UART_RXD_OUT;
   input UART_TXD_IN;
+  output dir_clk;
+  output dir_enable;
+  output dir_latch;
+  output dir_serial;
+  output [3:0]wheel;
 
   wire CLK100MHZ;
   wire CPU_RESETN;
@@ -87,8 +101,15 @@ module MIPSfpga_system_wrapper
   wire JB8;
   wire [15:0]LED;
   wire [1:0]PWMs;
+  wire RX;
+  wire TX;
   wire UART_RXD_OUT;
   wire UART_TXD_IN;
+  wire dir_clk;
+  wire dir_enable;
+  wire dir_latch;
+  wire dir_serial;
+  wire [3:0]wheel;
 
   MIPSfpga_system MIPSfpga_system_i
        (.CLK100MHZ(CLK100MHZ),
@@ -115,6 +136,13 @@ module MIPSfpga_system_wrapper
         .JB8(JB8),
         .LED(LED),
         .PWMs(PWMs),
+        .RX(RX),
+        .TX(TX),
         .UART_RXD_OUT(UART_RXD_OUT),
-        .UART_TXD_IN(UART_TXD_IN));
+        .UART_TXD_IN(UART_TXD_IN),
+        .dir_clk(dir_clk),
+        .dir_enable(dir_enable),
+        .dir_latch(dir_latch),
+        .dir_serial(dir_serial),
+        .wheel(wheel));
 endmodule

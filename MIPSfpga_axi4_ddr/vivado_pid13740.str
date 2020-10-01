@@ -1,0 +1,127 @@
+/*
+
+Xilinx Vivado v2018.2 (64-bit) [Major: 2018, Minor: 2]
+SW Build: 2258646 on Thu Jun 14 20:03:12 MDT 2018
+IP Build: 2256618 on Thu Jun 14 22:10:49 MDT 2018
+
+Process ID: 13740
+License: Customer
+
+Current time: 	Mon Sep 21 14:46:46 CST 2020
+Time zone: 	China Standard Time (Asia/Shanghai)
+
+OS: Windows 10
+OS Version: 10.0
+OS Architecture: amd64
+Available processors (cores): 8
+
+Screen size: 1536x864
+Screen resolution (DPI): 96
+Available screens: 1
+Available disk space: 37 GB
+Default font: family=Dialog,name=Dialog,style=plain,size=12
+
+Java version: 	1.8.0_112 64-bit
+Java home: 	C:/Xilinx/Vivado/2018.2/tps/win64/jre
+Java executable location: 	C:/Xilinx/Vivado/2018.2/tps/win64/jre/bin/java.exe
+Java initial memory (-Xms): 	128 MB
+Java maximum memory (-Xmx):	 2 GB
+
+
+User name: 	29942
+User home directory: C:/Users/29942
+User working directory: E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr
+User country: 	CN
+User language: 	zh
+User locale: 	zh_CN
+
+RDI_BASEROOT: C:/Xilinx/Vivado
+HDI_APPROOT: C:/Xilinx/Vivado/2018.2
+RDI_DATADIR: C:/Xilinx/Vivado/2018.2/data
+RDI_BINDIR: C:/Xilinx/Vivado/2018.2/bin
+
+Vivado preferences file location: C:/Users/29942/AppData/Roaming/Xilinx/Vivado/2018.2/vivado.xml
+Vivado preferences directory: C:/Users/29942/AppData/Roaming/Xilinx/Vivado/2018.2/
+Vivado layouts directory: C:/Users/29942/AppData/Roaming/Xilinx/Vivado/2018.2/layouts
+PlanAhead jar file location: 	C:/Xilinx/Vivado/2018.2/lib/classes/planAhead.jar
+Vivado log file location: 	E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/vivado.log
+Vivado journal file location: 	E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/vivado.jou
+Engine tmp dir: 	E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/.Xil/Vivado-13740-Kingqi
+
+Xilinx Environment Variables
+----------------------------
+XILINX: C:/Xilinx/Vivado/2018.2/ids_lite/ISE
+XILINX_DSP: C:/Xilinx/Vivado/2018.2/ids_lite/ISE
+XILINX_PLANAHEAD: C:/Xilinx/Vivado/2018.2
+XILINX_SDK: C:/Xilinx/SDK/2018.2
+XILINX_VIVADO: C:/Xilinx/Vivado/2018.2
+XILINX_VIVADO_HLS: C:/Xilinx/Vivado/2018.2
+
+
+GUI allocated memory:	190 MB
+GUI max memory:		3,052 MB
+Engine allocated memory: 574 MB
+
+Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+
+*/
+
+// [GUI Memory]: 17 MB (+15193kb) [00:00:05]
+// [Engine Memory]: 274 MB (+136243kb) [00:00:05]
+// TclEventType: START_GUI
+// Tcl Message: start_gui 
+// TclEventType: PROJECT_OPEN_DIALOG
+// [GUI Memory]: 55 MB (+39233kb) [00:00:12]
+// [Engine Memory]: 493 MB (+215271kb) [00:00:12]
+// Opening Vivado Project: E:\ComputerSystem\AWorkSpace\BluetoothCarHardWare\MIPSfpga_axi4_ddr\MIPSfpga_axi4_ddr.xpr. Version: Vivado v2018.2 
+// bx (ck):  Open Project : addNotify
+// TclEventType: DEBUG_PROBE_SET_CHANGE
+// Tcl Message: open_project E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.xpr 
+// TclEventType: MSGMGR_MOVEMSG
+// [GUI Memory]: 62 MB (+4258kb) [00:00:14]
+// [Engine Memory]: 564 MB (+48618kb) [00:00:14]
+// TclEventType: FILE_SET_NEW
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_CURRENT
+selectButton(RDIResource.ProgressDialog_CANCEL, "Cancel"); // a (bx)
+// TclEventType: FILE_SET_CHANGE
+// HMemoryUtils.trashcanNow. Engine heap size: 576 MB. GUI used memory: 35 MB. Current time: 9/21/20 2:46:48 PM CST
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// [Engine Memory]: 615 MB (+23740kb) [00:00:19]
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: PROJECT_CLOSE
+// TclEventType: FILE_SET_CHANGE
+// CommandFailedException: ERROR: [Common 17-69] Command failed:  
+// Tcl Message: INFO: [Common 17-344] 'open_project' was cancelled 
+dismissDialog("Open Project"); // bx (ck)
+unMinimizeFrame(PAResourceOtoP.PAViews_TCL_CONSOLE, "Tcl Console"); // aw
+selectCodeEditor(RDIResource.TclConsoleView_TCL_CONSOLE_CODE_EDITOR, 302, 62); // dn (ae, ck)
+setText(RDIResource.CommandsInput_TYPE_TCL_COMMAND_HERE, "opt_design -retarget -propconst -bufg_opt -shift_register_opt -bram_power_opt", true); // aA (Z, ck)
+// Tcl Command: 'opt_design -retarget -propconst -bufg_opt -shift_register_opt -bram_power_opt'
+// Tcl Command: 'opt_design -retarget -propconst -bufg_opt -shift_register_opt -bram_power_opt'
+// Tcl Message: opt_design -retarget -propconst -bufg_opt -shift_register_opt -bram_power_opt 
+// Tcl Message: ERROR: [Common 17-53] User Exception: No open project. Please create or open a project before executing this command. 
+// Elapsed time: 10 seconds
+selectButton(PAResourceEtoH.GettingStartedView_OPEN_PROJECT, "Open Project"); // x (w, ck)
+// Run Command: PAResourceCommand.PACommandNames_OPEN_PROJECT
+setFileChooser("E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.xpr");
+// Opening Vivado Project: E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.xpr. Version: Vivado v2018.2 
+// bx (ck):  Open Project : addNotify
+// TclEventType: MSGMGR_MOVEMSG
+// TclEventType: FILE_SET_NEW
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_CURRENT
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// HMemoryUtils.trashcanNow. Engine heap size: 645 MB. GUI used memory: 35 MB. Current time: 9/21/20 2:47:18 PM CST
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: PROJECT_NEW
+// [GUI Memory]: 76 MB (+11148kb) [00:00:50]
+// [Engine Memory]: 743 MB (+101022kb) [00:00:50]
+// [Engine Memory]: 788 MB (+8774kb) [00:00:51]
+// Tcl Message: open_project E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.xpr 
+// Tcl Message: Scanning sources... Finished scanning sources 
+// Tcl Message: INFO: [IP_Flow 19-234] Refreshing IP repositories INFO: [IP_Flow 19-1700] Loaded user IP repository 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/ip_repo'. INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Xilinx/Vivado/2018.2/data/ip'. 

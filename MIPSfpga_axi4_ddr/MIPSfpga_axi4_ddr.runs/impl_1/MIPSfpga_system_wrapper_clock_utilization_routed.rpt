@@ -1,8 +1,8 @@
 Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -----------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2018.2 (win64) Build 2258646 Thu Jun 14 20:03:12 MDT 2018
-| Date         : Mon Dec  9 17:01:11 2019
-| Host         : foxtrot024-PC running 64-bit Service Pack 1  (build 7601)
+| Date         : Thu Oct  1 11:23:34 2020
+| Host         : Kingqi running 64-bit major release  (build 9200)
 | Command      : report_clock_utilization -file MIPSfpga_system_wrapper_clock_utilization_routed.rpt
 | Design       : MIPSfpga_system_wrapper
 | Device       : 7a100t-csg324
@@ -54,9 +54,9 @@ Table of Contents
 +-----------+-----------+-----------------+------------+----------------+--------------+-------------------+-------------+-----------------+--------------+----------+---------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------+
 | Global Id | Source Id | Driver Type/Pin | Constraint | Site           | Clock Region | Load Clock Region | Clock Loads | Non-Clock Loads | Clock Period | Clock    | Driver Pin                                                                                                    | Net                                                                                                  |
 +-----------+-----------+-----------------+------------+----------------+--------------+-------------------+-------------+-----------------+--------------+----------+---------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------+
-| g0        | src0      | BUFG/O          | None       | BUFGCTRL_X0Y17 | n/a          |                 4 |       14307 |               0 |       20.000 | Multiple | MIPSfpga_system_i/clk_wiz_0/inst/clkout1_buf/O                                                                | MIPSfpga_system_i/clk_wiz_0/inst/clk_out1                                                            |
-| g1        | src1      | BUFG/O          | None       | BUFGCTRL_X0Y0  | n/a          |                 4 |        5684 |               0 |       12.308 | Multiple | MIPSfpga_system_i/mig_7series_0/u_MIPSfpga_system_mig_7series_0_0_mig/u_ddr2_infrastructure/u_bufg_clkdiv0/O  | MIPSfpga_system_i/mig_7series_0/u_MIPSfpga_system_mig_7series_0_0_mig/u_ddr2_infrastructure/CLK      |
-| g2        | src2      | BUFG/O          | None       | BUFGCTRL_X0Y1  | n/a          |                 2 |         165 |               0 |              |          | MIPSfpga_system_i/util_ds_buf_0/U0/USE_BUFG.GEN_BUFG[0].BUFG_U/O                                              | MIPSfpga_system_i/util_ds_buf_0/U0/BUFG_O[0]                                                         |
+| g0        | src0      | BUFG/O          | None       | BUFGCTRL_X0Y17 | n/a          |                 6 |       16632 |               0 |       20.000 | Multiple | MIPSfpga_system_i/clk_wiz_0/inst/clkout1_buf/O                                                                | MIPSfpga_system_i/clk_wiz_0/inst/clk_out1                                                            |
+| g1        | src1      | BUFG/O          | None       | BUFGCTRL_X0Y0  | n/a          |                 5 |        5684 |               0 |       12.308 | Multiple | MIPSfpga_system_i/mig_7series_0/u_MIPSfpga_system_mig_7series_0_0_mig/u_ddr2_infrastructure/u_bufg_clkdiv0/O  | MIPSfpga_system_i/mig_7series_0/u_MIPSfpga_system_mig_7series_0_0_mig/u_ddr2_infrastructure/CLK      |
+| g2        | src2      | BUFG/O          | None       | BUFGCTRL_X0Y1  | n/a          |                 1 |         165 |               0 |              |          | MIPSfpga_system_i/util_ds_buf_0/U0/USE_BUFG.GEN_BUFG[0].BUFG_U/O                                              | MIPSfpga_system_i/util_ds_buf_0/U0/BUFG_O[0]                                                         |
 | g3        | src0      | BUFG/O          | None       | BUFGCTRL_X0Y16 | n/a          |                 2 |          63 |               0 |        5.000 | Multiple | MIPSfpga_system_i/clk_wiz_0/inst/clkout2_buf/O                                                                | MIPSfpga_system_i/clk_wiz_0/inst/clk_out2                                                            |
 | g4        | src0      | BUFG/O          | None       | BUFGCTRL_X0Y18 | n/a          |                 1 |           1 |               0 |       10.000 | Multiple | MIPSfpga_system_i/clk_wiz_0/inst/clkf_buf/O                                                                   | MIPSfpga_system_i/clk_wiz_0/inst/clkfbout_buf_MIPSfpga_system_clk_wiz_0_0                            |
 | g5        | src3      | BUFH/O          | None       | BUFHCE_X1Y12   | X1Y1         |                 1 |           1 |               0 |       12.308 | Multiple | MIPSfpga_system_i/mig_7series_0/u_MIPSfpga_system_mig_7series_0_0_mig/u_ddr2_infrastructure/u_bufh_pll_clk3/O | MIPSfpga_system_i/mig_7series_0/u_MIPSfpga_system_mig_7series_0_0_mig/u_ddr2_infrastructure/pll_clk3 |
@@ -88,10 +88,11 @@ Table of Contents
 +----------+----------------------------+---------------------+------------------------------------+--------------+-------------+-----------------+--------------+----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | Local Id | Driver Type/Pin            | Constraint          | Site/BEL                           | Clock Region | Clock Loads | Non-Clock Loads | Clock Period | Clock    | Driver Pin                                                                                                                                                                                                                                 | Net                                                                                                                                                                                                                                     |
 +----------+----------------------------+---------------------+------------------------------------+--------------+-------------+-----------------+--------------+----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------||
-| 0        | PLLE2_ADV/CLKOUT0          | PLLE2_ADV_X1Y1      | PLLE2_ADV_X1Y1/PLLE2_ADV           | X1Y1         |           5 |               2 |        1.538 | Multiple | MIPSfpga_system_i/mig_7series_0/u_MIPSfpga_system_mig_7series_0_0_mig/u_ddr2_infrastructure/plle2_i/CLKOUT0                                                                                                                                | MIPSfpga_system_i/mig_7series_0/u_MIPSfpga_system_mig_7series_0_0_mig/u_ddr2_infrastructure/freq_refclk                                                                                                                                 - Static -
-| 1        | PHASER_OUT_PHY/OCLKDELAYED | PHASER_OUT_PHY_X1Y4 | PHASER_OUT_PHY_X1Y4/PHASER_OUT_PHY | X1Y1         |           2 |               0 |        3.077 | Multiple | MIPSfpga_system_i/mig_7series_0/u_MIPSfpga_system_mig_7series_0_0_mig/u_memc_ui_top_axi/mem_intfc0/ddr_phy_top0/u_ddr_mc_phy_wrapper/u_ddr_mc_phy/ddr_phy_4lanes_0.u_ddr_phy_4lanes/ddr_byte_lane_A.ddr_byte_lane_A/phaser_out/OCLKDELAYED | MIPSfpga_system_i/mig_7series_0/u_MIPSfpga_system_mig_7series_0_0_mig/u_memc_ui_top_axi/mem_intfc0/ddr_phy_top0/u_ddr_mc_phy_wrapper/u_ddr_mc_phy/ddr_phy_4lanes_0.u_ddr_phy_4lanes/ddr_byte_lane_A.ddr_byte_lane_A/oserdes_clk_delayed - Static -
-| 2        | PHASER_OUT_PHY/OCLKDELAYED | PHASER_OUT_PHY_X1Y6 | PHASER_OUT_PHY_X1Y6/PHASER_OUT_PHY | X1Y1         |           2 |               0 |        3.077 | Multiple | MIPSfpga_system_i/mig_7series_0/u_MIPSfpga_system_mig_7series_0_0_mig/u_memc_ui_top_axi/mem_intfc0/ddr_phy_top0/u_ddr_mc_phy_wrapper/u_ddr_mc_phy/ddr_phy_4lanes_0.u_ddr_phy_4lanes/ddr_byte_lane_C.ddr_byte_lane_C/phaser_out/OCLKDELAYED | MIPSfpga_system_i/mig_7series_0/u_MIPSfpga_system_mig_7series_0_0_mig/u_memc_ui_top_axi/mem_intfc0/ddr_phy_top0/u_ddr_mc_phy_wrapper/u_ddr_mc_phy/ddr_phy_4lanes_0.u_ddr_phy_4lanes/ddr_byte_lane_C.ddr_byte_lane_C/oserdes_clk_delayed - Static -
-| 3        | PLLE2_ADV/CLKOUT1          | PLLE2_ADV_X1Y1      | PLLE2_ADV_X1Y1/PLLE2_ADV           | X1Y1         |           1 |               6 |        3.077 | Multiple | MIPSfpga_system_i/mig_7series_0/u_MIPSfpga_system_mig_7series_0_0_mig/u_ddr2_infrastructure/plle2_i/CLKOUT1                                                                                                                                | MIPSfpga_system_i/mig_7series_0/u_MIPSfpga_system_mig_7series_0_0_mig/u_ddr2_infrastructure/mem_refclk                                                                                                                                  - Static -
+| 0        | FDRE/Q                     | None                | SLICE_X58Y114/AFF                  | X1Y2         |           6 |               2 |              |          | MIPSfpga_system_i/WheelController_0/inst/div/flag_reg/Q                                                                                                                                                                                    | MIPSfpga_system_i/WheelController_0/inst/div/FSM_sequential_stat_reg[0]                                                                                                                                                                 - Static -
+| 1        | PLLE2_ADV/CLKOUT0          | PLLE2_ADV_X1Y1      | PLLE2_ADV_X1Y1/PLLE2_ADV           | X1Y1         |           5 |               2 |        1.538 | Multiple | MIPSfpga_system_i/mig_7series_0/u_MIPSfpga_system_mig_7series_0_0_mig/u_ddr2_infrastructure/plle2_i/CLKOUT0                                                                                                                                | MIPSfpga_system_i/mig_7series_0/u_MIPSfpga_system_mig_7series_0_0_mig/u_ddr2_infrastructure/freq_refclk                                                                                                                                 - Static -
+| 2        | PHASER_OUT_PHY/OCLKDELAYED | PHASER_OUT_PHY_X1Y4 | PHASER_OUT_PHY_X1Y4/PHASER_OUT_PHY | X1Y1         |           2 |               0 |        3.077 | Multiple | MIPSfpga_system_i/mig_7series_0/u_MIPSfpga_system_mig_7series_0_0_mig/u_memc_ui_top_axi/mem_intfc0/ddr_phy_top0/u_ddr_mc_phy_wrapper/u_ddr_mc_phy/ddr_phy_4lanes_0.u_ddr_phy_4lanes/ddr_byte_lane_A.ddr_byte_lane_A/phaser_out/OCLKDELAYED | MIPSfpga_system_i/mig_7series_0/u_MIPSfpga_system_mig_7series_0_0_mig/u_memc_ui_top_axi/mem_intfc0/ddr_phy_top0/u_ddr_mc_phy_wrapper/u_ddr_mc_phy/ddr_phy_4lanes_0.u_ddr_phy_4lanes/ddr_byte_lane_A.ddr_byte_lane_A/oserdes_clk_delayed - Static -
+| 3        | PHASER_OUT_PHY/OCLKDELAYED | PHASER_OUT_PHY_X1Y6 | PHASER_OUT_PHY_X1Y6/PHASER_OUT_PHY | X1Y1         |           2 |               0 |        3.077 | Multiple | MIPSfpga_system_i/mig_7series_0/u_MIPSfpga_system_mig_7series_0_0_mig/u_memc_ui_top_axi/mem_intfc0/ddr_phy_top0/u_ddr_mc_phy_wrapper/u_ddr_mc_phy/ddr_phy_4lanes_0.u_ddr_phy_4lanes/ddr_byte_lane_C.ddr_byte_lane_C/phaser_out/OCLKDELAYED | MIPSfpga_system_i/mig_7series_0/u_MIPSfpga_system_mig_7series_0_0_mig/u_memc_ui_top_axi/mem_intfc0/ddr_phy_top0/u_ddr_mc_phy_wrapper/u_ddr_mc_phy/ddr_phy_4lanes_0.u_ddr_phy_4lanes/ddr_byte_lane_C.ddr_byte_lane_C/oserdes_clk_delayed - Static -
+| 4        | PLLE2_ADV/CLKOUT1          | PLLE2_ADV_X1Y1      | PLLE2_ADV_X1Y1/PLLE2_ADV           | X1Y1         |           1 |               6 |        3.077 | Multiple | MIPSfpga_system_i/mig_7series_0/u_MIPSfpga_system_mig_7series_0_0_mig/u_ddr2_infrastructure/plle2_i/CLKOUT1                                                                                                                                | MIPSfpga_system_i/mig_7series_0/u_MIPSfpga_system_mig_7series_0_0_mig/u_ddr2_infrastructure/mem_refclk                                                                                                                                  - Static -
 +----------+----------------------------+---------------------+------------------------------------+--------------+-------------+-----------------+--------------+----------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------||
 * Local Clocks in this context represents only clocks driven by non-global buffers
 ** Clock Loads column represents the clock pin loads (pin count)
@@ -106,12 +107,12 @@ Table of Contents
 +-------------------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+
 | Clock Region Name | Used | Avail | Used | Avail | Used | Avail | Used | Avail | Used | Avail | Used | Avail | Used | Avail | Used | Avail | Used | Avail | Used | Avail | Used | Avail | Used | Avail | Used | Avail | Used | Avail | Used | Avail |
 +-------------------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+
-| X0Y0              |    2 |    12 |    0 |     4 |    0 |     2 |    0 |     4 |    0 |     1 |    0 |     1 |    0 |     0 |    0 |     0 |    0 |    50 |    0 |    50 | 6690 |  2600 | 1607 |   600 |    4 |    20 |    0 |    10 |    0 |    20 |
-| X1Y0              |    2 |    12 |    0 |     0 |    0 |     0 |    0 |     0 |    0 |     0 |    0 |     0 |    0 |     4 |    0 |     0 |    0 |     0 |    0 |     0 | 2963 |  1500 | 1101 |   550 |    8 |    40 |    7 |    20 |    0 |    40 |
-| X0Y1              |    2 |    12 |    0 |     4 |    0 |     2 |    0 |     4 |    0 |     1 |    0 |     1 |    0 |     0 |    0 |     0 |    0 |    50 |    0 |    50 | 4276 |  2000 | 1339 |   600 |    0 |    20 |    0 |    10 |    0 |    20 |
-| X1Y1              |    4 |    12 |    0 |     4 |    0 |     2 |    0 |     4 |    1 |     1 |    1 |     1 |    0 |     0 |    0 |     0 |    0 |    50 |    4 |    50 | 5128 |  1900 | 1679 |   650 |    0 |    60 |    0 |    30 |    0 |    40 |
-| X0Y2              |    2 |    12 |    0 |     4 |    0 |     2 |    0 |     4 |    0 |     1 |    0 |     1 |    0 |     0 |    0 |     0 |    0 |    50 |    0 |    50 |  224 |  2000 |   64 |   600 |    0 |    20 |    0 |    10 |    0 |    20 |
-| X1Y2              |    2 |    12 |    0 |     4 |    0 |     2 |    0 |     4 |    0 |     1 |    1 |     1 |    0 |     0 |    0 |     0 |    0 |    50 |    0 |    50 |  198 |  1900 |   70 |   650 |    0 |    60 |    0 |    30 |    0 |    40 |
+| X0Y0              |    2 |    12 |    0 |     4 |    0 |     2 |    0 |     4 |    0 |     1 |    0 |     1 |    0 |     0 |    0 |     0 |    0 |    50 |    0 |    50 | 6035 |  2600 | 1492 |   600 |    2 |    20 |    2 |    10 |    0 |    20 |
+| X1Y0              |    2 |    12 |    0 |     0 |    0 |     0 |    0 |     0 |    0 |     0 |    0 |     0 |    0 |     4 |    0 |     0 |    0 |     0 |    0 |     0 | 3420 |  1500 | 1243 |   550 |   10 |    40 |    5 |    20 |    0 |    40 |
+| X0Y1              |    2 |    12 |    0 |     4 |    0 |     2 |    0 |     4 |    0 |     1 |    0 |     1 |    0 |     0 |    0 |     0 |    0 |    50 |    0 |    50 | 5268 |  2000 | 1597 |   600 |    0 |    20 |    0 |    10 |    0 |    20 |
+| X1Y1              |    4 |    12 |    0 |     4 |    0 |     2 |    0 |     4 |    1 |     1 |    1 |     1 |    0 |     0 |    0 |     0 |    0 |    50 |    4 |    50 | 5421 |  1900 | 1789 |   650 |    0 |    60 |    0 |    30 |    0 |    40 |
+| X0Y2              |    3 |    12 |    0 |     4 |    0 |     2 |    0 |     4 |    0 |     1 |    0 |     1 |    0 |     0 |    0 |     0 |    0 |    50 |    0 |    50 |  681 |  2000 |  188 |   600 |    0 |    20 |    0 |    10 |    0 |    20 |
+| X1Y2              |    3 |    12 |    0 |     4 |    0 |     2 |    0 |     4 |    0 |     1 |    1 |     1 |    0 |     0 |    0 |     0 |    0 |    50 |    0 |    50 |  881 |  1900 |  304 |   650 |    0 |    60 |    0 |    30 |    0 |    40 |
 | X0Y3              |    0 |    12 |    0 |     4 |    0 |     2 |    0 |     4 |    0 |     1 |    0 |     1 |    0 |     0 |    0 |     0 |    0 |    50 |    0 |    50 |    0 |  2600 |    0 |   600 |    0 |    20 |    0 |    10 |    0 |    20 |
 | X1Y3              |    0 |    12 |    0 |     0 |    0 |     0 |    0 |     0 |    0 |     0 |    0 |     0 |    0 |     4 |    0 |     1 |    0 |     0 |    0 |     0 |    0 |  1350 |    0 |   500 |    0 |    30 |    0 |    15 |    0 |    40 |
 +-------------------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+
@@ -126,7 +127,7 @@ All Modules
 |    | X0 | X1 |
 +----+----+----+
 | Y3 |  0 |  0 |
-| Y2 |  2 |  2 |
+| Y2 |  3 |  3 |
 | Y1 |  2 |  4 |
 | Y0 |  2 |  2 |
 +----+----+----+
@@ -138,7 +139,7 @@ All Modules
 +-----------+-----------------+-------------------+----------+-------------+----------------+-------------+----------+----------------+----------+-------------------------------------------+
 | Global Id | Driver Type/Pin | Driver Region (D) | Clock    | Period (ns) | Waveform (ns)  | Slice Loads | IO Loads | Clocking Loads | GT Loads | Net                                       |
 +-----------+-----------------+-------------------+----------+-------------+----------------+-------------+----------+----------------+----------+-------------------------------------------+
-| g0        | BUFG/O          | n/a               | Multiple |      20.000 | {0.000 10.000} |       14203 |        0 |              0 |        0 | MIPSfpga_system_i/clk_wiz_0/inst/clk_out1 |
+| g0        | BUFG/O          | n/a               | Multiple |      20.000 | {0.000 10.000} |       16504 |        0 |              0 |        0 | MIPSfpga_system_i/clk_wiz_0/inst/clk_out1 |
 +-----------+-----------------+-------------------+----------+-------------+----------------+-------------+----------+----------------+----------+-------------------------------------------+
 * Logic Loads column represents load cell count of all cell types other than IO, GT and clock resources
 ** IO Loads column represents load cell count of IO types
@@ -150,9 +151,9 @@ All Modules
 |    | X0    | X1    |
 +----+-------+-------+
 | Y3 |     0 |     0 |
-| Y2 |     0 |     0 |
-| Y1 |  3173 |  1396 |
-| Y0 |  6652 |  2982 |
+| Y2 |   599 |   186 |
+| Y1 |  5154 |  1354 |
+| Y0 |  5920 |  3291 |
 +----+-------+-------+
 
 
@@ -170,14 +171,14 @@ All Modules
 **** GT Loads column represents load cell count of GT types
 
 
-+----+-------+-------+
-|    | X0    | X1    |
-+----+-------+-------+
-| Y3 |     0 |     0 |
-| Y2 |   179 |   199 |
-| Y1 |  1194 |  3970 |
-| Y0 |     0 |     0 |
-+----+-------+-------+
++----+------+-------+
+|    | X0   | X1    |
++----+------+-------+
+| Y3 |    0 |     0 |
+| Y2 |   77 |   696 |
+| Y1 |  295 |  4319 |
+| Y0 |    0 |   155 |
++----+------+-------+
 
 
 9. Device Cell Placement Summary for Global Clock g2
@@ -194,14 +195,14 @@ All Modules
 **** GT Loads column represents load cell count of GT types
 
 
-+----+------+-----+
-|    | X0   | X1  |
-+----+------+-----+
-| Y3 |    0 |   0 |
-| Y2 |    0 |   0 |
-| Y1 |    0 |   0 |
-| Y0 |  119 |  46 |
-+----+------+-----+
++----+------+----+
+|    | X0   | X1 |
++----+------+----+
+| Y3 |    0 |  0 |
+| Y2 |    0 |  0 |
+| Y1 |    0 |  0 |
+| Y0 |  165 |  0 |
++----+------+----+
 
 
 10. Device Cell Placement Summary for Global Clock g3
@@ -282,8 +283,8 @@ All Modules
 +-----------+-------+-----------------+------------+-------------+-----------------+------+--------+------+-----+----+------+-----+---------+----------------------------------------------+
 | Global Id | Track | Driver Type/Pin | Constraint | Clock Loads | Non-Clock Loads | FF   | LUTRAM | RAMB | DSP | GT | MMCM | PLL | Hard IP | Net                                          |
 +-----------+-------+-----------------+------------+-------------+-----------------+------+--------+------+-----+----+------+-----+---------+----------------------------------------------+
-| g0        | n/a   | BUFG/O          | None       |        6652 |               0 | 6571 |     73 |    4 |   0 |  0 |    0 |   0 |       0 | MIPSfpga_system_i/clk_wiz_0/inst/clk_out1    |
-| g2        | n/a   | BUFG/O          | None       |         119 |               0 |  119 |      0 |    0 |   0 |  0 |    0 |   0 |       0 | MIPSfpga_system_i/util_ds_buf_0/U0/BUFG_O[0] |
+| g0        | n/a   | BUFG/O          | None       |        5920 |               0 | 5870 |     44 |    4 |   0 |  0 |    0 |   0 |       0 | MIPSfpga_system_i/clk_wiz_0/inst/clk_out1    |
+| g2        | n/a   | BUFG/O          | None       |         165 |               0 |  165 |      0 |    0 |   0 |  0 |    0 |   0 |       0 | MIPSfpga_system_i/util_ds_buf_0/U0/BUFG_O[0] |
 +-----------+-------+-----------------+------------+-------------+-----------------+------+--------+------+-----+----+------+-----+---------+----------------------------------------------+
 * Clock Loads column represents the clock pin loads (pin count)
 ** Non-Clock Loads column represents the non-clock pin loads (pin count)
@@ -293,12 +294,12 @@ All Modules
 14. Clock Region Cell Placement per Global Clock: Region X1Y0
 -------------------------------------------------------------
 
-+-----------+-------+-----------------+------------+-------------+-----------------+------+--------+------+-----+----+------+-----+---------+----------------------------------------------+
-| Global Id | Track | Driver Type/Pin | Constraint | Clock Loads | Non-Clock Loads | FF   | LUTRAM | RAMB | DSP | GT | MMCM | PLL | Hard IP | Net                                          |
-+-----------+-------+-----------------+------------+-------------+-----------------+------+--------+------+-----+----+------+-----+---------+----------------------------------------------+
-| g0        | n/a   | BUFG/O          | None       |        2982 |               0 | 2917 |     41 |   15 |   0 |  0 |    0 |   0 |       0 | MIPSfpga_system_i/clk_wiz_0/inst/clk_out1    |
-| g2        | n/a   | BUFG/O          | None       |          46 |               0 |   46 |      0 |    0 |   0 |  0 |    0 |   0 |       0 | MIPSfpga_system_i/util_ds_buf_0/U0/BUFG_O[0] |
-+-----------+-------+-----------------+------------+-------------+-----------------+------+--------+------+-----+----+------+-----+---------+----------------------------------------------+
++-----------+-------+-----------------+------------+-------------+-----------------+------+--------+------+-----+----+------+-----+---------+-------------------------------------------------------------------------------------------------+
+| Global Id | Track | Driver Type/Pin | Constraint | Clock Loads | Non-Clock Loads | FF   | LUTRAM | RAMB | DSP | GT | MMCM | PLL | Hard IP | Net                                                                                             |
++-----------+-------+-----------------+------------+-------------+-----------------+------+--------+------+-----+----+------+-----+---------+-------------------------------------------------------------------------------------------------+
+| g0        | n/a   | BUFG/O          | None       |        3291 |               0 | 3265 |      0 |   15 |   0 |  0 |    0 |   0 |       0 | MIPSfpga_system_i/clk_wiz_0/inst/clk_out1                                                       |
+| g1        | n/a   | BUFG/O          | None       |         155 |               0 |  155 |      0 |    0 |   0 |  0 |    0 |   0 |       0 | MIPSfpga_system_i/mig_7series_0/u_MIPSfpga_system_mig_7series_0_0_mig/u_ddr2_infrastructure/CLK |
++-----------+-------+-----------------+------------+-------------+-----------------+------+--------+------+-----+----+------+-----+---------+-------------------------------------------------------------------------------------------------+
 * Clock Loads column represents the clock pin loads (pin count)
 ** Non-Clock Loads column represents the non-clock pin loads (pin count)
 *** Columns FF, LUTRAM, RAMB through 'Hard IP' represents load cell counts
@@ -310,8 +311,8 @@ All Modules
 +-----------+-------+-----------------+------------+-------------+-----------------+------+--------+------+-----+----+------+-----+---------+-------------------------------------------------------------------------------------------------+
 | Global Id | Track | Driver Type/Pin | Constraint | Clock Loads | Non-Clock Loads | FF   | LUTRAM | RAMB | DSP | GT | MMCM | PLL | Hard IP | Net                                                                                             |
 +-----------+-------+-----------------+------------+-------------+-----------------+------+--------+------+-----+----+------+-----+---------+-------------------------------------------------------------------------------------------------+
-| g0        | n/a   | BUFG/O          | None       |        3173 |               0 | 3115 |     58 |    0 |   0 |  0 |    0 |   0 |       0 | MIPSfpga_system_i/clk_wiz_0/inst/clk_out1                                                       |
-| g1        | n/a   | BUFG/O          | None       |        1194 |               0 | 1161 |     33 |    0 |   0 |  0 |    0 |   0 |       0 | MIPSfpga_system_i/mig_7series_0/u_MIPSfpga_system_mig_7series_0_0_mig/u_ddr2_infrastructure/CLK |
+| g0        | n/a   | BUFG/O          | None       |        5154 |               0 | 4973 |    181 |    0 |   0 |  0 |    0 |   0 |       0 | MIPSfpga_system_i/clk_wiz_0/inst/clk_out1                                                       |
+| g1        | n/a   | BUFG/O          | None       |         295 |               0 |  295 |      0 |    0 |   0 |  0 |    0 |   0 |       0 | MIPSfpga_system_i/mig_7series_0/u_MIPSfpga_system_mig_7series_0_0_mig/u_ddr2_infrastructure/CLK |
 +-----------+-------+-----------------+------------+-------------+-----------------+------+--------+------+-----+----+------+-----+---------+-------------------------------------------------------------------------------------------------+
 * Clock Loads column represents the clock pin loads (pin count)
 ** Non-Clock Loads column represents the non-clock pin loads (pin count)
@@ -324,8 +325,8 @@ All Modules
 +-----------+-------+-----------------+------------+-------------+-----------------+------+--------+------+-----+----+------+-----+---------+------------------------------------------------------------------------------------------------------+
 | Global Id | Track | Driver Type/Pin | Constraint | Clock Loads | Non-Clock Loads | FF   | LUTRAM | RAMB | DSP | GT | MMCM | PLL | Hard IP | Net                                                                                                  |
 +-----------+-------+-----------------+------------+-------------+-----------------+------+--------+------+-----+----+------+-----+---------+------------------------------------------------------------------------------------------------------+
-| g0        | n/a   | BUFG/O          | None       |        1396 |               0 | 1351 |     45 |    0 |   0 |  0 |    0 |   0 |       0 | MIPSfpga_system_i/clk_wiz_0/inst/clk_out1                                                            |
-| g1        | n/a   | BUFG/O          | None       |        3970 |               0 | 3762 |    178 |    0 |   0 |  0 |    1 |   0 |       0 | MIPSfpga_system_i/mig_7series_0/u_MIPSfpga_system_mig_7series_0_0_mig/u_ddr2_infrastructure/CLK      |
+| g0        | n/a   | BUFG/O          | None       |        1354 |               0 | 1322 |     32 |    0 |   0 |  0 |    0 |   0 |       0 | MIPSfpga_system_i/clk_wiz_0/inst/clk_out1                                                            |
+| g1        | n/a   | BUFG/O          | None       |        4319 |               0 | 4078 |    211 |    0 |   0 |  0 |    1 |   0 |       0 | MIPSfpga_system_i/mig_7series_0/u_MIPSfpga_system_mig_7series_0_0_mig/u_ddr2_infrastructure/CLK      |
 | g3        | n/a   | BUFG/O          | None       |          17 |               0 |   15 |      0 |    0 |   0 |  0 |    0 |   1 |       0 | MIPSfpga_system_i/clk_wiz_0/inst/clk_out2                                                            |
 | g5        | n/a   | BUFH/O          | None       |           1 |               0 |    0 |      0 |    0 |   0 |  0 |    1 |   0 |       0 | MIPSfpga_system_i/mig_7series_0/u_MIPSfpga_system_mig_7series_0_0_mig/u_ddr2_infrastructure/pll_clk3 |
 +-----------+-------+-----------------+------------+-------------+-----------------+------+--------+------+-----+----+------+-----+---------+------------------------------------------------------------------------------------------------------+
@@ -340,7 +341,8 @@ All Modules
 +-----------+-------+-----------------+------------+-------------+-----------------+-----+--------+------+-----+----+------+-----+---------+-------------------------------------------------------------------------------------------------+
 | Global Id | Track | Driver Type/Pin | Constraint | Clock Loads | Non-Clock Loads | FF  | LUTRAM | RAMB | DSP | GT | MMCM | PLL | Hard IP | Net                                                                                             |
 +-----------+-------+-----------------+------------+-------------+-----------------+-----+--------+------+-----+----+------+-----+---------+-------------------------------------------------------------------------------------------------+
-| g1        | n/a   | BUFG/O          | None       |         179 |               0 | 179 |      0 |    0 |   0 |  0 |    0 |   0 |       0 | MIPSfpga_system_i/mig_7series_0/u_MIPSfpga_system_mig_7series_0_0_mig/u_ddr2_infrastructure/CLK |
+| g0        | n/a   | BUFG/O          | None       |         599 |               0 | 559 |     40 |    0 |   0 |  0 |    0 |   0 |       0 | MIPSfpga_system_i/clk_wiz_0/inst/clk_out1                                                       |
+| g1        | n/a   | BUFG/O          | None       |          77 |               0 |  77 |      0 |    0 |   0 |  0 |    0 |   0 |       0 | MIPSfpga_system_i/mig_7series_0/u_MIPSfpga_system_mig_7series_0_0_mig/u_ddr2_infrastructure/CLK |
 | g3        | n/a   | BUFG/O          | None       |          46 |               0 |  45 |      0 |    0 |   0 |  0 |    0 |   0 |       0 | MIPSfpga_system_i/clk_wiz_0/inst/clk_out2                                                       |
 +-----------+-------+-----------------+------------+-------------+-----------------+-----+--------+------+-----+----+------+-----+---------+-------------------------------------------------------------------------------------------------+
 * Clock Loads column represents the clock pin loads (pin count)
@@ -354,7 +356,8 @@ All Modules
 +-----------+-------+-----------------+------------+-------------+-----------------+-----+--------+------+-----+----+------+-----+---------+-------------------------------------------------------------------------------------------------+
 | Global Id | Track | Driver Type/Pin | Constraint | Clock Loads | Non-Clock Loads | FF  | LUTRAM | RAMB | DSP | GT | MMCM | PLL | Hard IP | Net                                                                                             |
 +-----------+-------+-----------------+------------+-------------+-----------------+-----+--------+------+-----+----+------+-----+---------+-------------------------------------------------------------------------------------------------+
-| g1        | n/a   | BUFG/O          | None       |         199 |               0 | 198 |      1 |    0 |   0 |  0 |    0 |   0 |       0 | MIPSfpga_system_i/mig_7series_0/u_MIPSfpga_system_mig_7series_0_0_mig/u_ddr2_infrastructure/CLK |
+| g0        | n/a   | BUFG/O          | None       |         186 |               0 | 186 |      0 |    0 |   0 |  0 |    0 |   0 |       0 | MIPSfpga_system_i/clk_wiz_0/inst/clk_out1                                                       |
+| g1        | n/a   | BUFG/O          | None       |         696 |               0 | 695 |      1 |    0 |   0 |  0 |    0 |   0 |       0 | MIPSfpga_system_i/mig_7series_0/u_MIPSfpga_system_mig_7series_0_0_mig/u_ddr2_infrastructure/CLK |
 | g4        | n/a   | BUFG/O          | None       |           1 |               0 |   0 |      0 |    0 |   0 |  0 |    0 |   1 |       0 | MIPSfpga_system_i/clk_wiz_0/inst/clkfbout_buf_MIPSfpga_system_clk_wiz_0_0                       |
 +-----------+-------+-----------------+------------+-------------+-----------------+-----+--------+------+-----+----+------+-----+---------+-------------------------------------------------------------------------------------------------+
 * Clock Loads column represents the clock pin loads (pin count)
@@ -383,14 +386,14 @@ set_property LOC IOB_X0Y120 [get_ports JB4]
 #startgroup
 create_pblock {CLKAG_MIPSfpga_system_i/util_ds_buf_0/U0/BUFG_O[0]}
 add_cells_to_pblock [get_pblocks  {CLKAG_MIPSfpga_system_i/util_ds_buf_0/U0/BUFG_O[0]}] [get_cells -filter { PRIMITIVE_GROUP != I/O && IS_PRIMITIVE==1 && PRIMITIVE_LEVEL !=INTERNAL } -of_object [get_pins -filter {DIRECTION==IN} -of_objects [get_nets -hierarchical -filter {PARENT=="MIPSfpga_system_i/util_ds_buf_0/U0/BUFG_O[0]"}]]]
-resize_pblock [get_pblocks {CLKAG_MIPSfpga_system_i/util_ds_buf_0/U0/BUFG_O[0]}] -add {CLOCKREGION_X0Y0:CLOCKREGION_X0Y0 CLOCKREGION_X1Y0:CLOCKREGION_X1Y0}
+resize_pblock [get_pblocks {CLKAG_MIPSfpga_system_i/util_ds_buf_0/U0/BUFG_O[0]}] -add {CLOCKREGION_X0Y0:CLOCKREGION_X0Y0}
 #endgroup
 
 # Clock net "MIPSfpga_system_i/mig_7series_0/u_MIPSfpga_system_mig_7series_0_0_mig/u_ddr2_infrastructure/CLK" driven by instance "MIPSfpga_system_i/mig_7series_0/u_MIPSfpga_system_mig_7series_0_0_mig/u_ddr2_infrastructure/u_bufg_clkdiv0" located at site "BUFGCTRL_X0Y0"
 #startgroup
 create_pblock {CLKAG_MIPSfpga_system_i/mig_7series_0/u_MIPSfpga_system_mig_7series_0_0_mig/u_ddr2_infrastructure/CLK}
 add_cells_to_pblock [get_pblocks  {CLKAG_MIPSfpga_system_i/mig_7series_0/u_MIPSfpga_system_mig_7series_0_0_mig/u_ddr2_infrastructure/CLK}] [get_cells -filter { PRIMITIVE_GROUP != I/O && IS_PRIMITIVE==1 && PRIMITIVE_LEVEL !=INTERNAL && NAME!=MIPSfpga_system_i/mig_7series_0/u_MIPSfpga_system_mig_7series_0_0_mig/u_ddr2_infrastructure/gen_mmcm.mmcm_i} -of_object [get_pins -filter {DIRECTION==IN} -of_objects [get_nets -hierarchical -filter {PARENT=="MIPSfpga_system_i/mig_7series_0/u_MIPSfpga_system_mig_7series_0_0_mig/u_ddr2_infrastructure/CLK"}]]]
-resize_pblock [get_pblocks {CLKAG_MIPSfpga_system_i/mig_7series_0/u_MIPSfpga_system_mig_7series_0_0_mig/u_ddr2_infrastructure/CLK}] -add {CLOCKREGION_X0Y1:CLOCKREGION_X0Y1 CLOCKREGION_X0Y2:CLOCKREGION_X0Y2 CLOCKREGION_X1Y1:CLOCKREGION_X1Y1 CLOCKREGION_X1Y2:CLOCKREGION_X1Y2}
+resize_pblock [get_pblocks {CLKAG_MIPSfpga_system_i/mig_7series_0/u_MIPSfpga_system_mig_7series_0_0_mig/u_ddr2_infrastructure/CLK}] -add {CLOCKREGION_X0Y1:CLOCKREGION_X0Y1 CLOCKREGION_X0Y2:CLOCKREGION_X0Y2 CLOCKREGION_X1Y0:CLOCKREGION_X1Y0 CLOCKREGION_X1Y1:CLOCKREGION_X1Y1 CLOCKREGION_X1Y2:CLOCKREGION_X1Y2}
 #endgroup
 
 # Clock net "MIPSfpga_system_i/clk_wiz_0/inst/clk_out2" driven by instance "MIPSfpga_system_i/clk_wiz_0/inst/clkout2_buf" located at site "BUFGCTRL_X0Y16"
@@ -404,5 +407,5 @@ resize_pblock [get_pblocks {CLKAG_MIPSfpga_system_i/clk_wiz_0/inst/clk_out2}] -a
 #startgroup
 create_pblock {CLKAG_MIPSfpga_system_i/clk_wiz_0/inst/clk_out1}
 add_cells_to_pblock [get_pblocks  {CLKAG_MIPSfpga_system_i/clk_wiz_0/inst/clk_out1}] [get_cells -filter { PRIMITIVE_GROUP != I/O && IS_PRIMITIVE==1 && PRIMITIVE_LEVEL !=INTERNAL } -of_object [get_pins -filter {DIRECTION==IN} -of_objects [get_nets -hierarchical -filter {PARENT=="MIPSfpga_system_i/clk_wiz_0/inst/clk_out1"}]]]
-resize_pblock [get_pblocks {CLKAG_MIPSfpga_system_i/clk_wiz_0/inst/clk_out1}] -add {CLOCKREGION_X0Y0:CLOCKREGION_X0Y0 CLOCKREGION_X0Y1:CLOCKREGION_X0Y1 CLOCKREGION_X1Y0:CLOCKREGION_X1Y0 CLOCKREGION_X1Y1:CLOCKREGION_X1Y1}
+resize_pblock [get_pblocks {CLKAG_MIPSfpga_system_i/clk_wiz_0/inst/clk_out1}] -add {CLOCKREGION_X0Y0:CLOCKREGION_X0Y0 CLOCKREGION_X0Y1:CLOCKREGION_X0Y1 CLOCKREGION_X0Y2:CLOCKREGION_X0Y2 CLOCKREGION_X1Y0:CLOCKREGION_X1Y0 CLOCKREGION_X1Y1:CLOCKREGION_X1Y1 CLOCKREGION_X1Y2:CLOCKREGION_X1Y2}
 #endgroup

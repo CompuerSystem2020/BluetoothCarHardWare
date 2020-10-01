@@ -1,0 +1,520 @@
+#-----------------------------------------------------------
+# Vivado v2018.2 (64-bit)
+# SW Build 2258646 on Thu Jun 14 20:03:12 MDT 2018
+# IP Build 2256618 on Thu Jun 14 22:10:49 MDT 2018
+# Start of session at: Wed Sep 30 20:21:57 2020
+# Process ID: 18504
+# Current directory: E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent12264 E:\ComputerSystem\AWorkSpace\BluetoothCarHardWare\MIPSfpga_axi4_ddr\MIPSfpga_axi4_ddr.xpr
+# Log file: E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/vivado.log
+# Journal file: E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.xpr
+INFO: [Project 1-313] Project file moved from 'C:/workspace/system_ability_2019/MIPSfpga_axi4_ddr' since last save.
+Scanning sources...
+Finished scanning sources
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/ip_repo'.
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Xilinx/Vivado/2018.2/data/ip'.
+open_project: Time (s): cpu = 00:00:21 ; elapsed = 00:00:12 . Memory (MB): peak = 944.805 ; gain = 263.031
+update_compile_order -fileset sources_1
+open_bd_design {E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/MIPSfpga_system.bd}
+Adding cell -- imgtec.org:user:MIPS_MicroAptiv_UP:1.3.1 - MIPS_MicroAptiv_UP_0
+Adding cell -- xilinx.com:user:PWM_w_Int:1.0 - PWM_w_Int_0
+Adding cell -- xilinx.com:ip:xlconcat:2.1 - xlconcat_0
+Adding cell -- xilinx.com:ip:xlconcat:2.1 - xlconcat_1
+Adding cell -- xilinx.com:ip:ahblite_axi_bridge:3.0 - ahblite_axi_bridge_0
+Adding cell -- xilinx.com:ip:axi_bram_ctrl:4.0 - axi_bram_ctrl_0
+Adding cell -- xilinx.com:ip:axi_gpio:2.0 - axi_gpio_0
+Adding cell -- xilinx.com:ip:axi_intc:4.1 - axi_intc_0
+Adding cell -- xilinx.com:ip:axi_uart16550:2.0 - axi_uart16550_0
+Adding cell -- xilinx.com:ip:blk_mem_gen:8.4 - blk_mem_gen_0
+Adding cell -- xilinx.com:ip:clk_wiz:6.0 - clk_wiz_0
+Adding cell -- xilinx.com:ip:mig_7series:4.1 - mig_7series_0
+Adding cell -- xilinx.com:ip:util_ds_buf:2.1 - util_ds_buf_0
+Adding cell -- xilinx.com:ip:util_vector_logic:2.0 - util_vector_logic_0
+Adding cell -- xilinx.com:ip:util_vector_logic:2.0 - util_vector_logic_1
+Adding cell -- xilinx.com:ip:util_vector_logic:2.0 - util_vector_logic_2
+Adding cell -- xilinx.com:ip:xlconstant:1.1 - xlconstant_0
+Adding cell -- xilinx.com:ip:xlconstant:1.1 - xlconstant_1
+Adding cell -- xilinx.com:ip:xlconstant:1.1 - xlconstant_2
+Adding cell -- xilinx.com:ip:xlconstant:1.1 - xlconstant_3
+Adding cell -- xilinx.com:ip:xlconstant:1.1 - xlconstant_4
+WARNING: [BD 41-1731] Type mismatch between connected pins: /MIPS_MicroAptiv_UP_0/HRESETn(undef) and /PWM_w_Int_0/s00_axi_aresetn(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /MIPS_MicroAptiv_UP_0/HRESETn(undef) and /ahblite_axi_bridge_0/s_ahb_hresetn(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /MIPS_MicroAptiv_UP_0/HRESETn(undef) and /axi_bram_ctrl_0/s_axi_aresetn(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /MIPS_MicroAptiv_UP_0/HRESETn(undef) and /axi_gpio_0/s_axi_aresetn(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /MIPS_MicroAptiv_UP_0/HRESETn(undef) and /axi_intc_0/s_axi_aresetn(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /MIPS_MicroAptiv_UP_0/HRESETn(undef) and /axi_uart16550_0/s_axi_aresetn(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /MIPS_MicroAptiv_UP_0/HRESETn(undef) and /mig_7series_0/aresetn(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /clk_wiz_0/clk_out1(clk) and /MIPS_MicroAptiv_UP_0/SI_ClkIn(undef)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /util_ds_buf_0/BUFG_O(clk) and /MIPS_MicroAptiv_UP_0/EJ_TCK(undef)
+Adding cell -- xilinx.com:ip:axi_crossbar:2.1 - xbar
+Adding cell -- xilinx.com:ip:axi_dwidth_converter:2.1 - auto_ds
+Adding cell -- xilinx.com:ip:axi_protocol_converter:2.1 - auto_pc
+Adding cell -- xilinx.com:ip:axi_dwidth_converter:2.1 - auto_ds
+Adding cell -- xilinx.com:ip:axi_protocol_converter:2.1 - auto_pc
+Adding cell -- xilinx.com:ip:axi_clock_converter:2.1 - auto_cc
+Adding cell -- xilinx.com:ip:axi_dwidth_converter:2.1 - auto_ds
+Adding cell -- xilinx.com:ip:axi_protocol_converter:2.1 - auto_pc
+Adding cell -- xilinx.com:ip:axi_dwidth_converter:2.1 - auto_ds
+Adding cell -- xilinx.com:ip:axi_dwidth_converter:2.1 - auto_ds
+Adding cell -- xilinx.com:ip:axi_protocol_converter:2.1 - auto_pc
+Adding cell -- xilinx.com:ip:axi_dwidth_converter:2.1 - auto_us
+WARNING: [BD 41-1731] Type mismatch between connected pins: /MIPS_MicroAptiv_UP_0/HRESETn(undef) and /axi_interconnect_0/ARESETN(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /MIPS_MicroAptiv_UP_0/HRESETn(undef) and /axi_interconnect_0/S00_ARESETN(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /MIPS_MicroAptiv_UP_0/HRESETn(undef) and /axi_interconnect_0/M00_ARESETN(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /MIPS_MicroAptiv_UP_0/HRESETn(undef) and /axi_interconnect_0/M01_ARESETN(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /MIPS_MicroAptiv_UP_0/HRESETn(undef) and /axi_interconnect_0/M02_ARESETN(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /MIPS_MicroAptiv_UP_0/HRESETn(undef) and /axi_interconnect_0/M04_ARESETN(rst)
+WARNING: [BD 41-1731] Type mismatch between connected pins: /MIPS_MicroAptiv_UP_0/HRESETn(undef) and /axi_interconnect_0/M05_ARESETN(rst)
+Successfully read diagram <MIPSfpga_system> from BD file <E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/MIPSfpga_system.bd>
+startgroup
+set_property -dict [list CONFIG.NUM_MI {8}] [get_bd_cells axi_interconnect_0]
+endgroup
+connect_bd_net [get_bd_pins axi_interconnect_0/M06_ACLK] [get_bd_pins MIPS_MicroAptiv_UP_0/HCLK]
+connect_bd_net [get_bd_pins axi_interconnect_0/M07_ACLK] [get_bd_pins MIPS_MicroAptiv_UP_0/HCLK]
+connect_bd_net [get_bd_pins axi_interconnect_0/M06_ARESETN] [get_bd_pins MIPS_MicroAptiv_UP_0/HRESETn]
+WARNING: [BD 41-1731] Type mismatch between connected pins: /MIPS_MicroAptiv_UP_0/HRESETn(undef) and /axi_interconnect_0/M06_ARESETN(rst)
+connect_bd_net [get_bd_pins axi_interconnect_0/M07_ARESETN] [get_bd_pins MIPS_MicroAptiv_UP_0/HRESETn]
+WARNING: [BD 41-1731] Type mismatch between connected pins: /MIPS_MicroAptiv_UP_0/HRESETn(undef) and /axi_interconnect_0/M07_ARESETN(rst)
+save_bd_design
+Wrote  : <E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/MIPSfpga_system.bd> 
+Wrote  : <E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ui/bd_690e812b.ui> 
+startgroup
+create_bd_cell -type ip -vlnv xilinx.com:ip:axi_uart16550:2.0 axi_uart16550_1
+endgroup
+set_property location {4 1771 534} [get_bd_cells axi_uart16550_1]
+set_property location {4 1758 484} [get_bd_cells axi_uart16550_1]
+connect_bd_intf_net [get_bd_intf_pins axi_uart16550_1/S_AXI] -boundary_type upper [get_bd_intf_pins axi_interconnect_0/M06_AXI]
+connect_bd_net [get_bd_pins axi_uart16550_1/s_axi_aclk] [get_bd_pins MIPS_MicroAptiv_UP_0/HCLK]
+undo
+INFO: [Common 17-17] undo 'connect_bd_net [get_bd_pins axi_uart16550_1/s_axi_aclk] [get_bd_pins MIPS_MicroAptiv_UP_0/HCLK]'
+connect_bd_net [get_bd_pins axi_uart16550_1/s_axi_aclk] [get_bd_pins MIPS_MicroAptiv_UP_0/HCLK]
+connect_bd_net [get_bd_pins axi_uart16550_1/s_axi_aresetn] [get_bd_pins MIPS_MicroAptiv_UP_0/HRESETn]
+WARNING: [BD 41-1731] Type mismatch between connected pins: /MIPS_MicroAptiv_UP_0/HRESETn(undef) and /axi_uart16550_1/s_axi_aresetn(rst)
+save_bd_design
+Wrote  : <E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/MIPSfpga_system.bd> 
+Wrote  : <E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ui/bd_690e812b.ui> 
+connect_bd_net [get_bd_pins axi_uart16550_1/freeze] [get_bd_pins xlconstant_3/dout]
+save_bd_design
+Wrote  : <E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/MIPSfpga_system.bd> 
+Wrote  : <E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ui/bd_690e812b.ui> 
+create_bd_port -dir I RX
+set_property location {1965 459} [get_bd_ports RX]
+delete_bd_objs [get_bd_ports RX]
+create_bd_port -dir I TX
+set_property location {1933 494} [get_bd_ports TX]
+connect_bd_net [get_bd_ports TX] [get_bd_pins axi_uart16550_1/sin]
+WARNING: [BD 41-1306] The connection to interface pin /axi_uart16550_1/sin is being overridden by the user. This pin will not be connected as a part of interface connection UART
+create_bd_port -dir O RX
+set_property location {1927 543} [get_bd_ports RX]
+startgroup
+connect_bd_net [get_bd_ports RX] [get_bd_pins axi_uart16550_1/sout]
+WARNING: [BD 41-1306] The connection to interface pin /axi_uart16550_1/sout is being overridden by the user. This pin will not be connected as a part of interface connection UART
+endgroup
+set_property location {1937 469} [get_bd_ports TX]
+set_property location {1934 494} [get_bd_ports RX]
+save_bd_design
+Wrote  : <E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/MIPSfpga_system.bd> 
+Wrote  : <E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ui/bd_690e812b.ui> 
+delete_bd_objs [get_bd_nets xlconstant_4_dout]
+connect_bd_net [get_bd_pins axi_uart16550_1/ip2intc_irpt] [get_bd_pins xlconcat_1/In1]
+connect_bd_net [get_bd_pins xlconstant_4/dout] [get_bd_pins xlconcat_1/In7]
+connect_bd_net [get_bd_pins xlconcat_1/In6] [get_bd_pins xlconstant_4/dout]
+connect_bd_net [get_bd_pins xlconcat_1/In3] [get_bd_pins xlconstant_4/dout]
+connect_bd_net [get_bd_pins xlconcat_1/In2] [get_bd_pins xlconstant_4/dout]
+connect_bd_net [get_bd_pins xlconcat_1/In0] [get_bd_pins xlconstant_4/dout]
+save_bd_design
+Wrote  : <E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/MIPSfpga_system.bd> 
+Wrote  : <E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ui/bd_690e812b.ui> 
+update_ip_catalog
+assign_bd_address [get_bd_addr_segs {axi_uart16550_1/S_AXI/Reg }]
+</axi_uart16550_1/S_AXI/Reg> is being mapped into </MIPS_MicroAptiv_UP_0/ahblite> at <0x44A00000 [ 64K ]>
+set_property offset 0x10500000 [get_bd_addr_segs {MIPS_MicroAptiv_UP_0/ahblite/SEG_axi_uart16550_1_Reg}]
+save_bd_design
+Wrote  : <E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/MIPSfpga_system.bd> 
+create_bd_cell -type ip -vlnv xilinx.com:ip:axi_gpio:2.0 axi_gpio_1
+set_property location {4 1738 643} [get_bd_cells axi_gpio_1]
+connect_bd_intf_net -boundary_type upper [get_bd_intf_pins axi_interconnect_0/M07_AXI] [get_bd_intf_pins axi_gpio_1/S_AXI]
+connect_bd_net [get_bd_pins axi_gpio_1/s_axi_aclk] [get_bd_pins MIPS_MicroAptiv_UP_0/HCLK]
+connect_bd_net [get_bd_pins axi_gpio_1/s_axi_aresetn] [get_bd_pins MIPS_MicroAptiv_UP_0/HRESETn]
+WARNING: [BD 41-1731] Type mismatch between connected pins: /MIPS_MicroAptiv_UP_0/HRESETn(undef) and /axi_gpio_1/s_axi_aresetn(rst)
+save_bd_design
+Wrote  : <E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/MIPSfpga_system.bd> 
+Wrote  : <E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ui/bd_690e812b.ui> 
+startgroup
+set_property -dict [list CONFIG.C_GPIO_WIDTH {11} CONFIG.C_ALL_OUTPUTS {1}] [get_bd_cells axi_gpio_1]
+endgroup
+save_bd_design
+Wrote  : <E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/MIPSfpga_system.bd> 
+Wrote  : <E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ui/bd_690e812b.ui> 
+set_property  ip_repo_paths  {e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/ip_repo E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/Car_Driver_Control} [current_project]
+update_ip_catalog
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/ip_repo'.
+INFO: [IP_Flow 19-1700] Loaded user IP repository 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/Car_Driver_Control'.
+update_ip_catalog
+create_bd_cell -type ip -vlnv xilinx.com:user:CarDriverControl:1.0 CarDriverControl_0
+set_property location {5 2026 686} [get_bd_cells CarDriverControl_0]
+set_property location {4 1762 690} [get_bd_cells axi_gpio_1]
+set_property location {5 2042 686} [get_bd_cells CarDriverControl_0]
+connect_bd_net [get_bd_pins axi_gpio_1/gpio_io_o] [get_bd_pins CarDriverControl_0/param]
+WARNING: [BD 41-1306] The connection to interface pin /axi_gpio_1/gpio_io_o is being overridden by the user. This pin will not be connected as a part of interface connection GPIO
+set_property location {5 2042 690} [get_bd_cells CarDriverControl_0]
+set_property location {5 2047 678} [get_bd_cells CarDriverControl_0]
+connect_bd_net [get_bd_pins CarDriverControl_0/clk] [get_bd_pins MIPS_MicroAptiv_UP_0/HCLK]
+connect_bd_net [get_bd_pins CarDriverControl_0/reset] [get_bd_pins MIPS_MicroAptiv_UP_0/HRESETn]
+WARNING: [BD 41-1731] Type mismatch between connected pins: /MIPS_MicroAptiv_UP_0/HRESETn(undef) and /CarDriverControl_0/reset(rst)
+save_bd_design
+Wrote  : <E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/MIPSfpga_system.bd> 
+Wrote  : <E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ui/bd_690e812b.ui> 
+create_bd_port -dir O dir_clk
+set_property location {2220 772} [get_bd_ports dir_clk]
+set_property location {2197 723} [get_bd_ports dir_clk]
+set_property location {2210 639} [get_bd_ports dir_clk]
+assign_bd_address [get_bd_addr_segs {axi_gpio_1/S_AXI/Reg }]
+</axi_gpio_1/S_AXI/Reg> is being mapped into </MIPS_MicroAptiv_UP_0/ahblite> at <0x40000000 [ 64K ]>
+set_property offset 0x10700000 [get_bd_addr_segs {MIPS_MicroAptiv_UP_0/ahblite/SEG_axi_gpio_1_Reg}]
+create_bd_port -dir I dir_enable
+delete_bd_objs [get_bd_ports dir_enable]
+create_bd_port -dir O dir_enable
+set_property location {2262 710} [get_bd_ports dir_enable]
+set_property location {2218 647} [get_bd_ports dir_enable]
+set_property location {2262 626} [get_bd_ports dir_clk]
+set_property location {2215 660} [get_bd_ports dir_enable]
+set_property location {2211 637} [get_bd_ports dir_clk]
+save_bd_design
+Wrote  : <E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/MIPSfpga_system.bd> 
+Wrote  : <E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ui/bd_690e812b.ui> 
+create_bd_port -dir O dir_latch
+set_property location {2228 981} [get_bd_ports dir_latch]
+set_property location {2235 695} [get_bd_ports dir_latch]
+set_property location {2233 700} [get_bd_ports dir_latch]
+create_bd_port -dir O dir_serial
+set_property location {2285 682} [get_bd_ports dir_serial]
+save_bd_design
+Wrote  : <E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/MIPSfpga_system.bd> 
+Wrote  : <E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ui/bd_690e812b.ui> 
+create_bd_port -dir O -from 3 -to 0 wheel
+set_property location {2309 721} [get_bd_ports wheel]
+connect_bd_net [get_bd_ports dir_clk] [get_bd_pins CarDriverControl_0/dir_clk]
+connect_bd_net [get_bd_ports dir_enable] [get_bd_pins CarDriverControl_0/dir_enable]
+connect_bd_net [get_bd_ports dir_serial] [get_bd_pins CarDriverControl_0/dir_serial]
+connect_bd_net [get_bd_ports dir_latch] [get_bd_pins CarDriverControl_0/dir_latch]
+connect_bd_net [get_bd_ports wheel] [get_bd_pins CarDriverControl_0/wheel]
+save_bd_design
+Wrote  : <E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/MIPSfpga_system.bd> 
+Wrote  : <E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ui/bd_690e812b.ui> 
+reset_run synth_1
+launch_runs synth_1 -jobs 8
+WARNING: [xilinx.com:ip:axi_intc:4.1-6] /axi_intc_0: Property SENSITIVITY = "NULL" for interrupt input 7 not recognized - using default interrupt type Rising Edge. Please change this manually if necessary.
+WARNING: [xilinx.com:ip:axi_intc:4.1-6] /axi_intc_0: Property SENSITIVITY = "NULL" for interrupt input 6 not recognized - using default interrupt type Rising Edge. Please change this manually if necessary.
+WARNING: [xilinx.com:ip:axi_intc:4.1-6] /axi_intc_0: Property SENSITIVITY = "NULL" for interrupt input 4 not recognized - using default interrupt type Rising Edge. Please change this manually if necessary.
+WARNING: [xilinx.com:ip:axi_intc:4.1-6] /axi_intc_0: Property SENSITIVITY = "NULL" for interrupt input 3 not recognized - using default interrupt type Rising Edge. Please change this manually if necessary.
+WARNING: [xilinx.com:ip:axi_intc:4.1-6] /axi_intc_0: Property SENSITIVITY = "NULL" for interrupt input 2 not recognized - using default interrupt type Rising Edge. Please change this manually if necessary.
+WARNING: [xilinx.com:ip:axi_intc:4.1-6] /axi_intc_0: Property SENSITIVITY = "NULL" for interrupt input 0 not recognized - using default interrupt type Rising Edge. Please change this manually if necessary.
+WARNING: [xilinx.com:ip:axi_intc:4.1-13] /axi_intc_0: Interrupt output connection Bus is selected, but the interrupt bus interface is not connected to a matching interface. Please consider selecting Single instead.
+CRITICAL WARNING: [BD 41-237] Bus Interface property MASTER_TYPE does not match between /blk_mem_gen_0/BRAM_PORTA(OTHER) and /axi_bram_ctrl_0/BRAM_PORTA(BRAM_CTRL)
+WARNING: [BD 41-927] Following properties on pin /MIPS_MicroAptiv_UP_0/HCLK have been updated from connected ip. They may not be synchronized with cell properties. You can set property on pin directly to confirm the value and resolve the warning.
+	CLK_DOMAIN=MIPSfpga_system_MIPS_MicroAptiv_UP_0_0_HCLK 
+WARNING: [BD 41-927] Following properties on pin /CarDriverControl_0/dir_clk have been updated from connected ip. They may not be synchronized with cell properties. You can set property on pin directly to confirm the value and resolve the warning.
+	CLK_DOMAIN=MIPSfpga_system_CarDriverControl_0_0_dir_clk 
+Wrote  : <E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/MIPSfpga_system.bd> 
+WARNING: [BD 41-235] Width mismatch when connecting pin: '/blk_mem_gen_0/wea'(1) to net 'axi_bram_ctrl_0_BRAM_PORTA_WE'(4) - Only lower order bits will be connected.
+CRITICAL WARNING: [BD 41-1228] Width mismatch when connecting input pin '/CarDriverControl_0/param'(12) to net 'axi_gpio_1_gpio_io_o'(11) - Only lower order bits will be connected, and other input bits of this pin will be left unconnected.
+VHDL Output written to : E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/synth/MIPSfpga_system.v
+WARNING: [BD 41-235] Width mismatch when connecting pin: '/blk_mem_gen_0/wea'(1) to net 'axi_bram_ctrl_0_BRAM_PORTA_WE'(4) - Only lower order bits will be connected.
+CRITICAL WARNING: [BD 41-1228] Width mismatch when connecting input pin '/CarDriverControl_0/param'(12) to net 'axi_gpio_1_gpio_io_o'(11) - Only lower order bits will be connected, and other input bits of this pin will be left unconnected.
+VHDL Output written to : E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/sim/MIPSfpga_system.v
+VHDL Output written to : E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/hdl/MIPSfpga_system_wrapper.v
+INFO: [BD 41-1029] Generation completed for the IP Integrator block MIPS_MicroAptiv_UP_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block PWM_w_Int_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block ahblite_axi_bridge_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_bram_ctrl_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_gpio_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_intc_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_uart16550_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block blk_mem_gen_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block clk_wiz_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block mig_7series_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block util_ds_buf_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block util_vector_logic_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block util_vector_logic_1 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block util_vector_logic_2 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block xlconcat_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block xlconcat_1 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block xlconstant_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block xlconstant_1 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block xlconstant_2 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block xlconstant_3 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block xlconstant_4 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/xbar .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_uart16550_1 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_gpio_1 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block CarDriverControl_0 .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ip/MIPSfpga_system_auto_ds_6/MIPSfpga_system_auto_ds_6_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/m07_couplers/auto_ds .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ip/MIPSfpga_system_auto_pc_5/MIPSfpga_system_auto_pc_5_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/m07_couplers/auto_pc .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ip/MIPSfpga_system_auto_ds_5_1/MIPSfpga_system_auto_ds_5_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/m06_couplers/auto_ds .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ip/MIPSfpga_system_auto_pc_4_1/MIPSfpga_system_auto_pc_4_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/m06_couplers/auto_pc .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ip/MIPSfpga_system_auto_ds_4/MIPSfpga_system_auto_ds_4_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/m05_couplers/auto_ds .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ip/MIPSfpga_system_auto_pc_3/MIPSfpga_system_auto_pc_3_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/m05_couplers/auto_pc .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ip/MIPSfpga_system_auto_ds_3/MIPSfpga_system_auto_ds_3_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/m04_couplers/auto_ds .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ip/MIPSfpga_system_auto_pc_2/MIPSfpga_system_auto_pc_2_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/m04_couplers/auto_pc .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ip/MIPSfpga_system_auto_cc_0/MIPSfpga_system_auto_cc_0_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/m03_couplers/auto_cc .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ip/MIPSfpga_system_auto_ds_2/MIPSfpga_system_auto_ds_2_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/m02_couplers/auto_ds .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ip/MIPSfpga_system_auto_pc_1/MIPSfpga_system_auto_pc_1_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/m02_couplers/auto_pc .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ip/MIPSfpga_system_auto_ds_1/MIPSfpga_system_auto_ds_1_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/m01_couplers/auto_ds .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ip/MIPSfpga_system_auto_ds_0/MIPSfpga_system_auto_ds_0_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/m00_couplers/auto_ds .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ip/MIPSfpga_system_auto_pc_0/MIPSfpga_system_auto_pc_0_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/m00_couplers/auto_pc .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ip/MIPSfpga_system_auto_us_0/MIPSfpga_system_auto_us_0_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/s00_couplers/auto_us .
+Exporting to file E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/hw_handoff/MIPSfpga_system.hwh
+Generated Block Design Tcl file E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/hw_handoff/MIPSfpga_system_bd.tcl
+Generated Hardware Definition File E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/synth/MIPSfpga_system.hwdef
+[Wed Sep 30 20:41:58 2020] Launched synth_1...
+Run output will be captured here: E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.runs/synth_1/runme.log
+launch_runs: Time (s): cpu = 00:00:17 ; elapsed = 00:00:57 . Memory (MB): peak = 1411.887 ; gain = 170.555
+reset_run synth_1
+startgroup
+set_property -dict [list CONFIG.C_GPIO_WIDTH {12}] [get_bd_cells axi_gpio_1]
+endgroup
+save_bd_design
+Wrote  : <E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/MIPSfpga_system.bd> 
+launch_runs synth_1 -jobs 8
+WARNING: [xilinx.com:ip:axi_intc:4.1-6] /axi_intc_0: Property SENSITIVITY = "NULL" for interrupt input 7 not recognized - using default interrupt type Rising Edge. Please change this manually if necessary.
+WARNING: [xilinx.com:ip:axi_intc:4.1-6] /axi_intc_0: Property SENSITIVITY = "NULL" for interrupt input 6 not recognized - using default interrupt type Rising Edge. Please change this manually if necessary.
+WARNING: [xilinx.com:ip:axi_intc:4.1-6] /axi_intc_0: Property SENSITIVITY = "NULL" for interrupt input 4 not recognized - using default interrupt type Rising Edge. Please change this manually if necessary.
+WARNING: [xilinx.com:ip:axi_intc:4.1-6] /axi_intc_0: Property SENSITIVITY = "NULL" for interrupt input 3 not recognized - using default interrupt type Rising Edge. Please change this manually if necessary.
+WARNING: [xilinx.com:ip:axi_intc:4.1-6] /axi_intc_0: Property SENSITIVITY = "NULL" for interrupt input 2 not recognized - using default interrupt type Rising Edge. Please change this manually if necessary.
+WARNING: [xilinx.com:ip:axi_intc:4.1-6] /axi_intc_0: Property SENSITIVITY = "NULL" for interrupt input 0 not recognized - using default interrupt type Rising Edge. Please change this manually if necessary.
+WARNING: [xilinx.com:ip:axi_intc:4.1-13] /axi_intc_0: Interrupt output connection Bus is selected, but the interrupt bus interface is not connected to a matching interface. Please consider selecting Single instead.
+CRITICAL WARNING: [BD 41-237] Bus Interface property MASTER_TYPE does not match between /blk_mem_gen_0/BRAM_PORTA(OTHER) and /axi_bram_ctrl_0/BRAM_PORTA(BRAM_CTRL)
+WARNING: [BD 41-927] Following properties on pin /MIPS_MicroAptiv_UP_0/HCLK have been updated from connected ip. They may not be synchronized with cell properties. You can set property on pin directly to confirm the value and resolve the warning.
+	CLK_DOMAIN=MIPSfpga_system_MIPS_MicroAptiv_UP_0_0_HCLK 
+WARNING: [BD 41-927] Following properties on pin /CarDriverControl_0/dir_clk have been updated from connected ip. They may not be synchronized with cell properties. You can set property on pin directly to confirm the value and resolve the warning.
+	CLK_DOMAIN=MIPSfpga_system_CarDriverControl_0_0_dir_clk 
+Wrote  : <E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/MIPSfpga_system.bd> 
+WARNING: [BD 41-235] Width mismatch when connecting pin: '/blk_mem_gen_0/wea'(1) to net 'axi_bram_ctrl_0_BRAM_PORTA_WE'(4) - Only lower order bits will be connected.
+VHDL Output written to : E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/synth/MIPSfpga_system.v
+WARNING: [BD 41-235] Width mismatch when connecting pin: '/blk_mem_gen_0/wea'(1) to net 'axi_bram_ctrl_0_BRAM_PORTA_WE'(4) - Only lower order bits will be connected.
+VHDL Output written to : E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/sim/MIPSfpga_system.v
+VHDL Output written to : E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/hdl/MIPSfpga_system_wrapper.v
+INFO: [BD 41-1029] Generation completed for the IP Integrator block MIPS_MicroAptiv_UP_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block PWM_w_Int_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block ahblite_axi_bridge_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_bram_ctrl_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_gpio_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_intc_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_uart16550_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block blk_mem_gen_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block clk_wiz_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block mig_7series_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block util_ds_buf_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block util_vector_logic_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block util_vector_logic_1 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block util_vector_logic_2 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block xlconcat_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block xlconcat_1 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block xlconstant_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block xlconstant_1 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block xlconstant_2 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block xlconstant_3 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block xlconstant_4 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/xbar .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_uart16550_1 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_gpio_1 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block CarDriverControl_0 .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ip/MIPSfpga_system_auto_ds_6/MIPSfpga_system_auto_ds_6_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/m07_couplers/auto_ds .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ip/MIPSfpga_system_auto_pc_5/MIPSfpga_system_auto_pc_5_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/m07_couplers/auto_pc .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ip/MIPSfpga_system_auto_ds_5_1/MIPSfpga_system_auto_ds_5_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/m06_couplers/auto_ds .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ip/MIPSfpga_system_auto_pc_4_1/MIPSfpga_system_auto_pc_4_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/m06_couplers/auto_pc .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ip/MIPSfpga_system_auto_ds_4/MIPSfpga_system_auto_ds_4_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/m05_couplers/auto_ds .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ip/MIPSfpga_system_auto_pc_3/MIPSfpga_system_auto_pc_3_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/m05_couplers/auto_pc .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ip/MIPSfpga_system_auto_ds_3/MIPSfpga_system_auto_ds_3_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/m04_couplers/auto_ds .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ip/MIPSfpga_system_auto_pc_2/MIPSfpga_system_auto_pc_2_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/m04_couplers/auto_pc .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ip/MIPSfpga_system_auto_cc_0/MIPSfpga_system_auto_cc_0_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/m03_couplers/auto_cc .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ip/MIPSfpga_system_auto_ds_2/MIPSfpga_system_auto_ds_2_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/m02_couplers/auto_ds .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ip/MIPSfpga_system_auto_pc_1/MIPSfpga_system_auto_pc_1_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/m02_couplers/auto_pc .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ip/MIPSfpga_system_auto_ds_1/MIPSfpga_system_auto_ds_1_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/m01_couplers/auto_ds .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ip/MIPSfpga_system_auto_ds_0/MIPSfpga_system_auto_ds_0_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/m00_couplers/auto_ds .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ip/MIPSfpga_system_auto_pc_0/MIPSfpga_system_auto_pc_0_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/m00_couplers/auto_pc .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ip/MIPSfpga_system_auto_us_0/MIPSfpga_system_auto_us_0_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/s00_couplers/auto_us .
+Exporting to file E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/hw_handoff/MIPSfpga_system.hwh
+Generated Block Design Tcl file E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/hw_handoff/MIPSfpga_system_bd.tcl
+Generated Hardware Definition File E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/synth/MIPSfpga_system.hwdef
+[Wed Sep 30 20:44:50 2020] Launched synth_1...
+Run output will be captured here: E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.runs/synth_1/runme.log
+launch_runs: Time (s): cpu = 00:00:14 ; elapsed = 00:00:56 . Memory (MB): peak = 1462.914 ; gain = 51.027
+launch_runs impl_1 -jobs 8
+[Wed Sep 30 20:59:00 2020] Launched impl_1...
+Run output will be captured here: E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.runs/impl_1/runme.log
+update_ip_catalog -rebuild -scan_changes
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/ip_repo'.
+INFO: [IP_Flow 19-1700] Loaded user IP repository 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/Car_Driver_Control'.
+report_ip_status -name ip_status
+upgrade_ip -vlnv xilinx.com:user:CarDriverControl:1.0 [get_ips  MIPSfpga_system_CarDriverControl_0_0] -log ip_upgrade.log
+Upgrading 'E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/MIPSfpga_system.bd'
+INFO: [IP_Flow 19-3422] Upgraded MIPSfpga_system_CarDriverControl_0_0 (CarDriverControl_v1_0 1.0) from revision 3 to revision 2
+WARNING: [BD 41-1731] Type mismatch between connected pins: /MIPS_MicroAptiv_UP_0/HRESETn(undef) and /CarDriverControl_0_upgraded_ipi/reset(rst)
+Wrote  : <E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/MIPSfpga_system.bd> 
+INFO: [Coretcl 2-1525] Wrote upgrade log to 'E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/ip_upgrade.log'.
+export_ip_user_files -of_objects [get_ips MIPSfpga_system_CarDriverControl_0_0] -no_script -sync -force -quiet
+reset_run synth_1
+launch_runs synth_1 -jobs 8
+WARNING: [xilinx.com:ip:axi_intc:4.1-6] /axi_intc_0: Property SENSITIVITY = "NULL" for interrupt input 7 not recognized - using default interrupt type Rising Edge. Please change this manually if necessary.
+WARNING: [xilinx.com:ip:axi_intc:4.1-6] /axi_intc_0: Property SENSITIVITY = "NULL" for interrupt input 6 not recognized - using default interrupt type Rising Edge. Please change this manually if necessary.
+WARNING: [xilinx.com:ip:axi_intc:4.1-6] /axi_intc_0: Property SENSITIVITY = "NULL" for interrupt input 4 not recognized - using default interrupt type Rising Edge. Please change this manually if necessary.
+WARNING: [xilinx.com:ip:axi_intc:4.1-6] /axi_intc_0: Property SENSITIVITY = "NULL" for interrupt input 3 not recognized - using default interrupt type Rising Edge. Please change this manually if necessary.
+WARNING: [xilinx.com:ip:axi_intc:4.1-6] /axi_intc_0: Property SENSITIVITY = "NULL" for interrupt input 2 not recognized - using default interrupt type Rising Edge. Please change this manually if necessary.
+WARNING: [xilinx.com:ip:axi_intc:4.1-6] /axi_intc_0: Property SENSITIVITY = "NULL" for interrupt input 0 not recognized - using default interrupt type Rising Edge. Please change this manually if necessary.
+WARNING: [xilinx.com:ip:axi_intc:4.1-13] /axi_intc_0: Interrupt output connection Bus is selected, but the interrupt bus interface is not connected to a matching interface. Please consider selecting Single instead.
+CRITICAL WARNING: [BD 41-237] Bus Interface property MASTER_TYPE does not match between /blk_mem_gen_0/BRAM_PORTA(OTHER) and /axi_bram_ctrl_0/BRAM_PORTA(BRAM_CTRL)
+WARNING: [BD 41-927] Following properties on pin /MIPS_MicroAptiv_UP_0/HCLK have been updated from connected ip. They may not be synchronized with cell properties. You can set property on pin directly to confirm the value and resolve the warning.
+	CLK_DOMAIN=MIPSfpga_system_MIPS_MicroAptiv_UP_0_0_HCLK 
+WARNING: [BD 41-927] Following properties on pin /CarDriverControl_0/dir_clk have been updated from connected ip. They may not be synchronized with cell properties. You can set property on pin directly to confirm the value and resolve the warning.
+	CLK_DOMAIN=MIPSfpga_system_CarDriverControl_0_0_dir_clk 
+Wrote  : <E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/MIPSfpga_system.bd> 
+WARNING: [BD 41-235] Width mismatch when connecting pin: '/blk_mem_gen_0/wea'(1) to net 'axi_bram_ctrl_0_BRAM_PORTA_WE'(4) - Only lower order bits will be connected.
+VHDL Output written to : E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/synth/MIPSfpga_system.v
+WARNING: [BD 41-235] Width mismatch when connecting pin: '/blk_mem_gen_0/wea'(1) to net 'axi_bram_ctrl_0_BRAM_PORTA_WE'(4) - Only lower order bits will be connected.
+VHDL Output written to : E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/sim/MIPSfpga_system.v
+VHDL Output written to : E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/hdl/MIPSfpga_system_wrapper.v
+INFO: [BD 41-1029] Generation completed for the IP Integrator block MIPS_MicroAptiv_UP_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block PWM_w_Int_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block ahblite_axi_bridge_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_bram_ctrl_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_gpio_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_intc_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_uart16550_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block blk_mem_gen_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block clk_wiz_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block mig_7series_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block util_ds_buf_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block util_vector_logic_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block util_vector_logic_1 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block util_vector_logic_2 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block xlconcat_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block xlconcat_1 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block xlconstant_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block xlconstant_1 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block xlconstant_2 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block xlconstant_3 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block xlconstant_4 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/xbar .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_uart16550_1 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_gpio_1 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block CarDriverControl_0 .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ip/MIPSfpga_system_auto_ds_6/MIPSfpga_system_auto_ds_6_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/m07_couplers/auto_ds .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ip/MIPSfpga_system_auto_pc_5/MIPSfpga_system_auto_pc_5_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/m07_couplers/auto_pc .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ip/MIPSfpga_system_auto_ds_5_1/MIPSfpga_system_auto_ds_5_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/m06_couplers/auto_ds .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ip/MIPSfpga_system_auto_pc_4_1/MIPSfpga_system_auto_pc_4_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/m06_couplers/auto_pc .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ip/MIPSfpga_system_auto_ds_4/MIPSfpga_system_auto_ds_4_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/m05_couplers/auto_ds .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ip/MIPSfpga_system_auto_pc_3/MIPSfpga_system_auto_pc_3_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/m05_couplers/auto_pc .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ip/MIPSfpga_system_auto_ds_3/MIPSfpga_system_auto_ds_3_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/m04_couplers/auto_ds .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ip/MIPSfpga_system_auto_pc_2/MIPSfpga_system_auto_pc_2_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/m04_couplers/auto_pc .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ip/MIPSfpga_system_auto_cc_0/MIPSfpga_system_auto_cc_0_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/m03_couplers/auto_cc .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ip/MIPSfpga_system_auto_ds_2/MIPSfpga_system_auto_ds_2_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/m02_couplers/auto_ds .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ip/MIPSfpga_system_auto_pc_1/MIPSfpga_system_auto_pc_1_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/m02_couplers/auto_pc .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ip/MIPSfpga_system_auto_ds_1/MIPSfpga_system_auto_ds_1_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/m01_couplers/auto_ds .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ip/MIPSfpga_system_auto_ds_0/MIPSfpga_system_auto_ds_0_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/m00_couplers/auto_ds .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ip/MIPSfpga_system_auto_pc_0/MIPSfpga_system_auto_pc_0_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/m00_couplers/auto_pc .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file 'e:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ip/MIPSfpga_system_auto_us_0/MIPSfpga_system_auto_us_0_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_interconnect_0/s00_couplers/auto_us .
+Exporting to file E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/hw_handoff/MIPSfpga_system.hwh
+Generated Block Design Tcl file E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/hw_handoff/MIPSfpga_system_bd.tcl
+Generated Hardware Definition File E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/synth/MIPSfpga_system.hwdef
+[Wed Sep 30 21:11:54 2020] Launched synth_1...
+Run output will be captured here: E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.runs/synth_1/runme.log
+launch_runs: Time (s): cpu = 00:00:13 ; elapsed = 00:00:57 . Memory (MB): peak = 1549.785 ; gain = 50.059
+launch_runs impl_1 -jobs 8
+[Wed Sep 30 21:25:44 2020] Launched impl_1...
+Run output will be captured here: E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.runs/impl_1/runme.log
+delete_bd_objs [get_bd_nets axi_gpio_1_gpio_io_o]
+connect_bd_net [get_bd_pins axi_gpio_1/gpio_io_o] [get_bd_pins CarDriverControl_0/param]
+WARNING: [BD 41-1306] The connection to interface pin /axi_gpio_1/gpio_io_o is being overridden by the user. This pin will not be connected as a part of interface connection GPIO
+save_bd_design
+Wrote  : <E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/MIPSfpga_system.bd> 
+Wrote  : <E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/ui/bd_690e812b.ui> 
+reset_run synth_1
+launch_runs impl_1 -jobs 8
+WARNING: [xilinx.com:ip:axi_intc:4.1-6] /axi_intc_0: Property SENSITIVITY = "NULL" for interrupt input 7 not recognized - using default interrupt type Rising Edge. Please change this manually if necessary.
+WARNING: [xilinx.com:ip:axi_intc:4.1-6] /axi_intc_0: Property SENSITIVITY = "NULL" for interrupt input 6 not recognized - using default interrupt type Rising Edge. Please change this manually if necessary.
+WARNING: [xilinx.com:ip:axi_intc:4.1-6] /axi_intc_0: Property SENSITIVITY = "NULL" for interrupt input 4 not recognized - using default interrupt type Rising Edge. Please change this manually if necessary.
+WARNING: [xilinx.com:ip:axi_intc:4.1-6] /axi_intc_0: Property SENSITIVITY = "NULL" for interrupt input 3 not recognized - using default interrupt type Rising Edge. Please change this manually if necessary.
+WARNING: [xilinx.com:ip:axi_intc:4.1-6] /axi_intc_0: Property SENSITIVITY = "NULL" for interrupt input 2 not recognized - using default interrupt type Rising Edge. Please change this manually if necessary.
+WARNING: [xilinx.com:ip:axi_intc:4.1-6] /axi_intc_0: Property SENSITIVITY = "NULL" for interrupt input 0 not recognized - using default interrupt type Rising Edge. Please change this manually if necessary.
+WARNING: [xilinx.com:ip:axi_intc:4.1-13] /axi_intc_0: Interrupt output connection Bus is selected, but the interrupt bus interface is not connected to a matching interface. Please consider selecting Single instead.
+CRITICAL WARNING: [BD 41-237] Bus Interface property MASTER_TYPE does not match between /blk_mem_gen_0/BRAM_PORTA(OTHER) and /axi_bram_ctrl_0/BRAM_PORTA(BRAM_CTRL)
+WARNING: [BD 41-927] Following properties on pin /MIPS_MicroAptiv_UP_0/HCLK have been updated from connected ip. They may not be synchronized with cell properties. You can set property on pin directly to confirm the value and resolve the warning.
+	CLK_DOMAIN=MIPSfpga_system_MIPS_MicroAptiv_UP_0_0_HCLK 
+WARNING: [BD 41-927] Following properties on pin /CarDriverControl_0/dir_clk have been updated from connected ip. They may not be synchronized with cell properties. You can set property on pin directly to confirm the value and resolve the warning.
+	CLK_DOMAIN=MIPSfpga_system_CarDriverControl_0_0_dir_clk 
+Wrote  : <E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/MIPSfpga_system.bd> 
+WARNING: [BD 41-235] Width mismatch when connecting pin: '/blk_mem_gen_0/wea'(1) to net 'axi_bram_ctrl_0_BRAM_PORTA_WE'(4) - Only lower order bits will be connected.
+VHDL Output written to : E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/synth/MIPSfpga_system.v
+WARNING: [BD 41-235] Width mismatch when connecting pin: '/blk_mem_gen_0/wea'(1) to net 'axi_bram_ctrl_0_BRAM_PORTA_WE'(4) - Only lower order bits will be connected.
+VHDL Output written to : E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/sim/MIPSfpga_system.v
+VHDL Output written to : E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/hdl/MIPSfpga_system_wrapper.v
+INFO: [BD 41-1029] Generation completed for the IP Integrator block MIPS_MicroAptiv_UP_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block PWM_w_Int_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block ahblite_axi_bridge_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_bram_ctrl_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_gpio_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_intc_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block axi_uart16550_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block blk_mem_gen_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block clk_wiz_0 .
+INFO: [Common 17-365] Interrupt caught but 'launch_runs' cannot be canceled. Please wait for command to finish.
+INFO: [IP_Flow 19-3499] Reset cancelled 'Synthesis' target for IP 'mig_7series_0'.
+INFO: [BD 41-1029] Generation completed for the IP Integrator block mig_7series_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block util_ds_buf_0 .
+INFO: [BD 41-1171] User-interrupt detected : Generation halted successfully for IPIntegrator design E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.srcs/sources_1/bd/MIPSfpga_system/MIPSfpga_system.bd
+INFO: [Common 17-681] Processing pending cancel.
+exit
+INFO: [Common 17-206] Exiting Vivado at Wed Sep 30 21:28:52 2020...

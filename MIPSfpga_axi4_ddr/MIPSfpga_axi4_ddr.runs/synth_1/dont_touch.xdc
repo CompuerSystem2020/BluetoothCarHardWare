@@ -75,6 +75,27 @@ set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==MIPSfpga_system
 # IP: bd/MIPSfpga_system/ip/MIPSfpga_system_xbar_0/MIPSfpga_system_xbar_0.xci
 set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==MIPSfpga_system_xbar_0 || ORIG_REF_NAME==MIPSfpga_system_xbar_0} -quiet] -quiet
 
+# IP: bd/MIPSfpga_system/ip/MIPSfpga_system_axi_uart16550_1_0_2/MIPSfpga_system_axi_uart16550_1_0.xci
+set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==MIPSfpga_system_axi_uart16550_1_0 || ORIG_REF_NAME==MIPSfpga_system_axi_uart16550_1_0} -quiet] -quiet
+
+# IP: bd/MIPSfpga_system/ip/MIPSfpga_system_axi_gpio_1_0_1/MIPSfpga_system_axi_gpio_1_0.xci
+set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==MIPSfpga_system_axi_gpio_1_0 || ORIG_REF_NAME==MIPSfpga_system_axi_gpio_1_0} -quiet] -quiet
+
+# IP: bd/MIPSfpga_system/ip/MIPSfpga_system_WheelController_0_0_1/MIPSfpga_system_WheelController_0_0.xci
+set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==MIPSfpga_system_WheelController_0_0 || ORIG_REF_NAME==MIPSfpga_system_WheelController_0_0} -quiet] -quiet
+
+# IP: bd/MIPSfpga_system/ip/MIPSfpga_system_auto_ds_6_1/MIPSfpga_system_auto_ds_6.xci
+set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==MIPSfpga_system_auto_ds_6 || ORIG_REF_NAME==MIPSfpga_system_auto_ds_6} -quiet] -quiet
+
+# IP: bd/MIPSfpga_system/ip/MIPSfpga_system_auto_pc_5_1/MIPSfpga_system_auto_pc_5.xci
+set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==MIPSfpga_system_auto_pc_5 || ORIG_REF_NAME==MIPSfpga_system_auto_pc_5} -quiet] -quiet
+
+# IP: bd/MIPSfpga_system/ip/MIPSfpga_system_auto_ds_5_2/MIPSfpga_system_auto_ds_5.xci
+set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==MIPSfpga_system_auto_ds_5 || ORIG_REF_NAME==MIPSfpga_system_auto_ds_5} -quiet] -quiet
+
+# IP: bd/MIPSfpga_system/ip/MIPSfpga_system_auto_pc_4_2/MIPSfpga_system_auto_pc_4.xci
+set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==MIPSfpga_system_auto_pc_4 || ORIG_REF_NAME==MIPSfpga_system_auto_pc_4} -quiet] -quiet
+
 # IP: bd/MIPSfpga_system/ip/MIPSfpga_system_auto_ds_4/MIPSfpga_system_auto_ds_4.xci
 set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==MIPSfpga_system_auto_ds_4 || ORIG_REF_NAME==MIPSfpga_system_auto_ds_4} -quiet] -quiet
 
@@ -160,6 +181,36 @@ set_property DONT_TOUCH TRUE [get_cells [split [join [get_cells -hier -filter {R
 # XDC: bd/MIPSfpga_system/ip/MIPSfpga_system_util_ds_buf_0_0/MIPSfpga_system_util_ds_buf_0_0_ooc.xdc
 
 # XDC: bd/MIPSfpga_system/ip/MIPSfpga_system_xbar_0/MIPSfpga_system_xbar_0_ooc.xdc
+
+# XDC: bd/MIPSfpga_system/ip/MIPSfpga_system_axi_uart16550_1_0_2/MIPSfpga_system_axi_uart16550_1_0_board.xdc
+set_property DONT_TOUCH TRUE [get_cells [split [join [get_cells -hier -filter {REF_NAME==MIPSfpga_system_axi_uart16550_1_0 || ORIG_REF_NAME==MIPSfpga_system_axi_uart16550_1_0} -quiet] {/U0 } ]/U0 ] -quiet] -quiet
+
+# XDC: bd/MIPSfpga_system/ip/MIPSfpga_system_axi_uart16550_1_0_2/MIPSfpga_system_axi_uart16550_1_0_ooc.xdc
+
+# XDC: bd/MIPSfpga_system/ip/MIPSfpga_system_axi_uart16550_1_0_2/MIPSfpga_system_axi_uart16550_1_0.xdc
+#dup# set_property DONT_TOUCH TRUE [get_cells [split [join [get_cells -hier -filter {REF_NAME==MIPSfpga_system_axi_uart16550_1_0 || ORIG_REF_NAME==MIPSfpga_system_axi_uart16550_1_0} -quiet] {/U0 } ]/U0 ] -quiet] -quiet
+
+# XDC: bd/MIPSfpga_system/ip/MIPSfpga_system_axi_gpio_1_0_1/MIPSfpga_system_axi_gpio_1_0_board.xdc
+set_property DONT_TOUCH TRUE [get_cells [split [join [get_cells -hier -filter {REF_NAME==MIPSfpga_system_axi_gpio_1_0 || ORIG_REF_NAME==MIPSfpga_system_axi_gpio_1_0} -quiet] {/U0 } ]/U0 ] -quiet] -quiet
+
+# XDC: bd/MIPSfpga_system/ip/MIPSfpga_system_axi_gpio_1_0_1/MIPSfpga_system_axi_gpio_1_0_ooc.xdc
+
+# XDC: bd/MIPSfpga_system/ip/MIPSfpga_system_axi_gpio_1_0_1/MIPSfpga_system_axi_gpio_1_0.xdc
+#dup# set_property DONT_TOUCH TRUE [get_cells [split [join [get_cells -hier -filter {REF_NAME==MIPSfpga_system_axi_gpio_1_0 || ORIG_REF_NAME==MIPSfpga_system_axi_gpio_1_0} -quiet] {/U0 } ]/U0 ] -quiet] -quiet
+
+# XDC: bd/MIPSfpga_system/ip/MIPSfpga_system_auto_ds_6_1/MIPSfpga_system_auto_ds_6_clocks.xdc
+set_property DONT_TOUCH TRUE [get_cells [split [join [get_cells -hier -filter {REF_NAME==MIPSfpga_system_auto_ds_6 || ORIG_REF_NAME==MIPSfpga_system_auto_ds_6} -quiet] {/inst } ]/inst ] -quiet] -quiet
+
+# XDC: bd/MIPSfpga_system/ip/MIPSfpga_system_auto_ds_6_1/MIPSfpga_system_auto_ds_6_ooc.xdc
+
+# XDC: bd/MIPSfpga_system/ip/MIPSfpga_system_auto_pc_5_1/MIPSfpga_system_auto_pc_5_ooc.xdc
+
+# XDC: bd/MIPSfpga_system/ip/MIPSfpga_system_auto_ds_5_2/MIPSfpga_system_auto_ds_5_clocks.xdc
+set_property DONT_TOUCH TRUE [get_cells [split [join [get_cells -hier -filter {REF_NAME==MIPSfpga_system_auto_ds_5 || ORIG_REF_NAME==MIPSfpga_system_auto_ds_5} -quiet] {/inst } ]/inst ] -quiet] -quiet
+
+# XDC: bd/MIPSfpga_system/ip/MIPSfpga_system_auto_ds_5_2/MIPSfpga_system_auto_ds_5_ooc.xdc
+
+# XDC: bd/MIPSfpga_system/ip/MIPSfpga_system_auto_pc_4_2/MIPSfpga_system_auto_pc_4_ooc.xdc
 
 # XDC: bd/MIPSfpga_system/ip/MIPSfpga_system_auto_ds_4/MIPSfpga_system_auto_ds_4_clocks.xdc
 set_property DONT_TOUCH TRUE [get_cells [split [join [get_cells -hier -filter {REF_NAME==MIPSfpga_system_auto_ds_4 || ORIG_REF_NAME==MIPSfpga_system_auto_ds_4} -quiet] {/inst } ]/inst ] -quiet] -quiet

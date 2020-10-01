@@ -2,11 +2,11 @@
 # Vivado v2018.2 (64-bit)
 # SW Build 2258646 on Thu Jun 14 20:03:12 MDT 2018
 # IP Build 2256618 on Thu Jun 14 22:10:49 MDT 2018
-# Start of session at: Mon Dec  9 16:39:26 2019
-# Process ID: 4016
-# Current directory: C:/workspace/system_ability_2019/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.runs/synth_1
+# Start of session at: Thu Oct  1 11:02:51 2020
+# Process ID: 19520
+# Current directory: E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.runs/synth_1
 # Command line: vivado.exe -log MIPSfpga_system_wrapper.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source MIPSfpga_system_wrapper.tcl
-# Log file: C:/workspace/system_ability_2019/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.runs/synth_1/MIPSfpga_system_wrapper.vds
-# Journal file: C:/workspace/system_ability_2019/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.runs/synth_1\vivado.jou
+# Log file: E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.runs/synth_1/MIPSfpga_system_wrapper.vds
+# Journal file: E:/ComputerSystem/AWorkSpace/BluetoothCarHardWare/MIPSfpga_axi4_ddr/MIPSfpga_axi4_ddr.runs/synth_1\vivado.jou
 #-----------------------------------------------------------
 source MIPSfpga_system_wrapper.tcl -notrace
