@@ -6,7 +6,7 @@
 <Project Version="7" Minor="38" Path="e:/computersystem/aworkspace/bluetoothcarhardware/mipsfpga_axi4_ddr/mipsfpga_axi4_ddr.tmp/wheelcontroller_v1_0_project/WheelController_v1_0_project.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
-    <Option Name="Id" Val="fc91f2f491774223bcd893efe7a4c65e"/>
+    <Option Name="Id" Val="1b8cef2f6a03407283f3f03cca31d1cb"/>
     <Option Name="Part" Val="xc7a100tcsg324-1"/>
     <Option Name="CompiledLibDir" Val="$PCACHEDIR/compile_simlib"/>
     <Option Name="CompiledLibDirXSim" Val=""/>
@@ -61,30 +61,30 @@
     <FileSet Name="sources_1" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1">
       <Filter Type="Srcs"/>
       <File Path="$PPRDIR/../../../../../../ComputerSystem/AWorkSpace/BluetoothCarHardWare/ip_repo/Wheel/Wheel.srcs/sources_1/new/direction.v">
-        <FileInfo SFType="VHeader">
-          <Attr Name="IsGlobalInclude" Val="1"/>
+        <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
       <File Path="$PPRDIR/../../../../../../ComputerSystem/AWorkSpace/BluetoothCarHardWare/ip_repo/Wheel/Wheel.srcs/sources_1/new/divider.v">
-        <FileInfo SFType="VHeader">
-          <Attr Name="IsGlobalInclude" Val="1"/>
+        <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
       <File Path="$PPRDIR/../../../../../../ComputerSystem/AWorkSpace/BluetoothCarHardWare/ip_repo/Wheel/Wheel.srcs/sources_1/new/pwm.v">
-        <FileInfo SFType="VHeader">
-          <Attr Name="IsGlobalInclude" Val="1"/>
+        <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
       <File Path="$PPRDIR/../../../../../../ComputerSystem/AWorkSpace/BluetoothCarHardWare/ip_repo/Wheel/Wheel.srcs/sources_1/new/WheelController.v">
-        <FileInfo SFType="VHeader">
-          <Attr Name="IsGlobalInclude" Val="1"/>
+        <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
@@ -93,7 +93,8 @@
       </File>
       <Config>
         <Option Name="DesignMode" Val="RTL"/>
-        <Option Name="TopAutoSet" Val="TRUE"/>
+        <Option Name="TopModule" Val="WheelController"/>
+        <Option Name="TopRTLFile" Val="$PPRDIR/../../../../../../ComputerSystem/AWorkSpace/BluetoothCarHardWare/ip_repo/Wheel/Wheel.srcs/sources_1/new/WheelController.v"/>
       </Config>
     </FileSet>
     <FileSet Name="constrs_1" Type="Constrs" RelSrcDir="$PSRCDIR/constrs_1">
@@ -105,6 +106,8 @@
     <FileSet Name="sim_1" Type="SimulationSrcs" RelSrcDir="$PSRCDIR/sim_1">
       <Config>
         <Option Name="DesignMode" Val="RTL"/>
+        <Option Name="TopModule" Val="WheelController"/>
+        <Option Name="TopLib" Val="xil_defaultlib"/>
         <Option Name="TopAutoSet" Val="TRUE"/>
         <Option Name="TransportPathDelay" Val="0"/>
         <Option Name="TransportIntDelay" Val="0"/>

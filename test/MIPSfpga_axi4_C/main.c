@@ -112,7 +112,7 @@ char _mips_handle_irq(void* ctx, int reason) {
  	delay();
 	return BT_rxData; 
 } 
-void pmw_helper(int x, int y)
+void pwm_helper(int x, int y)
 {
     *WRITE_IO(WHEEL_BASE) = (x << 4) | y;
     delay();
@@ -120,25 +120,25 @@ void pmw_helper(int x, int y)
 
 void forward(int speed)
 {
-	pmw_helper(0xD4,speed); // 1101 0100
+	pwm_helper(0xD4,speed); // 1101 0100
 }
 
 void backward(int speed)
 {
-	pmw_helper(0x2B,speed); // 0010 1011
+	pwm_helper(0x2B,speed); // 0010 1011
 }
 
 void turn_left(int speed)
 {
-    pmw_helper(0x66,speed); // 0110 0110
+    pwm_helper(0x66,speed); // 0110 0110
 }
 
 void turn_right(int speed)
 {
-	pmw_helper(0x99,speed); // 1001 1001
+	pwm_helper(0x99,speed); // 1001 1001
 }
 
-void pmw(int data, int *speed)
+void pwm(int data, int *speed)
 {	
 	int sss = *speed;
 	if (data == 'k') {
@@ -166,8 +166,6 @@ void pmw(int data, int *speed)
 // main()
 //------------------
 int main() {
-	volatile unsigned int pushbutton, count = 0xF;
-	volatile unsigned int j = 1;
 	char c = 0;
 	int speed = 0;
 
@@ -176,7 +174,7 @@ int main() {
 
 	while(1) {
 		c = _mips_handle_irq(0, 0);
-		pmw(c, &speed);
+		pwm(c, &speed);
 	}
 	return 0;
 }
